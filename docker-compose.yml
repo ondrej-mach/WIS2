@@ -1,0 +1,10 @@
+version: '3'
+services:
+  www:
+    image: php:8.1-apache
+    privileged: true
+    volumes:
+      - "./www/html:/var/www/html"
+    ports:
+      - 8080:80
+      - 8443:443
