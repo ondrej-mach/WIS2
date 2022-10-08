@@ -1,10 +1,36 @@
 version: '3'
+
 services:
-  www:
-    image: php:8.1-apache
+  web_server:
+    build:
+      context: .
+      dockerfile: ./docker/web_server/Dockerfile
+    container_name: 'web_server'
     privileged: true
+    environment:
+      MYSQL_SERVER_NAME: 'db_server'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
-      - "./www/html:/var/www/html"
+      - "./www/html/:/var/www/html/"
     ports:
       - 8080:80
       - 8443:443
+
+  db_server:
+    image: mysql
+    container_name: 'db_server'
+    privileged: true
+    restart: always
+    ports:
+      - '${DB_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
+    volumes:
+      - ./db_data/:/var/lib/mysql/
+
+
