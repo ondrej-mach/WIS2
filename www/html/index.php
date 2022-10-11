@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   
-  <?php include 'templates/header.php' ?>
+  <?php include_once 'templates/header.php' ?>
   
   
   <?php
@@ -20,6 +20,6 @@
     }
   ?> 
 
-  <?php include 'templates/footer.php' ?>
+  <?php include_once 'templates/footer.php' ?>
 
 </html>

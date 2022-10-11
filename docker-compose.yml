@@ -32,5 +32,17 @@ services:
       MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
       - ./db_data/:/var/lib/mysql/
+      - ./docker/db_server/init_db.sql:/docker-entrypoint-initdb.d/1.sql
+      
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: 'phpmyadmin'
+    restart: always
+    environment:
+      PMA_HOST: 'db_server'
+      PMA_USER: 'root'
+      PMA_PASSWORD: '${MYSQL_ROOT_PASS}'
+    ports:
+      - "8081:80"
 
 
