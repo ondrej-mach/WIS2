@@ -4,7 +4,7 @@
 require_once 'dbh-inc.php';
 
 try {
-    $sql = 'SELECT accountPassword FROM Account WHERE accountUsername = ?';
+    $sql = 'SELECT * FROM Account WHERE accountUsername = ?';
     $stmt = $GLOBALS['conn']->prepare($sql);
     $stmt->execute([$_POST["username"]]);
     if ($stmt->rowCount() == 0) {
@@ -14,8 +14,14 @@ try {
     $hashedPwd = $user->accountPassword;
 
     if (password_verify($_POST["password"], $hashedPwd)) {
-        # TODO set cookie and redirect
-        echo "Hello there";
+        session_start();
+        $sid = session_id();
+        
+        $sql = 'UPDATE Account SET accountSessionID = ? WHERE accountID = ?';
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->execute([$sid, $user->accountID]);
+        header("location: ../index.php");
+        
     } else {
         throw new Exception('Bad credentials.');
     }

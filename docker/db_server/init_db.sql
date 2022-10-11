@@ -6,7 +6,8 @@ CREATE TABLE Account (
     accountRealName VARCHAR(128),
     accountAddress VARCHAR(128),
     accountDateOfBirth DATE,
-    accountEmail VARCHAR(50)
+    accountEmail VARCHAR(128),
+    accountSessionID VARCHAR(128)
 );
 
 CREATE TABLE Admin (

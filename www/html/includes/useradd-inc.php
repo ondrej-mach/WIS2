@@ -5,7 +5,7 @@ require_once 'includes/dbh-inc.php';
 function userAdd($username, $password) {
     $sql = "INSERT INTO Account (accountUsername, accountPassword) VALUES (?, ?)";
     $stmt = $GLOBALS['conn']->prepare($sql);
-    $stmt->execute([$username, password_hash($password, NULL)]);
+    $stmt->execute([$username, password_hash($password,  NULL)]);
 }
 
 function username2uid($username) {
