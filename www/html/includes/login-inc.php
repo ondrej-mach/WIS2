@@ -17,9 +17,10 @@ try {
         session_start();
         $sid = session_id();
         
-        $sql = 'UPDATE Account SET accountSessionID = ? WHERE accountID = ?';
+        $sql = 'INSERT INTO Login (accountID, sessionID, timeout) VALUES (?, ?, ?)';
         $stmt = $GLOBALS['conn']->prepare($sql);
-        $stmt->execute([$sid, $user->accountID]);
+        $stmt->execute([$user->accountID, $sid, time()+3600]);
+        
         header("location: ../index.php");
         
     } else {

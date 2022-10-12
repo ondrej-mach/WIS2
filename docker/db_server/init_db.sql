@@ -6,9 +6,16 @@ CREATE TABLE Account (
     accountRealName VARCHAR(128),
     accountAddress VARCHAR(128),
     accountDateOfBirth DATE,
-    accountEmail VARCHAR(128),
-    accountSessionID VARCHAR(128)
+    accountEmail VARCHAR(128)
 );
+
+CREATE TABLE Login (
+    accountID INTEGER NOT NULL,
+    sessionID VARCHAR(128),
+    timeout INTEGER,  -- UNIX timestamp when login will be invalidated
+    FOREIGN KEY (accountID) REFERENCES Account(accountID)
+);
+
 
 CREATE TABLE Admin (
     accountID INTEGER NOT NULL,

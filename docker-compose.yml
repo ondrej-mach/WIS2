@@ -8,6 +8,7 @@ services:
     container_name: 'web_server'
     privileged: true
     environment:
+      TZ: '${TZ}'
       MYSQL_SERVER_NAME: 'db_server'
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASS}'

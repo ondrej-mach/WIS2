@@ -4,11 +4,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/authorization-inc.php';
 
 if (is_logged_in()) {
-    $uid = $GLOBALS['user']->accountID;
-
-    $sql = 'UPDATE Account SET accountSessionID = NULL WHERE accountID = ?';
+    $sql = 'DELETE FROM Login WHERE sessionID = ?';
     $stmt = $GLOBALS['conn']->prepare($sql);
-    $stmt->execute([$uid]);
+    $stmt->execute([session_id()]);
 }
 
 header("location: /index.php");
