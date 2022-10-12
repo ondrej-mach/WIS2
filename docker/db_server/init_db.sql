@@ -8,7 +8,8 @@ CREATE TABLE Account (
     accountDateOfBirth DATE,
     accountEmail VARCHAR(128),
     accountTeacher BOOLEAN,
-    accountStudent BOOLEAN
+    accountStudent BOOLEAN,
+    accountAdmin BOOLEAN
 );
 
 CREATE TABLE Login (
@@ -18,11 +19,6 @@ CREATE TABLE Login (
     FOREIGN KEY (accountID) REFERENCES Account(accountID)
 );
 
-
-CREATE TABLE Admin (
-    accountID INTEGER NOT NULL,
-    FOREIGN KEY (accountID) REFERENCES Account(accountID)
-);
 
 CREATE TABLE Room (
     roomID INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,

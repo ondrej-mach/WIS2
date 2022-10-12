@@ -41,6 +41,7 @@ function is_logged_in() {
 function assert_logged_in() {
     if (!is_logged_in()) {
         header("location: ../login.php");
+        exit;
     }
 }
 
@@ -49,14 +50,19 @@ function is_admin() {
         return false;
     }
     
-    $uid = $GLOBALS['user']->accountID;
-    $sql = 'SELECT 1 FROM Admin WHERE accountID = ?';
-    $stmt = $GLOBALS['conn']->prepare($sql);
-    $stmt->execute([$uid]);
-    
-    return $stmt->rowCount() != 0;
+    return $GLOBALS['user']->accountAdmin;
 }
 
+function assert_admin() {
+    if (!is_logged_in()) {
+        header("location: ../login.php");
+        exit;
+    }
+    if (!is_admin()) {
+        http_response_code(403);
+        die('Forbidden');
+    }
+}
 
 
 
