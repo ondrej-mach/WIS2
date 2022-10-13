@@ -1,6 +1,6 @@
 <?php
 
-require_once 'includes/dbh-inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/dbh-inc.php';
 
 function userAdd($username, $password) {
     $sql = "INSERT INTO Account (accountUsername, accountPassword) VALUES (?, ?)";
@@ -22,30 +22,41 @@ function uid2username($uid) {
     return $user->accountUsername;
 }
     
-function userMod($uid, $attr) {
+function userMod($uid, $attributes) {
     $conn = $GLOBALS['conn'];
     
-    # TODO
-    if (isset($attr["username"])) {
-        
-    }
+    $possibleAttr = [ 
+        "accountRealName",
+        "accountPassword",
+        "accountAddress",
+        "accountDateOfBirth",
+        "accountEmail",
+        "accountUsername", 
+        "accountStudent", 
+        "accountTeacher", 
+        "accountAdmin",
+    ];
     
-    if (isset($attr["pasword"])) {
-        
-    }
+    $values = [];
+    $keys = '';
     
-    if (isset($attr["is_admin"])) {
-        if ($attr["is_admin"]) {
-            $sql = "INSERT INTO Admin (accountID) VALUES (?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$uid]);
-        } else {
-            # TODO remove admin privileges from user
+    foreach($attributes as $key => $value) {
+        if (!in_array($key, $possibleAttr)) {
+            throw new Exception("Attribute $key does not exist.");
         }
+        if ($key == "accountPassword") {
+            $value = password_hash($value, NULL);
+        }
+        
+        $sql = "UPDATE Account SET $key = ? WHERE accountID = ?";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->execute([$value, $uid]);
     }
 }
 
-function userDel($username) {
-    # TODO
-
+function userDel($uid) {
+    # TODO cascade all foreign keys
+    $sql = "DELETE FROM Account WHERE accountID = ?";
+    $stmt = $GLOBALS['conn']->prepare($sql);
+    $stmt->execute([$uid]);
 }
