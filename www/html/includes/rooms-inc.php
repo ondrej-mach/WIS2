@@ -1,5 +1,7 @@
 <?php
 
+require_once 'includes/dbh-inc.php';
+
 function getRooms() {
     $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Room");
     $stmt->execute();

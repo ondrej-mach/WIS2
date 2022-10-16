@@ -33,7 +33,6 @@ if ($sid != '') {
     }
 }
 
-
 function is_logged_in() {
     return isset($GLOBALS['user']);
 }
@@ -49,8 +48,21 @@ function is_admin() {
     if (!is_logged_in()) {
         return false;
     }
-    
     return $GLOBALS['user']->accountAdmin;
+}
+
+function is_teacher() {
+    if (!is_logged_in()) {
+        return false;
+    }
+    return $GLOBALS['user']->accountTeacher;
+}
+
+function is_student() {
+    if (!is_logged_in()) {
+        return false;
+    }
+    return $GLOBALS['user']->accountStudent;
 }
 
 function assert_admin() {

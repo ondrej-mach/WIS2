@@ -14,6 +14,9 @@ VALUES ('xnovak00', '$1$J2b.7qT3$C6m3z10By7kfob8Ikx0N10', true);
 INSERT INTO Room (roomName, roomDescription) 
 VALUES ('D105', 'Big lecture room');
 
--- login xnovak00, heslo student
 INSERT INTO Room (roomName, roomDescription) 
 VALUES ('E105', 'Small lecture room');
+
+
+INSERT INTO Course (courseName, courseFullName, courseDescription) 
+VALUES ('IIS', 'Information systems', 'This course will teach student the secrets of universe', 10);

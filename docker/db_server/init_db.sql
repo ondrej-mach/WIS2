@@ -26,10 +26,13 @@ CREATE TABLE Room (
     roomDescription VARCHAR(128)
 );
 
+
 CREATE TABLE Course (
     courseID INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     courseName VARCHAR(128),
-    courseDescription VARCHAR(128)
+    courseFullName VARCHAR(128),
+    courseDescription TEXT,
+    courseState INTEGER NOT NULL,
 );
 
 CREATE TABLE Guarantees (
