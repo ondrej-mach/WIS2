@@ -5,7 +5,7 @@
     
     if (is_admin()) {
         # TODO
-        echo "i'm admin\n";
+        echo "<a href=manageusers.php>User management</a>";
     }
     if (is_logged_in()) {
         # TODO
@@ -22,4 +22,6 @@
         echo "<a href='/login.php'>log in</a>\n";
     }
     
-?> 
+?>
+
+<br/>

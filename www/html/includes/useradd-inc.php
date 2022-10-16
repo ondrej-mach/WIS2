@@ -6,6 +6,7 @@ function userAdd($username, $password) {
     $sql = "INSERT INTO Account (accountUsername, accountPassword) VALUES (?, ?)";
     $stmt = $GLOBALS['conn']->prepare($sql);
     $stmt->execute([$username, password_hash($password,  NULL)]);
+    return $GLOBALS['conn']->lastInsertId();
 }
 
 function username2uid($username) {
@@ -59,4 +60,14 @@ function userDel($uid) {
     $sql = "DELETE FROM Account WHERE accountID = ?";
     $stmt = $GLOBALS['conn']->prepare($sql);
     $stmt->execute([$uid]);
+}
+
+function getUserByID($uid) {
+    $conn = $GLOBALS['conn'];
+    
+    $stmt = $conn->prepare("SELECT * FROM Account WHERE accountID = ?");
+    $stmt->execute([$uid]);
+    $user = $stmt->fetch(PDO::FETCH_OBJ);
+    
+    return $user;
 }

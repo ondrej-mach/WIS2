@@ -2,7 +2,7 @@
 CREATE TABLE Account (
     accountID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     accountUsername VARCHAR(128) NOT NULL UNIQUE,
-    accountPassword VARCHAR(128) NOT NULL,
+    accountPassword VARCHAR(128),
     accountRealName VARCHAR(128),
     accountAddress VARCHAR(128),
     accountDateOfBirth DATE,
