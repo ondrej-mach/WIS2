@@ -9,7 +9,7 @@ assert_admin();
   <?php include_once 'templates/header.php' ?>
   <?php include_once 'templates/navbar.php' ?>
   
-  <table style='border: solid 1px black;'>";
+  <table style='border: solid 1px black;'>
   <tr>
     <th>Username</th>
     <th>Name</th>

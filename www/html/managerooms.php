@@ -9,40 +9,23 @@
   <?php include_once 'templates/header.php' ?>
   <?php include_once 'templates/navbar.php' ?>
   
-  <table style='border: solid 1px black;'>";
+  <table style='border: solid 1px black;'>
   <tr>
-    <th>Room Name</th>
+    <th>Name</th>
     <th>Modify</th>
-    <th>Delete</th>
   </tr>
   
 <?php
 
-function printBool($x) {
-    $text = $x ? 'yes' : 'no';
-    $color = $x ? 'green' : 'red';
-    return "<td style=\"color:$color\">$text</td>";
-}
+require_once 'includes/rooms-inc.php';
 
-require_once 'includes/dbh-inc.php';
-
-$conn = $GLOBALS['conn'];
-$stmt = $conn->prepare("SELECT * FROM Account");
-$stmt->execute();
-
-while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $usermodURL = 'usermod.php?accountID=' . $user['accountID'];
-    $userdelURL = 'userdel.php?accountID=' . $user['accountID'];
+$rooms = getRooms();
+foreach ($rooms as $room) {
+    $modifyRoomURL = 'modifyroom.php?accountID=' . $room->roomID;
   
     echo "<tr>";
-    echo "<td>" . $user['accountUsername'] . "</td>";
-    echo "<td>" . $user['accountRealName'] . "</td>";
-    echo "<td>" . $user['accountEmail'] . "</td>";
-    echo printBool($user['accountStudent']);
-    echo printBool($user['accountTeacher']);
-    echo printBool($user['accountAdmin']); 
-    echo "<td><a href=\"$roommodURL\">Modify</a></td>";
-    echo "<td><a href=\"$roomdelURL\">Delete</a></td>";
+    echo "<td>" . $room->roomName . "</td>";
+    echo "<td><a href=\"$modifyRoomURL\">Modify</a></td>";
     echo "</tr>";
 }
 
@@ -50,7 +33,14 @@ while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
 echo "</table>";
 ?>
 
-<a href=useradd.php>Add user</a><br/>
+<h3>Add new room</h3>
+  
+  <form action=addroom.php>
+    <label>New room name
+      <input name="roomName" type="text">
+    </label><br/>
+    <button type="submit" name="submit">Add room</button>
+  </form>
 
   <?php include_once 'templates/footer.php' ?>
 

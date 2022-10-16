@@ -22,7 +22,7 @@ CREATE TABLE Login (
 
 CREATE TABLE Room (
     roomID INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    roomName VARCHAR(128),
+    roomName VARCHAR(128) NOT NULL UNIQUE,
     roomDescription VARCHAR(128)
 );
 
