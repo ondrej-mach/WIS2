@@ -32,7 +32,7 @@ CREATE TABLE Course (
     courseName VARCHAR(128),
     courseFullName VARCHAR(128),
     courseDescription TEXT,
-    courseState INTEGER NOT NULL,
+    courseState INTEGER NOT NULL
 );
 
 CREATE TABLE Guarantees (

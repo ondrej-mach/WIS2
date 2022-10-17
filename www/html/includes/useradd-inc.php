@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/dbh-inc.php';
+require_once 'includes/dbh-inc.php';
 
 function userAdd($username, $password) {
     $sql = "INSERT INTO Account (accountUsername, accountPassword) VALUES (?, ?)";

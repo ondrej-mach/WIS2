@@ -33,6 +33,15 @@ if ($sid != '') {
     }
 }
 
+function dieForbidden() {
+    http_response_code(403);
+    die('Forbidden');
+}
+
+function getUID() {
+    return $GLOBALS['user']->accountID;
+}
+
 function is_logged_in() {
     return isset($GLOBALS['user']);
 }
@@ -71,8 +80,7 @@ function assert_admin() {
         exit;
     }
     if (!is_admin()) {
-        http_response_code(403);
-        die('Forbidden');
+        dieForbidden();
     }
 }
 

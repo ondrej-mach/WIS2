@@ -12,35 +12,35 @@
   <table style='border: solid 1px black;'>
   <tr>
     <th>Name</th>
-    <th>Modify</th>
+    <th>Full name</th>
+    <th>Guarantor</th>
+    <th>State</th>
+    <th>Edit</th>
   </tr>
   
 <?php
 
-require_once 'includes/rooms-inc.php';
+require_once 'includes/courses-inc.php';
+require_once 'includes/useradd-inc.php';
 
 $courses = getCourses();
-foreach ($coures as $course) {
-    $modifyCourseURL = 'modifycourse.php?courseID=' . $room->roomID;
+
+foreach ($courses as $course) {
+    $editCourseURL = 'editcourse.php?courseID=' . $course->courseID;
+    $guarantor = getUserByID(getGuarantorID($course->courseID));
   
     echo "<tr>";
-    echo "<td>" . $room->roomName . "</td>";
-    echo "<td><a href=\"$modifyRoomURL\">Modify</a></td>";
+    echo "<td>" . $course->courseName . "</td>";
+    echo "<td>" . $course->courseFullName . "</td>";
+    echo "<td>" . $guarantor->accountRealName . "</td>";
+    echo "<td>" . courseStateToString($course->courseState) . "</td>";
+    echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
     echo "</tr>";
 }
 
 
 echo "</table>";
 ?>
-
-<h3>Add new room</h3>
-  
-  <form action=addroom.php>
-    <label>New room name
-      <input name="roomName" type="text">
-    </label><br/>
-    <button type="submit" name="submit">Add room</button>
-  </form>
 
   <?php include_once 'templates/footer.php' ?>
 

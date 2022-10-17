@@ -27,6 +27,8 @@
     }
     
     if (is_logged_in()) {
+        $username = $GLOBALS['user']->accountUsername;
+        echo $username;
         echo "<a href='logout.php'>Log out</a>\n";
     } else {
         echo "<a href='login.php'>Log in</a>\n";
