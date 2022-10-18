@@ -38,9 +38,6 @@ function userMod($uid, $attributes) {
         "accountAdmin",
     ];
     
-    $values = [];
-    $keys = '';
-    
     foreach($attributes as $key => $value) {
         if (!in_array($key, $possibleAttr)) {
             throw new Exception("Attribute $key does not exist.");
@@ -62,7 +59,7 @@ function userDel($uid) {
     $stmt->execute([$uid]);
 }
 
-function getUserByID($uid) {
+ function getUserByID($uid) {
     $conn = $GLOBALS['conn'];
     
     $stmt = $conn->prepare("SELECT * FROM Account WHERE accountID = ?");

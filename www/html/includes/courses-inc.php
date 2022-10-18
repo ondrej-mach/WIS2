@@ -38,10 +38,6 @@ function getEmptyCourse() {
     return $course;
 }
 
-function getCourse($courseID) {
-    
-}
-
 function getCourses() {
     $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Course");
     $stmt->execute();
@@ -94,4 +90,39 @@ function getLectorIDs($courseID) {
     }
     
     return $lectors;
+}
+
+function modifyCourse($courseID, $attributes) {
+    $conn = $GLOBALS['conn'];
+    
+    $possibleAttr = [ 
+        "courseName",
+        "courseFullName",
+        "courseDescription",
+        "courseState",
+        "courseGuarantor"
+    ];
+    
+    foreach($attributes as $key => $value) {
+        if (!in_array($key, $possibleAttr)) {
+            throw new Exception("Attribute $key does not exist.");
+        }
+        
+        if ($key == "courseGuarantor") {
+            $conn->beginTransaction();
+            $sql = "DELETE FROM Guarantees WHERE courseID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$courseID]);
+            
+            $sql = "INSERT INTO Guarantees (accountID, courseID) VALUES (?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$value, $courseID]);
+            $conn->commit();
+            
+        } else {
+            $sql = "UPDATE Course SET $key = ? WHERE courseID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$value, $courseID]);
+        }
+    }
 }

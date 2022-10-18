@@ -11,12 +11,13 @@
   <?php include_once 'templates/header.php' ?>
   <?php include_once 'templates/navbar.php' ?>
   
-  <h3>My guaranteed courses</h3>
+  <h3>My courses</h3>
   <table style='border: solid 1px black;'>
   <tr>
     <th>Name</th>
     <th>Full name</th>
     <th>State</th>
+    <th>Evaluate</th>
     <th>Edit</th>
   </tr>
   
@@ -24,17 +25,23 @@
 
 require_once 'includes/courses-inc.php';
 require_once 'includes/useradd-inc.php';
+require_once 'includes/teachers-inc.php';
 
-$courses = getCoursesGuaranteedBy(getUID());
+$courses = getCoursesForTeacher(getUID());
 
 foreach ($courses as $course) {
     $editCourseURL = 'editcourse.php?courseID=' . $course->courseID;
+    $evaluateCourseURL = 'editcourse.php?courseID=' . $course->courseID;
   
     echo "<tr>";
     echo "<td>" . $course->courseName . "</td>";
     echo "<td>" . $course->courseFullName . "</td>";
     echo "<td>" . courseStateToString($course->courseState) . "</td>";
-    echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
+    echo "<td><a href=\"$evaluateCourseURL\">Evaluate</a></td>";
+    if ($course->is_guarantor) {
+        echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
+        echo "<td/>";
+    }
     echo "</tr>";
 }
 

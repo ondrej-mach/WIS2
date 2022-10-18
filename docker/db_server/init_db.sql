@@ -29,7 +29,7 @@ CREATE TABLE Room (
 
 CREATE TABLE Course (
     courseID INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    courseName VARCHAR(128),
+    courseName VARCHAR(128) UNIQUE NOT NULL,
     courseFullName VARCHAR(128),
     courseDescription TEXT,
     courseState INTEGER NOT NULL

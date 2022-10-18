@@ -39,7 +39,7 @@
   <?php include_once 'templates/navbar.php' ?>
   
   <form method="POST" 
-    action="<?php echo $new ? 'addcourse.php' : 'modifycourse.php'; ?>" 
+    action="<?php echo 'modifycourse.php'; ?>" 
     >
     
     <?php
@@ -68,10 +68,10 @@
             </label><br/>';
             
         if (is_admin()) {
-            # TODO drop down list of teachers
             require_once 'includes/useradd-inc.php';
             require_once 'includes/teachers-inc.php';
             
+            # Course guarantor selector¨
             echo '<label>Guarantor
             <select name="guarantorID">
             <optgroup label="Current guarantor">';
