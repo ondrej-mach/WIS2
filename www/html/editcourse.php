@@ -62,42 +62,36 @@
             <input name="courseDescription" type="text"
             value="'.$course->courseDescription.'">
             </label><br/>';
-        
-        # TODO
-        echo '<label>Lecturers TODO
-            </label><br/>';
             
         if (is_admin()) {
             require_once 'includes/useradd-inc.php';
             require_once 'includes/teachers-inc.php';
             
-            # Course guarantor selector¨
+            # Course guarantor selector
             echo '<label>Guarantor
-            <select name="guarantorID">
+            <select name="courseGuarantor">
             <optgroup label="Current guarantor">';
             
             $gid = getGuarantorID($courseID);
-            echo '<option value="">'.getUserByID($gid)->accountRealName.'</option>';
+            echo '<option value="'.$gid.'">'.getUserByID($gid)->accountRealName.'</option>';
             
-            echo '</optgroup><optgroup label="Lectors">';
+            echo '</optgroup><optgroup label="Lecturers">';
             
-            $lectorIDs = getLectorIDs($courseID);
-            $displayed = array_diff($lectorIDs, [$gid]);
-            foreach ($displayed as $lectorID) {
-                echo '<option value="">'.getUserByID($lectorID)->accountRealName.'</option>';
+            $lecturerIDs = getLecturerIDs($courseID);
+            foreach ($lecturerIDs as $id) {
+                echo '<option value="'.$id.'">'.getUserByID($id)->accountRealName.'</option>';
             }
             
             echo '</optgroup><optgroup label="Others">';
             
             $teacherIDs = getTeacherIDs($courseID);
-            $displayed = array_diff($teacherIDs, $lectorIDs);
-            foreach ($displayed as $lectorID) {
-                echo '<option value="">'.getUserByID($lectorID)->accountRealName.'</option>';
+            $displayed = array_diff($teacherIDs, $lecturerIDs);
+            $displayed = array_diff($displayed, [$gid]);
+            foreach ($displayed as $id) {
+                echo '<option value="'.$id.'">'.getUserByID($id)->accountRealName.'</option>';
             }
             
             echo '</optgroup></select></label><br/>';
-            
-            
         }
         
         if ($new) {
@@ -106,9 +100,58 @@
             echo '<button type="submit" name="submit">Update</button>';
         }
     ?>
-    
-    
-    </form>
+  </form>
+  
+  
+  <h3>Lecturers</h3>
+  
+  <!-- TABLE OF LECTURERS -->
+  <table style='border: solid 1px black;'>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Remove</th>
+  </tr>
+    <?php
+        require 'includes/useradd-inc.php';
+        $lecturers = getLecturerIDs($courseID);
+        foreach ($lecturers as $id) {
+            $user = getUserByID($id);
+            
+            $removeURL = "removelecturer.php?courseID=$courseID&lecturerID=$id";
+            echo "<tr>";
+            echo "<td>" . $user->accountUsername . "</td>";
+            echo "<td>" . $user->accountRealName . "</td>";
+            echo "<td><a href=\"$removeURL\">Remove</a></td>";
+            echo "</tr>";
+        }
+    ?>
+  </table>
+  
+  <!-- SELECTOR FOR NEW LECTURERS -->
+  <form method="GET" action="addlecturer.php" >
+    <?php
+        require_once 'includes/courses-inc.php';
+        $course = $new ? getEmptyCourse() : getCourseByID($courseID);
+        
+        echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
+        
+        require_once 'includes/useradd-inc.php';
+        require_once 'includes/teachers-inc.php';
+        
+        # Course lecturer selector
+        echo '<label>Lecturer<select name="lecturerID">';
+        $teacherIDs = getTeacherIDs($courseID);
+        $displayed = array_diff($teacherIDs, getLecturerIDs($courseID));
+        $displayed = array_diff($displayed, [getGuarantorID($courseID)]);
+        foreach ($displayed as $id) {
+            echo '<option value="'.$id.'">'.getUserByID($id)->accountRealName.
+            '</option>';
+        }
+        echo '</select></label>';
+    ?>
+    <button type="submit" name="submit">Add</button>
+  </form>
 
   <?php include_once 'templates/footer.php' ?>
 

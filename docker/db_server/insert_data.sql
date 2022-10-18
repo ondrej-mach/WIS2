@@ -30,10 +30,18 @@ VALUES ('D105', 'Big lecture room');
 INSERT INTO Room (roomName, roomDescription) 
 VALUES ('E105', 'Small lecture room');
 
-
+-- IIS course
 INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState) 
 VALUES (1, 'IIS', 'Information systems', 'This course will teach student the secrets of universe', 10);
 
 INSERT INTO Guarantees (accountID, courseID) VALUES (2, 1);
-INSERT INTO Lector (accountID, courseID) VALUES (4, 1);
-INSERT INTO Lector (accountID, courseID) VALUES (5, 1);
+INSERT INTO Lecturer (accountID, courseID) VALUES (4, 1);
+INSERT INTO Lecturer (accountID, courseID) VALUES (5, 1);
+
+-- IMA course
+INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState) 
+VALUES (2, 'IMA', 'Mathematical Analysis', 'math stuff, integrals, ...', 10);
+
+INSERT INTO Guarantees (accountID, courseID) VALUES (4, 2);
+INSERT INTO Lecturer (accountID, courseID) VALUES (5, 2);
+

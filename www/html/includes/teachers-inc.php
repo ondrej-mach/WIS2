@@ -22,7 +22,7 @@ function getCoursesForTeacher($accountID) {
         FROM Course NATURAL JOIN Guarantees WHERE accountID = ?
         UNION
         SELECT courseID, courseName, courseFullName, courseState, false AS is_guarantor
-        FROM Course NATURAL JOIN Lector WHERE accountID = ?; 
+        FROM Course NATURAL JOIN Lecturer WHERE accountID = ?; 
     ");
     $stmt->execute([$accountID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);

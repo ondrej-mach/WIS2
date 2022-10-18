@@ -78,18 +78,18 @@ function getGuarantorID($courseID) {
     return $result->accountID;
 }
 
-function getLectorIDs($courseID) {
-    $lectors = [ getGuarantorID($courseID) ];
+function getLecturerIDs($courseID) {
+    $lecturers = [ ];
     
-    $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Lector WHERE courseID = ?");
+    $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Lecturer WHERE courseID = ?");
     $stmt->execute([$courseID]);
     $result = $stmt->fetchAll(PDO::FETCH_CLASS);
     
-    foreach($result as $lector) {
-        array_push($lectors, $lector->accountID);
+    foreach($result as $lecturer) {
+        array_push($lecturers, $lecturer->accountID);
     }
     
-    return $lectors;
+    return $lecturers;
 }
 
 function modifyCourse($courseID, $attributes) {
@@ -118,11 +118,29 @@ function modifyCourse($courseID, $attributes) {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$value, $courseID]);
             $conn->commit();
-            
         } else {
             $sql = "UPDATE Course SET $key = ? WHERE courseID = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$value, $courseID]);
         }
     }
+}
+
+
+function addLecturer($courseID, $accountID) {
+    $conn = $GLOBALS['conn'];
+
+    $sql = "INSERT INTO Lecturer (accountID, courseID) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$accountID, $courseID]);
+    
+    return $conn->lastInsertId();
+}
+
+function removeLecturer($courseID, $accountID) {
+    $conn = $GLOBALS['conn'];
+
+    $sql = "DELETE FROM Lecturer WHERE courseID = ? AND accountID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$courseID, $accountID]);
 }

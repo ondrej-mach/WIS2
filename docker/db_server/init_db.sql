@@ -32,7 +32,9 @@ CREATE TABLE Course (
     courseName VARCHAR(128) UNIQUE NOT NULL,
     courseFullName VARCHAR(128),
     courseDescription TEXT,
-    courseState INTEGER NOT NULL
+    courseState INTEGER NOT NULL,
+    courseCredits INTEGER,
+    courseCapacity INTEGER,
 );
 
 CREATE TABLE Guarantees (
@@ -59,7 +61,7 @@ CREATE TABLE Lecture (
     FOREIGN KEY (roomID) REFERENCES Room(roomID)
 );
 
-CREATE TABLE Lector (
+CREATE TABLE Lecturer (
     accountID INTEGER NOT NULL,
     courseID INTEGER NOT NULL,
     FOREIGN KEY (accountID) REFERENCES Account(accountID),
