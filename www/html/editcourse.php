@@ -161,27 +161,34 @@
   <!-- TABLE OF TERMS -->
   <table style='border: solid 1px black;'>
   <tr>
-    <th>Username</th>
     <th>Name</th>
+    <th>Date</th>
+    <th>Max points</th>
+    <th>Auto registration</th>
     <th>Remove</th>
+    <th>Edit</th>
   </tr>
     <?php
-        require_once 'includes/users-inc.php';
-        $lecturers = getLecturerIDs($courseID);
-        foreach ($lecturers as $id) {
-            $user = getUserByID($id);
-            
-            $removeURL = "removelecturer.php?courseID=$courseID&lecturerID=$id";
+        require_once 'includes/terms-inc.php';
+        $terms = getTerms($courseID);
+        foreach ($terms as $term) {
+            $removeURL = "removeterm.php?courseID=$term->termID";
+            $editURL = "editterm.php?termID=$term->termID&courseID=$courseID";
             echo "<tr>";
-            echo "<td>" . $user->accountUsername . "</td>";
-            echo "<td>" . $user->accountRealName . "</td>";
+            echo "<td>" . $term->termName . "</td>";
+            echo "<td>" . $term->termDate . "</td>";
+            echo "<td>" . $term->termMaxPoints . "</td>";
+            echo "<td>" . $term->termAutoregistered . "</td>";
             echo "<td><a href=\"$removeURL\">Remove</a></td>";
+            echo "<td><a href=\"$editURL\">Edit</a></td>";
             echo "</tr>";
         }
     ?>
   </table>
-  
 
-  <?php include_once 'templates/footer.php' ?>
+  <?php 
+    echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>";
+    include_once 'templates/footer.php' 
+  ?>
 
 </html>
