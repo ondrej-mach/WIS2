@@ -49,7 +49,8 @@ CREATE TABLE Attends (
     accountID INTEGER NOT NULL,
     courseID INTEGER NOT NULL,
     approved BOOLEAN,
-    FOREIGN KEY (accountID) REFERENCES Account(accountID)
+    FOREIGN KEY (accountID) REFERENCES Account(accountID),
+    FOREIGN KEY (courseID) REFERENCES Course(courseID)
 );
 
 CREATE TABLE Lecture (
@@ -69,20 +70,21 @@ CREATE TABLE Lecturer (
 );
 
 CREATE TABLE Term (
-    courseID INTEGER NOT NULL,
     termID INTEGER PRIMARY KEY NOT NULL,
+    courseID INTEGER NOT NULL,
     termName VARCHAR(128),
     termDate DATE,
     termMaxPoints INTEGER,
-    termAutoregistered BOOLEAN,
+    termAutoregistered BOOLEAN DEFAULT false,
     FOREIGN KEY (courseID) REFERENCES Course(courseID)
 );
 
-CREATE TABLE Points (
+CREATE TABLE SignedUp (
     termID INTEGER,
-    accountID INTEGER,
-    termName VARCHAR(128),
-    termDate DATE,
-    termMaxPoints INTEGER,
-    FOREIGN KEY (termID) REFERENCES Term(termID)
+    studentID INTEGER,
+    lecturerID INTEGER, -- last changed by
+    points INTEGER,
+    FOREIGN KEY (termID) REFERENCES Term(termID),
+    FOREIGN KEY (studentID) REFERENCES Account(accountID),
+    FOREIGN KEY (lecturerID) REFERENCES Account(accountID)
 );

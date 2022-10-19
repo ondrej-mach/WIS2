@@ -38,6 +38,8 @@
   <?php include_once 'templates/header.php' ?>
   <?php include_once 'templates/navbar.php' ?>
   
+  <h3>Course info</h3>
+  
   <form method="POST" 
     action="<?php echo 'modifycourse.php'; ?>" 
     >
@@ -113,7 +115,7 @@
     <th>Remove</th>
   </tr>
     <?php
-        require 'includes/users-inc.php';
+        require_once 'includes/users-inc.php';
         $lecturers = getLecturerIDs($courseID);
         foreach ($lecturers as $id) {
             $user = getUserByID($id);
@@ -152,6 +154,33 @@
     ?>
     <button type="submit" name="submit">Add</button>
   </form>
+  
+  
+  <h3>Terms</h3>
+  
+  <!-- TABLE OF TERMS -->
+  <table style='border: solid 1px black;'>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Remove</th>
+  </tr>
+    <?php
+        require_once 'includes/users-inc.php';
+        $lecturers = getLecturerIDs($courseID);
+        foreach ($lecturers as $id) {
+            $user = getUserByID($id);
+            
+            $removeURL = "removelecturer.php?courseID=$courseID&lecturerID=$id";
+            echo "<tr>";
+            echo "<td>" . $user->accountUsername . "</td>";
+            echo "<td>" . $user->accountRealName . "</td>";
+            echo "<td><a href=\"$removeURL\">Remove</a></td>";
+            echo "</tr>";
+        }
+    ?>
+  </table>
+  
 
   <?php include_once 'templates/footer.php' ?>
 

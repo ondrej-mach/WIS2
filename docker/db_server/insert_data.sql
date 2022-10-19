@@ -45,3 +45,6 @@ VALUES (2, 'IMA', 'Mathematical Analysis', 'math stuff, integrals, ...', 10);
 INSERT INTO Guarantees (accountID, courseID) VALUES (4, 2);
 INSERT INTO Lecturer (accountID, courseID) VALUES (5, 2);
 
+INSERT INTO Term (courseID, termName, termDate, termMaxPoints, termAutoregistered) VALUES (2, 'Půlsemestrální zkouška', '2022-11-02', '15', true);
+
+
