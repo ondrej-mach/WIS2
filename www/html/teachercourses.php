@@ -24,7 +24,7 @@
 <?php
 
 require_once 'includes/courses-inc.php';
-require_once 'includes/useradd-inc.php';
+require_once 'includes/users-inc.php';
 require_once 'includes/teachers-inc.php';
 
 $courses = getCoursesForTeacher(getUID());

@@ -40,7 +40,7 @@ foreach ($_POST as $key => $value) {
 
 # if we need to change any data, access the database
 if (!empty($attributes)) {
-    require_once 'includes/useradd-inc.php';
+    require_once 'includes/users-inc.php';
     userMod($uid, $attributes);
 }
 
@@ -58,7 +58,7 @@ if (!empty($attributes)) {
     <?php
         $disabled = is_admin() ? '' : 'disabled';
         
-        require_once 'includes/useradd-inc.php';
+        require_once 'includes/users-inc.php';
         $user = getUserByID($uid);
         
         if (is_admin()) {

@@ -3,7 +3,7 @@
     assert_admin();
     
     if (isset($_GET['accountID'])) {
-        require_once 'includes/useradd-inc.php';
+        require_once 'includes/users-inc.php';
         userDel($_GET['accountID']);
     }
 

@@ -64,7 +64,7 @@
             </label><br/>';
             
         if (is_admin()) {
-            require_once 'includes/useradd-inc.php';
+            require_once 'includes/users-inc.php';
             require_once 'includes/teachers-inc.php';
             
             # Course guarantor selector
@@ -113,7 +113,7 @@
     <th>Remove</th>
   </tr>
     <?php
-        require 'includes/useradd-inc.php';
+        require 'includes/users-inc.php';
         $lecturers = getLecturerIDs($courseID);
         foreach ($lecturers as $id) {
             $user = getUserByID($id);
@@ -136,7 +136,7 @@
         
         echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
         
-        require_once 'includes/useradd-inc.php';
+        require_once 'includes/users-inc.php';
         require_once 'includes/teachers-inc.php';
         
         # Course lecturer selector

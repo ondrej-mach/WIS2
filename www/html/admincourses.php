@@ -21,7 +21,7 @@
 <?php
 
 require_once 'includes/courses-inc.php';
-require_once 'includes/useradd-inc.php';
+require_once 'includes/users-inc.php';
 
 $courses = getCourses();
 
