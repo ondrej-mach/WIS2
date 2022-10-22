@@ -17,4 +17,4 @@ if (!is_admin() && !(getUID() == getGuarantorID($courseID))) {
 
 removeLecturer($courseID, $_GET['lecturerID']);
 
-header("location: ../editcourse.php?courseID=$courseID");
+header("location: editcourse.php?courseID=$courseID");

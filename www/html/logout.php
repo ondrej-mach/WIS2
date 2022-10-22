@@ -9,5 +9,5 @@ if (is_logged_in()) {
     $stmt->execute([session_id()]);
 }
 
-header("location: /index.php");
+header("location: index.php");
 
