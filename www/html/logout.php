@@ -1,7 +1,7 @@
 <?php
 
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/authorization-inc.php';
+require_once 'includes/authorization-inc.php';
 
 if (is_logged_in()) {
     $sql = 'DELETE FROM Login WHERE sessionID = ?';
