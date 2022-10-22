@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+    
+jobs:
+  deploy:
+    name: Deploy source to eva, update database if modified
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/eva.key
+          chmod 600 ~/.ssh/eva.key
+          cat >>~/.ssh/config <<END
+          Host eva
+            HostName eva.fit.vutbr.cz
+            User $SSH_USER
+            IdentityFile ~/.ssh/eva.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+
+      - name: test
+        run: ssh eva 'ls'
