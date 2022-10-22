@@ -45,7 +45,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
         
-      -name: Reset database
+      - name: Reset database
         run: |
           scp ${{ github.workspace }}/docker/db_server/* eva:~
           ssh eva "bash -s" -- < ${{ github.workspace }}/reset_database.sh ${{ secrets.SSH_USER }} ${{ secrets.MYSQL_PASSWORD }}
