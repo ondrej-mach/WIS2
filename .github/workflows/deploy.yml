@@ -31,14 +31,14 @@ jobs:
         run: |
           cat >${{ github.workspace }}/www/html/includes/secrets.php <<END
           <?php
-            $servername = 'localhost';
-            $username = '$SSH_USER';
-            $password = '$MYSQL_PASSWORD';
-            $dbname = 'WIS2';
+            \$servername = 'localhost';
+            \$username = '$SSH_USER';
+            \$password = '$MYSQL_PASSWORD';
+            \$dbname = 'WIS2';
           ?>
           END
           
-          scp -r ${{ github.workspace }}/www/html eva:~/WWW/IIS
+          scp -r ${{ github.workspace }}/www/html/* eva:~/WWW/IIS
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
