@@ -1,5 +1,3 @@
-SET NAMES UTF8;
-
 -- PHP compatible password can be obtained like this:
 -- echo admin | openssl passwd -stdin
 INSERT INTO Account (accountID, accountUsername, accountPassword, accountAdmin) 

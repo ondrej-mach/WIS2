@@ -1,3 +1,5 @@
+name: Deploy
+
 on:
   workflow_dispatch:
   push:
@@ -34,7 +36,7 @@ jobs:
             \$servername = 'localhost';
             \$username = '$SSH_USER';
             \$password = '$MYSQL_PASSWORD';
-            \$dbname = 'WIS2';
+            \$dbname = '$SSH_USER';
           ?>
           END
           
@@ -42,4 +44,8 @@ jobs:
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          
+        
+      -name: Reset database
+        run: |
+          scp ${{ github.workspace }}/docker/db_server/* eva:~
+          ssh eva "bash -s" -- < ${{ github.workspace }}/reset_database.sh ${{ secrets.SSH_USER }} ${{ secrets.MYSQL_PASSWORD }}
