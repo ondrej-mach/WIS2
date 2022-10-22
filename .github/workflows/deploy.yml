@@ -24,5 +24,22 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
 
-      - name: test
-        run: ssh eva 'ls'
+      - name: Check out
+        uses: actions/checkout@v3
+        
+      - name: Deploy source
+        run: |
+          cat >${{ github.workspace }}/www/html/includes/secrets.php <<END
+          <?php
+            $servername = 'localhost';
+            $username = '$SSH_USER';
+            $password = '$MYSQL_PASSWORD';
+            $dbname = 'WIS2';
+          ?>
+          END
+          
+          scp -r ${{ github.workspace }}/www/html eva:~/WWW/IIS
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          
