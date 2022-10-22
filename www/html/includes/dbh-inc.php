@@ -1,7 +1,7 @@
 <?php
 
     if (!isset($GLOBALS['conn'])) {
-        if(is_readable('secrets.php')) {
+        if(is_readable(__DIR__.'/secrets.php')) {
             require_once 'secrets.php';
         } else {
             $servername = $_ENV['MYSQL_SERVER_NAME'];
