@@ -18,7 +18,7 @@
             require_once 'includes/users-inc.php';
             try {
                 $newuid = userAdd($_POST['accountUsername'], $_POST['accountPassword']);
-                header("location: ../usermod.php?accountID=$newuid");
+                header("location: usermod.php?accountID=$newuid");
             } catch (Exception $e) {
                 $badUsername = true;
             }

@@ -1,7 +1,7 @@
 <?php
 
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/authorization-inc.php';
+require_once 'includes/authorization-inc.php';
 
 if (is_logged_in()) {
     $sql = 'DELETE FROM Login WHERE sessionID = ?';
@@ -9,5 +9,5 @@ if (is_logged_in()) {
     $stmt->execute([session_id()]);
 }
 
-header("location: /index.php");
+header("location: index.php");
 
