@@ -1,7 +1,6 @@
 name: Deploy
 
 on:
-  workflow_dispatch:
   push:
     branches: main
     
@@ -40,12 +39,12 @@ jobs:
           ?>
           END
           
-          scp -r ${{ github.workspace }}/www/html/* eva:~/WWW/IIS
+          rsync -rv ${{ github.workspace }}/www/html/* eva:~/WWW/IIS
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
         
       - name: Reset database
         run: |
-          scp ${{ github.workspace }}/docker/db_server/* eva:~
+          rsync -v ${{ github.workspace }}/docker/db_server/* eva:~
           ssh eva "bash -s" -- < ${{ github.workspace }}/reset_database.sh ${{ secrets.SSH_USER }} ${{ secrets.MYSQL_PASSWORD }}
