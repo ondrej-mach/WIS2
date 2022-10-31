@@ -1,12 +1,17 @@
-<h1>WIS 2</h1>
-
 <?php
     require_once 'includes/authorization-inc.php';
-    
+    echo "<ul>";
+    echo "<li>
+            <a href=index.php id=\"logo\">
+                <img src=\"../res/vut_logo.png\" alt=\"VUT logo\">
+                <h1>WIS 2</h1>
+            </a>
+        </li>";  
+
     if (is_admin()) {
         # TODO
-        echo "<a href=manageusers.php>User management</a>";
-        echo "<a href=managerooms.php>Room management</a>";
+        echo "<li><a href=manageusers.php>User management</a></li>";
+        echo "<li><a href=managerooms.php>Room management</a></li>";
     }
     
     if (!is_admin() && is_logged_in()) {
@@ -15,25 +20,28 @@
     }
     
     if (is_admin()) {
-        echo "<a href=admincourses.php>Manage courses</a>";
+        echo "<li><a href=admincourses.php>Manage courses</a></li>";
     }
     
     if (is_teacher()) {
-        echo "<a href=teachercourses.php>Organize courses</a>";
+        echo "<li><a href=teachercourses.php>Organize courses</a></li>";
     }
     
     if (is_student()) {
-        echo "<a href=studentcourses.php>My courses</a>";
+        echo "<li><a href=studentcourses.php>My courses</a></li>";
     }
     
     if (is_logged_in()) {
-        $username = $GLOBALS['user']->accountUsername;
-        echo $username;
-        echo "<a href='logout.php'>Log out</a>\n";
+        echo "<li id=\"filler\">";
+        echo "<li><a href='logout.php'>Log out</a></li>\n";
     } else {
-        echo "<a href='login.php'>Log in</a>\n";
+        echo "<li><a href='login.php'>Log in</a></li>\n";
     }
-    
-?>
 
-<br/>
+    echo "</ul>";
+
+    if (is_logged_in()) {
+        $username = $GLOBALS['user']->accountUsername;
+        echo "<p id=\"username\">Logged in as $username</p>";
+    }
+?>
