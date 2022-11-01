@@ -46,6 +46,7 @@ function userMod($uid, $attributes) {
             $value = password_hash($value, NULL);
         }
         
+        #TODO check if date value is valid
         $sql = "UPDATE Account SET $key = ? WHERE accountID = ?";
         $stmt = $GLOBALS['conn']->prepare($sql);
         $stmt->execute([$value, $uid]);

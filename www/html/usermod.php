@@ -30,8 +30,7 @@ $attributes = [];
 
 foreach ($_POST as $key => $value) {
     if (in_array($key, $userParams)) {
-        $attributes[$key] = $value;
-        
+        $attributes[$key] = $value;        
     } elseif (in_array($key, $adminParams)) {
         assert_admin();
         $attributes[$key] = $value;
@@ -44,41 +43,46 @@ if (!empty($attributes)) {
     userMod($uid, $attributes);
 }
 
-
 ?>
 
 <!DOCTYPE html>
 <html>
-  
-  <?php include_once 'templates/header.php' ?>
-  <?php include_once 'templates/navbar.php' ?>
-  
-  <form method="POST">
-  
+
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
+<section class="section_form">
     <?php
-        $disabled = is_admin() ? '' : 'disabled';
+            if (is_admin()) {
+                echo "<a href=manageusers.php>Back to user management</a><br/>";
+            }
+
+            echo "<div><form method=\"POST\">";
+            $disabled = is_admin() ? '' : 'disabled';
+            
+            require_once 'includes/users-inc.php';
+            $user = getUserByID($uid);
+            
+            echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
+            $disabled value=\"$user->accountUsername\"></label><br/>";
+            
+            echo '<label>Name<input name="accountRealName" type="text" value="'.
+            $user->accountRealName.'"></label><br/>';
+            
+            echo '<label>Address<input name="accountAddress" type="text" value="'.
+            $user->accountAddress.'"></label><br/>';
+
+            echo '<label>Date of birth<input name="accountDateOfBirth" type="text" value="'.
+            $user->accountDateOfBirth.'"></label><br/>';
         
-        require_once 'includes/users-inc.php';
-        $user = getUserByID($uid);
-        
-        if (is_admin()) {
-            echo "<a href=manageusers.php>Back to user management</a><br/>";
-        }
-        
-        echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
-        $disabled value=\"$user->accountUsername\"></label><br/>";
-        
-        echo '<label>Name<input name="accountRealName" type="text" value="' .
-        $user->accountRealName . '"></label><br/>';
-        
-        echo '<label>Address<input name="accountAddress" type="text" value="'.
-        $user->accountAddress.'"></label><br/>';
-        
-    ?>
-    
+            echo '<label>Email<input name="accountEmail" type="text" value="'.
+            $user->accountEmail.'"></label><br/>';
+            
+        ?>
+
     <button type="submit" name="submit">Update</button>
     </form>
-
-  <?php include_once 'templates/footer.php' ?>
+    </div>
+</section>
+<?php include_once 'templates/footer.php' ?>
 
 </html>

@@ -33,7 +33,7 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
-<section id="section_user_add">
+<section class="section_form">
     <div>
         <h1>Add new user</h1>
 

@@ -26,21 +26,24 @@ if (!empty($attributes)) {
 
 <!DOCTYPE html>
 <html>
-  
-  <?php include_once 'templates/header.php' ?>
-  <?php include_once 'templates/navbar.php' ?>
-  
-  <form method="POST">
-  
+
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
+
+
+<section class="section_form">
     <?php
+        if (is_admin()) {
+            echo "<a href=managerooms.php>Back to room management</a><br/>";
+        }
+        echo "<div><form method=\"POST\">";
+
         $disabled = is_admin() ? '' : 'disabled';
         
         require_once 'includes/rooms-inc.php';
         $room = getRoomByID($rid);
         
-        if (is_admin()) {
-            echo "<a href=managerooms.php>Back to room management</a><br/>";
-        }
+
         
         echo "<label>Room name<input name=\"roomName\" type=\"text\" 
         $disabled value=\"$room->roomName\"></label><br/>";
@@ -48,10 +51,12 @@ if (!empty($attributes)) {
         echo '<label>Room description<input name="roomDescription" type="text" value="' .
         $room->roomDescription . '"></label><br/>';        
     ?>
-    
+
     <button type="submit" name="submit">Update</button>
     </form>
+    </div>
+</section>
 
-  <?php include_once 'templates/footer.php' ?>
+<?php include_once 'templates/footer.php' ?>
 
 </html>

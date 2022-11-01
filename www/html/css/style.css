@@ -205,7 +205,7 @@ footer div {
 
 /* Add user section */
 
-#section_user_add div {
+.section_form div {
     margin-left: 20px;
     display: flex;
     flex-direction: column;
@@ -214,24 +214,24 @@ footer div {
     max-width: fit-content;
 }
 
-#section_user_add div h1 {
+.section_form div h1 {
     margin: 0;
     padding: 20px;
     padding-bottom: 0;
 }
 
-#section_user_add div form {
+.section_form div form {
     display: grid; 
     padding: 20px;
 }
 
-#section_user_add label {
+.section_form label {
     display: grid;
     grid-template-columns: 40% 60%;
     padding: 0 0 10px 0;
 }
 
-#section_user_add button {
+.section_form button {
     padding: 10px;
     background-color: #3498DB;
     border: #3498DB 1px solid;
@@ -239,18 +239,18 @@ footer div {
     border-radius: 5px;
 }
 
-#section_user_add button:hover {
+.section_form button:hover {
     background-color: #2980B9;
 }
 
-#section_user_add input {
+.section_form input {
     font-size: 15px;
     padding: 0 10px;
     border: none;
     border-bottom: #3498DB 1px solid;
 }
 
-#section_user_add p {
+.section_form p {
     margin: 10px;
 }
 
