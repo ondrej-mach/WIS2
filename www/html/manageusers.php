@@ -5,23 +5,26 @@ assert_admin();
 
 <!DOCTYPE html>
 <html>
-  
-  <?php include_once 'templates/header.php' ?>
-  <?php include_once 'templates/navbar.php' ?>
-  
-  <table style='border: solid 1px black;'>
-  <tr>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Student</th>
-    <th>Teacher</th>
-    <th>Admin</th>
-    <th>Modify</th>
-    <th>Delete</th>
-  </tr>
-  
-<?php
+
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
+<section id="section_user_management">
+    <table id="table_users">
+        <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Student</th>
+              <th>Teacher</th>
+              <th>Admin</th>
+              <th>Actions</th>
+              <th>
+            </tr>
+        </thead>
+      <tbody>
+
+            <?php
 
 function printBool($x) {
     $text = $x ? 'yes' : 'no';
@@ -46,18 +49,16 @@ while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo printBool($user['accountStudent']);
     echo printBool($user['accountTeacher']);
     echo printBool($user['accountAdmin']);
-    echo "<td><a href=\"$usermodURL\">Modify</a></td>";
+    echo "<td><a href=\"$usermodURL\">Edit</a></td>";
     echo "<td><a href=\"$userdelURL\">Delete</a></td>";
     echo "</tr>";
 }
-
-
-echo "</table>";
+echo "</tbody></table>";
 ?>
 
-<a href=useradd.php>Add user</a><br/>
+            <a id="user_add" href=useradd.php>Add user</a><br />
+</section>
 
-  <?php include_once 'templates/footer.php' ?>
+<?php include_once 'templates/footer.php' ?>
 
 </html>
-

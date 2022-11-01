@@ -14,5 +14,39 @@ function addRoom($name) {
     return $GLOBALS['conn']->lastInsertId();
 }
 
+function roomMod($rid, $attributes) {
+    $conn = $GLOBALS['conn'];
+    
+    $possibleAttr = [ 
+        "roomName",
+        "roomDescription",
+    ];
+    
+    foreach($attributes as $key => $value) {
+        if (!in_array($key, $possibleAttr)) {
+            throw new Exception("Attribute $key does not exist.");
+        }
+        
+        $sql = "UPDATE Room SET $key = ? WHERE roomID = ?";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->execute([$value, $rid]);
+    }
+}
 
+function delRoom($rid) {
+    # TODO cascade all foreign keys
+    $sql = "DELETE FROM Room WHERE roomID = ?";
+    $stmt = $GLOBALS['conn']->prepare($sql);
+    $stmt->execute([$rid]);
+}
+
+function getRoomByID($rid) {
+    $conn = $GLOBALS['conn'];
+    
+    $stmt = $conn->prepare("SELECT * FROM Room WHERE roomID = ?");
+    $stmt->execute([$rid]);
+    $room = $stmt->fetch(PDO::FETCH_OBJ);
+    
+    return $room;
+}
 

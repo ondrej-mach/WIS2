@@ -1,12 +1,14 @@
+<section class="section_navbar">
+
 <?php
     require_once 'includes/authorization-inc.php';
-    echo "<ul>";
-    echo "<li>
-            <a href=index.php id=\"logo\">
-                <img src=\"../res/vut_logo.png\" alt=\"VUT logo\">
-                <h1>WIS 2</h1>
-            </a>
-        </li>";  
+    echo "<ul>
+            <li>
+                <a href=index.php id=\"logo\">
+                    <img src=\"../res/vut_logo.png\" alt=\"VUT logo\">
+                    <h1>WIS 2</h1>
+                </a>
+            </li>";  
 
     if (is_admin()) {
         # TODO
@@ -15,8 +17,7 @@
     }
     
     if (!is_admin() && is_logged_in()) {
-        # TODO
-        echo "My Account\n";
+        echo "<li><a href=usermod.php>My Account</a></li>";
     }
     
     if (is_admin()) {
@@ -39,7 +40,8 @@
         echo "<li><a href='login.php'>Log in</a></li>\n";
     }
 
-    echo "</ul>";
+    echo "</ul>
+        </section>";
 
     if (is_logged_in()) {
         $username = $GLOBALS['user']->accountUsername;

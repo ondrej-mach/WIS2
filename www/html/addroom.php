@@ -6,6 +6,6 @@
         require_once 'includes/rooms-inc.php';
         
         $newRoomID = addRoom($_REQUEST['roomName']);
-        header("location: modifyroom.php?roomID=$newRoomID");
+        header("location: roommod.php?roomID=$newRoomID");
         
     } 

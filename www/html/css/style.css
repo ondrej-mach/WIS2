@@ -5,7 +5,7 @@ body {
     font-family: Verdana, "DejaVu Sans", Arial, sans-serif;
 }
 
-h1 {
+.section_navbar h1 {
     margin: 0;
     padding: 10px;
     background-color: #3498DB;
@@ -13,7 +13,7 @@ h1 {
     color: #fff;
 }
 
-li a {
+.section_navbar ul li a {
     text-decoration: none;
     color: #fff;
     display: flex;
@@ -118,6 +118,8 @@ ul #filler {
     color: #2980B9;
 }
 
+/* Footer section*/
+
 footer {
     background-color: #3498DB;
     color: #fff;
@@ -127,8 +129,134 @@ footer {
     right: 0;
     min-width: 100%;
 }
+
 footer div {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+/* User management section */
+
+#section_user_management, 
+#section_manage_rooms {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10px;
+    max-width: fit-content;
+    margin: 10px;
+    padding: 20px;
+}
+
+#section_user_management table, 
+#section_manage_rooms table {
+    padding: 20px;
+    border: #3498DB 1px solid;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+}
+
+#section_user_management table thead, 
+#section_manage_rooms table thead {
+    background-color: #3498DB;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+#section_user_management table th, 
+#section_manage_rooms table th {
+    padding: 10px 5px;
+}
+
+#section_user_management table td, 
+#section_manage_rooms table td {
+    padding: 10px 5px;
+    text-align: center;
+}
+
+#section_user_management tr td:first-child, 
+#section_user_management tr td:nth-child(2) {
+    text-align: start;
+}
+
+#section_user_management table tr:nth-child(even),
+#section_manage_rooms table tr:nth-child(even) {
+    background-color: #ECECEC;
+}
+
+#section_user_management a, 
+#section_manage_rooms a {
+    text-decoration: none;
+    color: black;
+}
+
+#section_user_management>a, 
+#section_manage_rooms>a {
+    border: #3498DB 1px solid;
+    border-top: none;
+    background-color: #ECECEC;
+    padding: 5px;
+    border-radius:0 0 5px 5px;
+}
+
+/* Add user section */
+
+#section_user_add div {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: #3498DB 1px solid;
+    max-width: fit-content;
+}
+
+#section_user_add div h1 {
+    margin: 0;
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+#section_user_add div form {
+    display: grid; 
+    padding: 20px;
+}
+
+#section_user_add label {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    padding: 0 0 10px 0;
+}
+
+#section_user_add button {
+    padding: 10px;
+    background-color: #3498DB;
+    border: #3498DB 1px solid;
+    color: #fff;
+    border-radius: 5px;
+}
+
+#section_user_add button:hover {
+    background-color: #2980B9;
+}
+
+#section_user_add input {
+    font-size: 15px;
+    padding: 0 10px;
+    border: none;
+    border-bottom: #3498DB 1px solid;
+}
+
+#section_user_add p {
+    margin: 10px;
+}
+
+/* Add room section */
+
+#section_manage_rooms tr td:first-child {
+    padding: 10px;
+    text-align: left;
 }

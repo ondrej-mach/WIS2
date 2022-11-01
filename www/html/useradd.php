@@ -25,32 +25,34 @@
         }
     }
 
-    
-
 ?>
 
 <!DOCTYPE html>
 <html>
-  
-  <?php include_once 'templates/header.php' ?>
-  <?php include_once 'templates/navbar.php' ?>
-  
-  <h1>Add new user</h1>
-  
-  <form method="POST">
-    <label <?php if ($badUsername) echo 'style="color:red"'; ?> >Username
-      <input name="accountUsername" value="<?php echo $username; ?>" type="text">
-    </label><br/>
-    
-    <label>Password
-      <input name="accountPassword" value="<?php echo $password; ?>" type="text">
-    </label><br/>
-    
-    <button type="submit" name="submit">Add user</button>
-  </form>
 
-  <?php include_once 'templates/footer.php' ?>
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
+
+<section id="section_user_add">
+    <div>
+        <h1>Add new user</h1>
+
+        <form method="POST">
+            <label <?php if ($badUsername) echo 'style="color:red"'; ?>>
+                <p>Username</p>
+                <input name="accountUsername" value="<?php echo $username; ?>" type="text">
+            </label><br />
+
+            <label>
+                <p>Password</p>
+                <input name="accountPassword" value="<?php echo $password; ?>" type="text">
+            </label><br />
+
+            <button type="submit" name="submit">Add user</button>
+        </form>
+    </div>
+</section>
+
+<?php include_once 'templates/footer.php' ?>
 
 </html>
-
-
