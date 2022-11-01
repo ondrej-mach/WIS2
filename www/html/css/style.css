@@ -68,3 +68,67 @@ ul #filler {
     justify-content: center;
     white-space: nowrap;
 }
+
+#section_login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10px;
+    border: #3498DB 1px solid;
+    max-width: fit-content;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+#section_login form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#section_login form input {
+    margin: 5px;
+    padding: 10px;
+    font-size: medium;
+    border: none;
+    border-bottom: #3498DB 1px solid;
+}
+
+#section_login button {
+    background-color: #3498DB;
+    color: #fff;
+    border: none;
+    padding: 15px 105px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+#section_login button:hover {
+    background-color: #2980B9;
+}
+
+#section_login h2 {
+    color: #3498DB;
+    text-decoration: none;
+}
+
+#section_login p {
+    color: #2980B9;
+}
+
+footer {
+    background-color: #3498DB;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    min-width: 100%;
+}
+footer div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

@@ -31,8 +31,9 @@
         echo "<li><a href=studentcourses.php>My courses</a></li>";
     }
     
+    echo "<li id=\"filler\">";
+
     if (is_logged_in()) {
-        echo "<li id=\"filler\">";
         echo "<li><a href='logout.php'>Log out</a></li>\n";
     } else {
         echo "<li><a href='login.php'>Log in</a></li>\n";
