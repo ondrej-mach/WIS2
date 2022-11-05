@@ -50,10 +50,11 @@ if (!empty($attributes)) {
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
+
 <section class="section_form">
     <?php
             if (is_admin()) {
-                echo "<a href=manageusers.php>Back to user management</a><br/>";
+                echo "<a class=\"button_back\" href=manageusers.php>Back to user management</a><br/>";
             }
 
             echo "<div><form method=\"POST\">";
@@ -77,12 +78,28 @@ if (!empty($attributes)) {
             echo '<label>Email<input name="accountEmail" type="text" value="'.
             $user->accountEmail.'"></label><br/>';
             
-        ?>
+            #TODO uncheck user not working properly
+            $checked_a = $user->accountAdmin ? 'checked' : '';
+            $checked_t = $user->accountTeacher ? 'checked' : '';
+            $checked_s = $user->accountStudent ? 'checked' : '';
 
-    <button type="submit" name="submit">Update</button>
-    </form>
+            echo "  <label class = \"switch\">Admin
+                        <input type=\"checkbox\" name=\"accountAdmin\" $checked_a>
+                    </label><br/>";
+
+            echo "  <label class = \"switch\">Teacher
+                        <input type=\"checkbox\" name=\"accountTeacher\" $checked_t>
+                    </label><br/>";
+
+            echo "  <label class = \"switch\">Student
+                        <input type=\"checkbox\" name=\"accountStudent\" $checked_s>
+                    </label><br/>";
+    ?>
+            <button type="submit" name="submit">Update</button>
+        </form>
     </div>
 </section>
+
 <?php include_once 'templates/footer.php' ?>
 
 </html>

@@ -8,15 +8,14 @@
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
-
-<section id="section_manage_rooms">
-    <table style='border: solid 1px black;'>
+<section class="section_table">
+    <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Desc</th>
-                <th>
+                <th>Actions</th>
                 <th>
             </tr>
         </thead>
@@ -43,13 +42,11 @@ foreach ($rooms as $room) {
     </table>
 </section>
 
-<h2>Add new room</h2>
-
 <form action=addroom.php>
-    <label>New room name
+    <label>Add room
         <input name="roomName" type="text">
-    </label><br />
-    <button type="submit" name="submit">Add room</button>
+    </label>
+    <button type="submit" name="submit">Add</button>
 </form>
 
 <?php include_once 'templates/footer.php' ?>

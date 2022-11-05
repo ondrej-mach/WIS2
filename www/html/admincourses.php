@@ -8,8 +8,8 @@
   
   <?php include_once 'templates/header.php' ?>
   <?php include_once 'templates/navbar.php' ?>
-  
-  <table style='border: solid 1px black;'>
+  <section class="section_table">
+  <table>
   <tr>
     <th>Name</th>
     <th>Full name</th>
@@ -38,9 +38,8 @@ foreach ($courses as $course) {
     echo "</tr>";
 }
 
-
-echo "</table>";
 ?>
+  </table></section>
 
   <?php include_once 'templates/footer.php' ?>
 

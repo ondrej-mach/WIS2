@@ -34,7 +34,7 @@ if (!empty($attributes)) {
 <section class="section_form">
     <?php
         if (is_admin()) {
-            echo "<a href=managerooms.php>Back to room management</a><br/>";
+            echo "<a class=\"button_back\" href=managerooms.php>Back to room management</a><br/>";
         }
         echo "<div><form method=\"POST\">";
 
@@ -42,9 +42,7 @@ if (!empty($attributes)) {
         
         require_once 'includes/rooms-inc.php';
         $room = getRoomByID($rid);
-        
-
-        
+                
         echo "<label>Room name<input name=\"roomName\" type=\"text\" 
         $disabled value=\"$room->roomName\"></label><br/>";
         

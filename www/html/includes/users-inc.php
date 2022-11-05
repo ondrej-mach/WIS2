@@ -45,6 +45,9 @@ function userMod($uid, $attributes) {
         if ($key == "accountPassword") {
             $value = password_hash($value, NULL);
         }
+        if (($value == "on") && ($key == "accountStudent" || $key == "accountTeacher" || $key == "accountAdmin")) {
+            $value = 1;
+        }
         
         #TODO check if date value is valid
         $sql = "UPDATE Account SET $key = ? WHERE accountID = ?";

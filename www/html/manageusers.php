@@ -8,7 +8,7 @@ assert_admin();
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
-<section id="section_user_management">
+<section class="section_table">
     <table id="table_users">
         <thead>
             <tr>
@@ -25,13 +25,16 @@ assert_admin();
             </tr>
         </thead>
         <tbody>
-
 <?php
 
 function printBool($x) {
-    $text = $x ? 'yes' : 'no';
-    $color = $x ? 'green' : 'red';
-    return "<td style=\"color:$color\">$text</td>";
+    $svg = $x ? 
+    '<td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>'
+    :
+    '<td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
+    return $svg;
 }
 
 require_once 'includes/dbh-inc.php';

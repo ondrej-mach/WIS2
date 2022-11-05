@@ -17,7 +17,7 @@ function addRoom($name) {
 function roomMod($rid, $attributes) {
     $conn = $GLOBALS['conn'];
     
-    $possibleAttr = [ 
+    $possibleAttr = [
         "roomName",
         "roomDescription",
     ];
