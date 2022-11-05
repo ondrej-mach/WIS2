@@ -39,7 +39,8 @@
   <?php include_once 'templates/navbar.php' ?>
   
   <h3>Term info</h3>
-  
+  <section class="section_form">
+    <div>
   <form method="POST" 
     action="<?php echo 'modifyterm.php'; ?>" 
     >
@@ -83,6 +84,8 @@
         }
     ?>
   </form>
+    </div>
+    </section>
 
   <?php include_once 'templates/footer.php' ?>
 

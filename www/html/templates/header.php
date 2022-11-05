@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="utf-8">
     <title>WIS 2 | Web Information System 2</title>

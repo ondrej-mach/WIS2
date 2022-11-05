@@ -16,7 +16,7 @@ if ($courseID == 'new') {
     try {
         $courseID = addCourse($_REQUEST['courseName'], getUID());
     } catch (Exception $e) {
-        header("location: editcourse.php?courseID=new");
+        header("location: createcourse.php?courseID=new");
         exit;
     }
 }
@@ -31,7 +31,9 @@ $userParams = [
 // user cannot change these attributes, only admin can
 $adminParams = [ 
     "courseState",
-    "courseGuarantor"
+    "courseCredits",
+    "courseCapacity",
+    "courseGuarantor",
 ];
 
 $attributes = [];
@@ -53,3 +55,5 @@ if (!empty($attributes)) {
 }
 
 header("location: editcourse.php?courseID=$courseID");
+
+?>

@@ -33,6 +33,8 @@ function getEmptyCourse() {
         'courseName' => '',
         'courseFullName' => '',
         'courseDescription' => '',
+        'courseCredits' => 0,
+        'courseCapacity' => 0,
         'courseState' => CourseState::CONCEPT
     ];
     return $course;
@@ -71,6 +73,13 @@ function addCourse($name, $guarantorID) {
     return $newCourseID;
 }
 
+function deleteCourse($courseID) {
+    #TODO: delete all the other stuff
+    $sql = "DELETE FROM Course WHERE courseID = ?";
+    $stmt = $GLOBALS['conn']->prepare($sql);
+    $stmt->execute([$courseID]);
+}
+
 function getGuarantorID($courseID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Guarantees WHERE courseID = ?");
     $stmt->execute([$courseID]);
@@ -79,7 +88,7 @@ function getGuarantorID($courseID) {
 }
 
 function getLecturerIDs($courseID) {
-    $lecturers = [ ];
+    $lecturers = [];
     
     $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Lecturer WHERE courseID = ?");
     $stmt->execute([$courseID]);
@@ -100,6 +109,8 @@ function modifyCourse($courseID, $attributes) {
         "courseFullName",
         "courseDescription",
         "courseState",
+        "courseCredits",
+        "courseCapacity",
         "courseGuarantor"
     ];
     
