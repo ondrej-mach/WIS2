@@ -35,25 +35,26 @@
 <!DOCTYPE html>
 <html>
   
-  <?php include_once 'templates/header.php' ?>
-  <?php include_once 'templates/navbar.php' ?>
-  
-  <h3>Term info</h3>
-  <section class="section_form">
-    <div>
-  <form method="POST" 
-    action="<?php echo 'modifyterm.php'; ?>" 
-    >
-    
-    <?php
-        require_once 'includes/terms-inc.php';
-        $term = $new ? getEmptyTerm() : getTermByID($termID);
-        if ($new) {
-            $term->courseID = $_GET['courseID'];
-        }
-        
-        echo "<a href=editcourse.php?courseID=$term->courseID>Back to edit course</a><br/>";
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
 
+<section class="section_form">
+
+<h3>Term info</h3>
+
+<?php
+    require_once 'includes/terms-inc.php';
+    $term = $new ? getEmptyTerm() : getTermByID($termID);
+    if ($new) {
+        $term->courseID = $_GET['courseID'];
+    }
+    if (is_admin()) {
+        echo "<a class=\"button_back\" href=editcourse.php?courseID=$term->courseID>Back to edit course</a><br/>";
+    }
+?>
+<div>
+    <form method="POST" action="<?php echo 'modifyterm.php'; ?>" >
+    <?php
         echo '<input type="hidden" name="termID" value="'.$termID.'" />';
         echo '<input type="hidden" name="courseID" value="'.$term->courseID.'" />';
         
@@ -83,11 +84,11 @@
             echo '<button type="submit" name="submit">Update</button>';
         }
     ?>
-  </form>
-    </div>
-    </section>
+    </form>
+</div>
+</section>
 
-  <?php include_once 'templates/footer.php' ?>
+<?php include_once 'templates/footer.php' ?>
 
 </html>
  

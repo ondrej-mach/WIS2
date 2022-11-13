@@ -45,6 +45,6 @@
 
     if (is_logged_in()) {
         $username = $GLOBALS['user']->accountUsername;
-        echo "<p id=\"username\">Logged in as $username</p>";
+        echo "<div id=\"uname_div\"><p id=\"username\">Logged in as $username</p></div>";
     }
 ?>

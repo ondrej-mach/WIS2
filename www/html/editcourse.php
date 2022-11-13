@@ -35,21 +35,24 @@
 <!DOCTYPE html>
 <html>
   
-    <?php include_once 'templates/header.php' ?>
-    <?php include_once 'templates/navbar.php' ?>
-  
-    <h3>Course info</h3>
-    <section class="section_form">
+<?php include_once 'templates/header.php' ?>
+<?php include_once 'templates/navbar.php' ?>
 
-    <?php
+<div id="edit_course">
+
+<!-- TABLE OF LECTURERS -->
+<section class="section_form">
+
+<?php
     if (is_admin()) {
         echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
     }
-    ?>
+?>
 
-    <div>
+<h3>Edit course info</h3>
+
+<div>
     <form method="POST" action="<?php echo 'modifycourse.php'; ?>">
-    
     <?php
         require_once 'includes/courses-inc.php';
         $course = $new ? getEmptyCourse() : getCourseByID($courseID);
@@ -126,18 +129,23 @@
         }
     ?>
     </form>
-    </div>
-  
-  
-        <h3>Lecturers</h3>
-        <section class="section_table">
-        <!-- TABLE OF LECTURERS -->
-            <table>
+</div>
+
+
+<h3>Lecturers</h3>
+
+<!-- TABLE OF LECTURERS -->
+<section class="section_table">
+    <table>
+        <thead>
             <tr>
                 <th>Username</th>
                 <th>Name</th>
-                <th>Remove</th>
+                <th>Contact</th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
             <?php
                 require_once 'includes/users-inc.php';
                 $lecturers = getLecturerIDs($courseID);
@@ -148,82 +156,89 @@
                     echo "<tr>";
                     echo "<td>" . $user->accountUsername . "</td>";
                     echo "<td>" . $user->accountRealName . "</td>";
+                    echo "<td>" . $user->accountEmail . "</td>";
                     echo "<td><a href=\"$removeURL\">Remove</a></td>";
                     echo "</tr>";
                 }
             ?>
-        </table>
-    </section>
-  
-    <!-- SELECTOR FOR NEW LECTURERS -->
-    <section class="section_form">
-        <div>
-            <form method="GET" action="addlecturer.php" >
-                <?php
-                    require_once 'includes/courses-inc.php';
-                    $course = $new ? getEmptyCourse() : getCourseByID($courseID);
-                    
-                    echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
-                    
-                    require_once 'includes/users-inc.php';
-                    require_once 'includes/teachers-inc.php';
-                    
-                    # Course lecturer selector
-                    echo '<label>Lecturer<select name="lecturerID">';
-                    $teacherIDs = getTeacherIDs($courseID);
-                    $displayed = array_diff($teacherIDs, getLecturerIDs($courseID));
-                    $displayed = array_diff($displayed, [getGuarantorID($courseID)]);
-                    foreach ($displayed as $id) {
-                        echo '<option value="'.$id.'">'.getUserByID($id)->accountRealName.
-                        '</option>';
-                    }
-                    echo '</select></label>';
-                ?>
-                <button type="submit" name="submit">Add</button>
-            </form>
-        </div>
-    </section>
-  
-  
-  <h3>Terms</h3>
-  
-    <!-- TABLE OF TERMS -->
-    <section class="section_table">
-        <table>
-            <thead>
-                <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Max points</th>
-                <th>Auto registration</th>
-                <th>Remove</th>
-                <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    require_once 'includes/terms-inc.php';
-                    $terms = getTerms($courseID);
-                    foreach ($terms as $term) {
-                        $removeURL = "removeterm.php?courseID=$term->termID";
-                        $editURL = "editterm.php?termID=$term->termID&courseID=$courseID";
-                        echo "<tr>";
-                        echo "<td>" . $term->termName . "</td>";
-                        echo "<td>" . $term->termDate . "</td>";
-                        echo "<td>" . $term->termMaxPoints . "</td>";
-                        echo "<td>" . $term->termAutoregistered . "</td>";
-                        echo "<td><a href=\"$removeURL\">Remove</a></td>";
-                        echo "<td><a href=\"$editURL\">Edit</a></td>";
-                        echo "</tr>";
-                    }
-                ?>
-            </tbody>
-        </table>
-    
+        </tbody>
+    </table>
+</section>
 
-    <?php 
-        echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>";
-        include_once 'templates/footer.php'
-    ?>
-    </section>
-    </html>
+<!-- SELECTOR FOR NEW LECTURERS -->
+<section class="section_form">
+    <div>
+        <?php
+            require_once 'includes/users-inc.php';
+            require_once 'includes/teachers-inc.php';
+            require_once 'includes/courses-inc.php';
+            
+            $course = $new ? getEmptyCourse() : getCourseByID($courseID);
+            
+            # Course lecturer selector
+            $teacherIDs = getTeacherIDs($courseID);
+            $displayed = array_diff($teacherIDs, getLecturerIDs($courseID));
+            $displayed = array_diff($displayed, [getGuarantorID($courseID)]);
+            $displayed_empty = (count($displayed) == 0);
+
+            $display = $displayed_empty ? 'style="display: none;"' : '';
+
+            echo '<form method="GET" action="addlecturer.php" ' .$display.'>';
+
+            echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
+            echo '<label>Lecturer<select name="lecturerID">';
+
+            foreach ($displayed as $id) {
+                echo '<option value="'.$id.'">'.getUserByID($id)->accountRealName.'</option>';
+            } 
+            echo '</select>';
+            echo '</label>';
+            echo '<button type="submit" name="submit">Add</button>';
+            echo '</form>';
+        ?>
+    </div>
+</section>
+
+<h3>Terms</h3>
+
+<!-- TABLE OF TERMS -->
+<section class="section_table">
+    <table>
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Max points</th>
+            <th>Auto registration</th>
+            <th>Remove</th>
+            <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                require_once 'includes/terms-inc.php';
+                $terms = getTerms($courseID);
+                foreach ($terms as $term) {
+                    $removeURL = "removeterm.php?termID=$term->termID";
+                    $editURL = "editterm.php?termID=$term->termID&courseID=$courseID";
+                    echo "<tr>";
+                    echo "<td>" . $term->termName . "</td>";
+                    echo "<td>" . $term->termDate . "</td>";
+                    echo "<td>" . $term->termMaxPoints . "</td>";
+                    echo "<td>" . $term->termAutoregistered . "</td>";
+                    echo "<td><a href=\"$removeURL\">Remove</a></td>";
+                    echo "<td><a href=\"$editURL\">Edit</a></td>";
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
+    
+    <?php echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>"; ?>
+
+</section>
+</div>
+
+<?php include_once 'templates/footer.php'; ?>
+
+</html>
