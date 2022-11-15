@@ -83,15 +83,15 @@ if (!empty($attributes)) {
             $checked_t = $user->accountTeacher ? 'checked' : '';
             $checked_s = $user->accountStudent ? 'checked' : '';
 
-            echo "  <label class = \"switch\">Admin
+            echo "  <label>Admin
                         <input type=\"checkbox\" name=\"accountAdmin\" $checked_a>
                     </label><br/>";
 
-            echo "  <label class = \"switch\">Teacher
+            echo "  <label>Teacher
                         <input type=\"checkbox\" name=\"accountTeacher\" $checked_t>
                     </label><br/>";
 
-            echo "  <label class = \"switch\">Student
+            echo "  <label>Student
                         <input type=\"checkbox\" name=\"accountStudent\" $checked_s>
                     </label><br/>";
     ?>

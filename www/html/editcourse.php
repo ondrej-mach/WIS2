@@ -88,17 +88,17 @@
             <input name="courseCapacity" type="number"
             value="'.$courseCapacity.'">
             </label><br/>';
-            
+        
+        $gid = getGuarantorID($courseID);
         if (is_admin()) {
             require_once 'includes/users-inc.php';
             require_once 'includes/teachers-inc.php';
             
             # Course guarantor selector
-            
             echo '<label>Guarantor <select name="courseGuarantor">';
             echo '<optgroup label="Current guarantor">';
             
-            $gid = getGuarantorID($courseID);
+            
             echo '  <option value="'.$gid.'">'.getUserByID($gid)->accountRealName.'</option>';
             echo '</optgroup>';
             echo '<optgroup label="Lecturers">';
@@ -120,6 +120,37 @@
             }
 
             echo '</optgroup></select></label><br/>';
+        }
+
+        $courseState = isset($course->courseState) ? $course->courseState : 0;
+        $disp = array($courseState);
+        if (is_admin() && ($courseState != 0)) {
+            $states = array(5, 10);
+            $not_disp = array_diff($states, $disp);
+            echo '
+            <label>State
+            <select name="courseState" value='.$courseState.'>
+            <option value='.$courseState.'>'.courseStateToString($courseState).'</option>';
+
+            foreach($not_disp as $value) {
+                echo '<option value='.$value.'>'.courseStateToString($value).'</option>';
+            }
+            echo '</select></label><br/>';
+        }
+
+        $uid = getUID();
+        # display if user is the course guatantor
+        if (is_teacher() && ($uid === $gid) && ($courseState != 10)) {
+            $states = array(0, 5);
+            $not_disp = array_diff($states, $disp);
+            echo '<label>State
+                    <select name="courseState" value='.$courseState.'>
+                        <option value='.$courseState.'>'.courseStateToString($courseState).'</option>';
+
+            foreach($not_disp as $value) {
+                echo '<option value='.$value.'>'.courseStateToString($value).'</option>';
+            }
+            echo '</select></label><br/>';
         }
         
         if ($new) {

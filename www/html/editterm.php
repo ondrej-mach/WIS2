@@ -48,7 +48,7 @@
     if ($new) {
         $term->courseID = $_GET['courseID'];
     }
-    if (is_admin()) {
+    if (is_admin() || is_teacher()) {
         echo "<a class=\"button_back\" href=editcourse.php?courseID=$term->courseID>Back to edit course</a><br/>";
     }
 ?>
@@ -77,7 +77,6 @@
             <input name="termAutoregistered" type="text"
             value="'.$term->termAutoregistered.'">
             </label><br/>';
-            
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';
         } else {
