@@ -94,6 +94,29 @@ h3 {
     padding: 10px 0;
 }
 
+/* index site */
+
+#section_index ul {
+    max-width: 400px;
+    list-style: none;
+}
+
+#section_index li {
+    padding: 20px;
+    background-color: #3498DB;
+    max-width: 350px;
+    margin: 2rem 0;
+    border-radius: 5px;
+}
+
+#section_index a {
+    width: fit-content;
+    padding: auto;
+    text-decoration: none;
+    color: white;
+    font-size: larger;
+}
+
 /* login form */
 
 #section_login {
@@ -171,15 +194,13 @@ footer div {
     justify-content: center;
     flex-direction: column;
     max-width: fit-content;
-    margin: 30px;
 }
 
 .section_table table {
     margin-left: 30px;
     border: #CCCCCC 1px solid;
     border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
+    overflow: scroll;
 }
 
 .section_table table thead {
@@ -264,7 +285,7 @@ footer div {
 /* General style for forms */
 
 .section_form div {
-    margin-left: 30px;
+    margin: 30px  0 0 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -296,6 +317,7 @@ footer div {
     border: #3498DB 1px solid;
     color: #fff;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .section_form button:hover {

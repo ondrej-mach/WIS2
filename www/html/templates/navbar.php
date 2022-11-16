@@ -14,14 +14,11 @@
         # TODO
         echo "<li><a href=manageusers.php>User management</a></li>";
         echo "<li><a href=managerooms.php>Room management</a></li>";
+        echo "<li><a href=admincourses.php>Manage courses</a></li>";
     }
     
     if (!is_admin() && is_logged_in()) {
         echo "<li><a href=usermod.php>My Account</a></li>";
-    }
-    
-    if (is_admin()) {
-        echo "<li><a href=admincourses.php>Manage courses</a></li>";
     }
     
     if (is_teacher()) {
