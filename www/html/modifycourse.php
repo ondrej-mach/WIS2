@@ -25,12 +25,12 @@ $userParams = [
     "courseName",
     "courseFullName",
     "courseDescription",
+    "courseState",
 ];
 
 // when accountID is not set, it changes info for the logged in user.
 // user cannot change these attributes, only admin can
 $adminParams = [ 
-    "courseState",
     "courseCredits",
     "courseCapacity",
     "courseGuarantor",
@@ -43,7 +43,11 @@ foreach ($_REQUEST as $key => $value) {
         $attributes[$key] = $value;
         
     } elseif (in_array($key, $adminParams)) {
-        assert_admin();
+        if (!is_admin()) {
+            if (($key == "courseGuarantor") && ($value != getUID())) {
+                dieForbidden();
+            }
+        }
         $attributes[$key] = $value;
     }
 }

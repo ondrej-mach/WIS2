@@ -202,18 +202,27 @@ footer div {
 .section_table a {
     text-decoration: none;
     color: black;
+    transition: color 0.2s;
 }
 
 .section_table table tr {
     border-bottom: #CCCCCC 1px solid;
 }
 
+.section_table table tbody tr:hover {
+    background-color: #DDDDDD;
+}
+
 .section_table tr:last-child {
     border-bottom: #3498DB 2px solid;
 }
 
-.section_table table tr:nth-child(even) {
+.section_table table tbody tr:nth-child(even) {
     background-color: #ECECEC;
+}
+
+.section_table table tbody tr:nth-child(even):hover {
+    background-color: #DDDDDD;
 }
 
 .section_table table tr td:last-child a:hover {
@@ -230,6 +239,12 @@ footer div {
     background-color: #ECECEC;
     padding: 5px;
     border-radius:0 0 5px 5px;
+    transition: background-color 0.2s;
+}
+
+.section_table>a:hover {
+    background-color: #DDDDDD;
+    cursor: pointer;
 }
 
 .section_table button {
@@ -238,6 +253,12 @@ footer div {
     background-color: #ECECEC;
     padding: 5px;
     border-radius: 0 0 5px 5px;
+    transition: background-color 0.2s;
+}
+
+.section_table button:hover {
+    background-color: #DDDDDD;
+    cursor: pointer;
 }
 
 /* General style for forms */

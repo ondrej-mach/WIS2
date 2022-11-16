@@ -53,51 +53,52 @@ if (!empty($attributes)) {
 
 <section class="section_form">
     <?php
-            if (is_admin()) {
-                echo "<a class=\"button_back\" href=manageusers.php>Back to user management</a><br/>";
-            }
+        if (is_admin()) {
+            echo "<a class=\"button_back\" href=manageusers.php>Back to user management</a><br/>";
+        }
 
-            echo "<div><form method=\"POST\">";
-            $disabled = is_admin() ? '' : 'disabled';
-            
-            require_once 'includes/users-inc.php';
-            $user = getUserByID($uid);
-            
-            echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
-            $disabled value=\"$user->accountUsername\"></label><br/>";
-            
-            echo '<label>Name<input name="accountRealName" type="text" value="'.
-            $user->accountRealName.'"></label><br/>';
-            
-            echo '<label>Address<input name="accountAddress" type="text" value="'.
-            $user->accountAddress.'"></label><br/>';
-
-            echo '<label>Date of birth<input name="accountDateOfBirth" type="text" value="'.
-            $user->accountDateOfBirth.'"></label><br/>';
+        echo "<div><form method=\"POST\">";
+        $disabled = is_admin() ? '' : 'disabled';
         
-            echo '<label>Email<input name="accountEmail" type="text" value="'.
-            $user->accountEmail.'"></label><br/>';
-            
-            #TODO uncheck user not working properly
-            $checked_a = $user->accountAdmin ? 'checked' : '';
-            $checked_t = $user->accountTeacher ? 'checked' : '';
-            $checked_s = $user->accountStudent ? 'checked' : '';
+        require_once 'includes/users-inc.php';
+        $user = getUserByID($uid);
+        
+        echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
+        $disabled value=\"$user->accountUsername\"></label><br/>";
+        
+        echo '<label>Name<input name="accountRealName" type="text" value="'.
+        $user->accountRealName.'"></label><br/>';
+        
+        echo '<label>Address<input name="accountAddress" type="text" value="'.
+        $user->accountAddress.'"></label><br/>';
 
-            echo "  <label>Admin
-                        <input type=\"checkbox\" name=\"accountAdmin\" $checked_a>
-                    </label><br/>";
+        echo '<label>Date of birth<input name="accountDateOfBirth" type="text" value="'.
+        $user->accountDateOfBirth.'"></label><br/>';
+    
+        echo '<label>Email<input name="accountEmail" type="text" value="'.
+        $user->accountEmail.'"></label><br/>';
+        
+        #TODO uncheck user not working properly
+        $checked_a = $user->accountAdmin ? 'checked' : '';
+        $checked_t = $user->accountTeacher ? 'checked' : '';
+        $checked_s = $user->accountStudent ? 'checked' : '';
+        if (is_admin()) {
+            echo '  <label>Admin
+                        <input type="checkbox" name="accountAdmin"'.$checked_a.'>
+                    </label><br/>';
 
-            echo "  <label>Teacher
-                        <input type=\"checkbox\" name=\"accountTeacher\" $checked_t>
-                    </label><br/>";
+            echo '  <label>Teacher
+                        <input type="checkbox" name="accountTeacher"'.$checked_t.'>
+                    </label><br/>';
 
-            echo "  <label>Student
-                        <input type=\"checkbox\" name=\"accountStudent\" $checked_s>
-                    </label><br/>";
+            echo '  <label>Student
+                        <input type="checkbox" name="accountStudent"'.$checked_s.'>
+                    </label><br/>';
+        }
     ?>
-            <button type="submit" name="submit">Update</button>
-        </form>
-    </div>
+        <button type="submit" name="submit">Update</button>
+    </form>
+</div>
 </section>
 
 <?php include_once 'templates/footer.php' ?>

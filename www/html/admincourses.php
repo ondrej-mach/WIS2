@@ -9,7 +9,7 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
-<div id="manage_courses">
+<div id="manage_courses_a">
 
 <h3>Manage Courses</h3>
 
@@ -36,6 +36,10 @@
         $courses = getCourses();
 
         foreach ($courses as $course) {
+            # don't care about concepts
+            if ($course->courseState == 0) {
+                continue;
+            }
             $editCourseURL = 'editcourse.php?courseID=' . $course->courseID;
             $deleteCourseURL = 'deletecourse.php?courseID=' . $course->courseID;
             $guarantor = getUserByID(getGuarantorID($course->courseID));
