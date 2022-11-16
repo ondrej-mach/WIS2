@@ -60,8 +60,17 @@ function modifyTerm($termID, $attributes) {
     }
 }
 
+function removeAllStudentsfromTerm($termID) {
+    $conn = $GLOBALS['conn'];
+
+    $sql = "DELETE FROM SignedUp WHERE termID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$termID]);
+}
+
 function delTerm($termID) {
     //TODO cascade constraints
     $stmt = $GLOBALS['conn']->prepare("DELETE FROM Term WHERE termID = ?");
     $stmt->execute([$termID]);
 }
+?>

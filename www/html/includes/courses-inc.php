@@ -25,6 +25,21 @@ function courseStateToString($state) {
     }
 }
 
+function courseStateToInt($state) {
+    switch ($state) {
+        case CourseState::CONCEPT:
+        case CourseState::CONCEPT->value:
+            return 0;
+            
+        case CourseState::FOR_APPROVAL:
+        case CourseState::FOR_APPROVAL->value:
+            return 5;
+            
+        case CourseState::RUNNING:
+        case CourseState::RUNNING->value:
+            return 10;
+    }
+}
 
 
 function getEmptyCourse() {
@@ -41,19 +56,22 @@ function getEmptyCourse() {
 }
 
 function getCourses() {
-    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Course");
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Course");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getCoursesGuaranteedBy($accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Course NATURAL JOIN Guarantees WHERE accountID = ?");
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Course NATURAL JOIN Guarantees WHERE accountID = ?");
     $stmt->execute([$accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getCourseByID($courseID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Course WHERE courseID = ?");
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Course WHERE courseID = ?");
     $stmt->execute([$courseID]);
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
@@ -62,11 +80,11 @@ function addCourse($name, $guarantorID) {
     $conn = $GLOBALS['conn'];
     $conn->beginTransaction();
     
-    $stmt = $GLOBALS['conn']->prepare("INSERT INTO Course (courseName, courseState) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO Course (courseName, courseState) VALUES (?, ?)");
     $stmt->execute([$name, CourseState::CONCEPT->value]);
     $newCourseID = $conn->lastInsertId();
     
-    $stmt = $GLOBALS['conn']->prepare("INSERT INTO Guarantees (accountID, courseID) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO Guarantees (accountID, courseID) VALUES (?, ?)");
     $stmt->execute([$guarantorID, $newCourseID]);
     
     $conn->commit();
@@ -75,13 +93,15 @@ function addCourse($name, $guarantorID) {
 
 function deleteCourse($courseID) {
     #TODO: delete all the other stuff
+    $conn = $GLOBALS['conn'];
     $sql = "DELETE FROM Course WHERE courseID = ?";
-    $stmt = $GLOBALS['conn']->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $stmt->execute([$courseID]);
 }
 
 function getGuarantorID($courseID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Guarantees WHERE courseID = ?");
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT accountID FROM Guarantees WHERE courseID = ?");
     $stmt->execute([$courseID]);
     $result = $stmt->fetch(PDO::FETCH_OBJ);
     return $result->accountID;
@@ -89,8 +109,9 @@ function getGuarantorID($courseID) {
 
 function getLecturerIDs($courseID) {
     $lecturers = [];
+    $conn = $GLOBALS['conn'];
     
-    $stmt = $GLOBALS['conn']->prepare("SELECT accountID FROM Lecturer WHERE courseID = ?");
+    $stmt = $conn->prepare("SELECT accountID FROM Lecturer WHERE courseID = ?");
     $stmt->execute([$courseID]);
     $result = $stmt->fetchAll(PDO::FETCH_CLASS);
     
@@ -150,8 +171,24 @@ function addLecturer($courseID, $accountID) {
 
 function removeLecturer($courseID, $accountID) {
     $conn = $GLOBALS['conn'];
-
     $sql = "DELETE FROM Lecturer WHERE courseID = ? AND accountID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$courseID, $accountID]);
 }
+
+function removeAllTermsfromCourse($courseID) {
+    $conn = $GLOBALS['conn'];
+
+    $sql = "DELETE FROM Term WHERE courseID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$courseID]);
+}
+
+function removeGuarantor($courseID) {
+    $conn = $GLOBALS['conn'];
+
+    $sql = "DELETE FROM Guarantees WHERE courseID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$courseID]);
+}
+?>

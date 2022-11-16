@@ -47,6 +47,9 @@
     if (is_admin()) {
         echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
     }
+    if (is_teacher()) {
+        echo "<a class=\"button_back\" href=teachercourses.php>Back to courses</a><br/>";
+    }
 ?>
 
 <h3>Edit course info</h3>
@@ -59,37 +62,37 @@
         
         echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
         
-        $courseName = isset($course->courseName) ? $course->courseName : '';
+        $courseName = isset($course->courseName) ? $course->courseName : 'short';
         echo '<label>Name
             <input name="courseName" type="text"
             value="'.$courseName.'">
             </label><br/>';
             
-        $courseFullName = isset($course->courseFullName) ? $course->courseFullName : '';
+        $courseFullName = isset($course->courseFullName) ? $course->courseFullName : 'full name';
         echo '<label>Full name
             <input name="courseFullName" type="text"
             value="'.$courseFullName.'">
             </label><br/>';
             
-        $courseDescription = isset($course->courseDescription) ? $course->courseDescription : '';
+        $courseDescription = isset($course->courseDescription) ? $course->courseDescription : 'desc';
         echo '<label>Description
             <input name="courseDescription" type="text"
             value="'.$courseDescription.'">
             </label><br/>';
 
-        $courseCredits = isset($course->courseCredits) ? $course->courseCredits : '';
+        $courseCredits = isset($course->courseCredits) ? $course->courseCredits : 0;
         echo '<label>Credits
             <input name="courseCredits" type="number"
             value="'.$courseCredits.'">
             </label><br/>';
 
-        $courseCapacity = isset($course->courseCapacity) ? $course->courseCapacity : '';
+        $courseCapacity = isset($course->courseCapacity) ? $course->courseCapacity : 0;
         echo '<label>Capacity
             <input name="courseCapacity" type="number"
             value="'.$courseCapacity.'">
             </label><br/>';
         
-        $gid = getGuarantorID($courseID);
+        $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
         if (is_admin()) {
             require_once 'includes/users-inc.php';
             require_once 'includes/teachers-inc.php';
@@ -122,7 +125,7 @@
             echo '</optgroup></select></label><br/>';
         }
 
-        $courseState = isset($course->courseState) ? $course->courseState : 0;
+        $courseState = isset($course->courseState) ? courseStateToInt($course->courseState) : 0;
         $disp = array($courseState);
         if (is_admin() && ($courseState != 0)) {
             $states = array(5, 10);
@@ -182,8 +185,8 @@
                 $lecturers = getLecturerIDs($courseID);
                 foreach ($lecturers as $id) {
                     $user = getUserByID($id);
-                    
                     $removeURL = "removelecturer.php?courseID=$courseID&lecturerID=$id";
+
                     echo "<tr>";
                     echo "<td>" . $user->accountUsername . "</td>";
                     echo "<td>" . $user->accountRealName . "</td>";
@@ -209,7 +212,8 @@
             # Course lecturer selector
             $teacherIDs = getTeacherIDs($courseID);
             $displayed = array_diff($teacherIDs, getLecturerIDs($courseID));
-            $displayed = array_diff($displayed, [getGuarantorID($courseID)]);
+            $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
+            $displayed = array_diff($displayed, [$gid]);
             $displayed_empty = (count($displayed) == 0);
 
             $display = $displayed_empty ? 'style="display: none;"' : '';
@@ -250,7 +254,7 @@
                 require_once 'includes/terms-inc.php';
                 $terms = getTerms($courseID);
                 foreach ($terms as $term) {
-                    $removeURL = "removeterm.php?termID=$term->termID";
+                    $removeURL = "removeterm.php?termID=$term->termID&courseID=$course->courseID";
                     $editURL = "editterm.php?termID=$term->termID&courseID=$courseID";
                     echo "<tr>";
                     echo "<td>" . $term->termName . "</td>";
