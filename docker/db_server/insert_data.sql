@@ -78,10 +78,10 @@ INSERT INTO SignedUp (studentID, termID) VALUES (6, 2);
 INSERT INTO SignedUp (studentID, termID) VALUES (3, 2);
 
 -- student attends course
-INSERT INTO Attends (studentID, courseID, approved) VALUES (3, 1, true);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (3, 2, true);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (6, 1, true);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (6, 3, true);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (7, 1, true);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (7, 2, false);
-INSERT INTO Attends (studentID, courseID, approved) VALUES (7, 3, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (3, 1, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (3, 2, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (6, 1, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (6, 3, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (7, 1, true);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (7, 2, false);
+INSERT INTO Attends (accountID, courseID, approved) VALUES (7, 3, true);
