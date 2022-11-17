@@ -29,16 +29,16 @@ VALUES (7, 'xfitko12', '$1$J2b.7qT3$C6m3z10By7kfob8Ikx0N10', "2003/5/8", "xfitko
 
 
 -- IIS course
-INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity)
-VALUES (1, 'IIS', 'Information systems', 'This course will teach student the secrets of universe', 10, 4, 500);
+INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity, courseOpen)
+VALUES (1, 'IIS', 'Information systems', 'This course will teach student the secrets of universe', 10, 4, 500, true);
 
 -- IMA1 course
-INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity)
-VALUES (2, 'IMA1', 'Mathematical Analysis', 'math stuff, integrals, ...', 10, 5, 600);
+INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity, courseOpen)
+VALUES (2, 'IMA1', 'Mathematical Analysis', 'math stuff, integrals, ...', 10, 5, 600, false);
 
 -- IMA1 course
-INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity)
-VALUES (3, 'ISU', 'Assemblers', 'assemblers x86', 10, 7, 700);
+INSERT INTO Course (courseID, courseName, courseFullName, courseDescription, courseState, courseCredits, courseCapacity, courseOpen)
+VALUES (3, 'ISU', 'Assemblers', 'assemblers x86', 10, 7, 700, true);
 
 -- guarantors for courses
 INSERT INTO Guarantees (accountID, courseID) VALUES (2, 1);

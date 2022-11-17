@@ -50,7 +50,8 @@ function getEmptyCourse() {
         'courseDescription' => '',
         'courseCredits' => 0,
         'courseCapacity' => 0,
-        'courseState' => CourseState::CONCEPT
+        'courseState' => CourseState::CONCEPT,
+        'courseOpen' => 0
     ];
     return $course;
 }
@@ -79,7 +80,6 @@ function getCourseByID($courseID) {
 function addCourse($name, $guarantorID) {
     $conn = $GLOBALS['conn'];
     $conn->beginTransaction();
-    
     $stmt = $conn->prepare("INSERT INTO Course (courseName, courseState) VALUES (?, ?)");
     $stmt->execute([$name, CourseState::CONCEPT->value]);
     $newCourseID = $conn->lastInsertId();
@@ -110,7 +110,6 @@ function getGuarantorID($courseID) {
 function getLecturerIDs($courseID) {
     $lecturers = [];
     $conn = $GLOBALS['conn'];
-    
     $stmt = $conn->prepare("SELECT accountID FROM Lecturer WHERE courseID = ?");
     $stmt->execute([$courseID]);
     $result = $stmt->fetchAll(PDO::FETCH_CLASS);
@@ -132,7 +131,8 @@ function modifyCourse($courseID, $attributes) {
         "courseState",
         "courseCredits",
         "courseCapacity",
-        "courseGuarantor"
+        "courseGuarantor",
+        "courseOpen"
     ];
     
     foreach($attributes as $key => $value) {
@@ -161,7 +161,6 @@ function modifyCourse($courseID, $attributes) {
 
 function addLecturer($courseID, $accountID) {
     $conn = $GLOBALS['conn'];
-
     $sql = "INSERT INTO Lecturer (accountID, courseID) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$accountID, $courseID]);
@@ -178,7 +177,6 @@ function removeLecturer($courseID, $accountID) {
 
 function removeAllTermsfromCourse($courseID) {
     $conn = $GLOBALS['conn'];
-
     $sql = "DELETE FROM Term WHERE courseID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$courseID]);
@@ -186,9 +184,21 @@ function removeAllTermsfromCourse($courseID) {
 
 function removeGuarantor($courseID) {
     $conn = $GLOBALS['conn'];
-
     $sql = "DELETE FROM Guarantees WHERE courseID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$courseID]);
+}
+
+function getStudents($courseID) {
+    $students = [];
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT accountID, approved FROM Attends WHERE courseID = ?");
+    $stmt->execute([$courseID]);
+    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+    
+    foreach($result as $student) {
+        array_push($students, $student);
+    }
+    return $students;
 }
 ?>

@@ -18,3 +18,5 @@ if (!is_admin() && !(getUID() == getGuarantorID($courseID))) {
 addLecturer($courseID, $_GET['lecturerID']);
 
 header("location: editcourse.php?courseID=$courseID");
+
+?>

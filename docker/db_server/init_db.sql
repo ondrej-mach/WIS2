@@ -34,7 +34,8 @@ CREATE TABLE Course (
     courseDescription TEXT,
     courseState INTEGER NOT NULL,
     courseCredits INTEGER,
-    courseCapacity INTEGER
+    courseCapacity INTEGER,
+    courseOpen BOOLEAN
 );
 
 CREATE TABLE Guarantees (
