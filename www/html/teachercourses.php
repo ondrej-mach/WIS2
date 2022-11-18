@@ -23,7 +23,7 @@
 			<th>Name</th>
 			<th>Full name</th>
 			<th>State</th>
-			
+			<th>Summary</th>
 			<th>Evaluate</th>
 			<th>Accept</th>
 			<th>Edit</th>
@@ -52,7 +52,7 @@
 			$acceptStudentsURL = 'acceptstudents.php?courseID='.$course->courseID;
 			$deleteCourseURL = 'deletecourse.php?courseID='.$course->courseID;
 			$evaluateStudentsURL = 'evaluatecourse.php?courseID='.$course->courseID;
-			#$courseSummaryURL = 'coursesummary.php?courseID='.$course->courseID;
+			$courseSummaryURL = 'coursesummary.php?courseID='.$course->courseID;
 
 			echo "<tr>";
 			echo "<td>" . $course->courseName . "</td>";
@@ -63,11 +63,11 @@
 			$is_guarantor = (getUID() == getGuarantorID($course->courseID));
 
 			if ($course->courseState == 10) {
-				#echo "<td><a href=\"$courseSummaryURL\">Summary</a></td>";
+				echo "<td><a href=\"$courseSummaryURL\">Summary</a></td>";
 				echo "<td><a href=\"$evaluateStudentsURL\">Evaluate</a></td>";
 			}
 			else {
-				#echo "<td>";
+				echo "<td>";
 				echo "<td>";
 			}
 

@@ -72,7 +72,7 @@ if (!empty($attributes)) {
         echo '<label>Address<input name="accountAddress" type="text" value="'.
         $user->accountAddress.'"></label><br/>';
 
-        echo '<label>Date of birth<input name="accountDateOfBirth" type="text" value="'.
+        echo '<label>Date of birth<input name="accountDateOfBirth" type="date" value="'.
         $user->accountDateOfBirth.'"></label><br/>';
     
         echo '<label>Email<input name="accountEmail" type="text" value="'.

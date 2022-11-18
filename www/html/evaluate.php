@@ -24,7 +24,6 @@ if (!(is_teacher() && (in_array($uid, $lecturers) || $uid == getGuarantorID($cou
 }
 
 foreach($points as $key => $value) {
-    # check max points in backend
     $maxPoints = getTermByID($termID)->termMaxPoints;
     if ($value > $maxPoints) {
         exit('Wrong parameters');

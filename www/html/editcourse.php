@@ -158,6 +158,7 @@
             }
             echo '</select></label><br/>';
         }
+        #TODO
         /*
         if (is_teacher() && ($uid === $gid)) {
             $disabled = (count(getStudents($courseID)) > $course->courseCapacity) ? "disabled" : "";
@@ -258,7 +259,7 @@
             <tr>
             <th>Name</th>
             <th>Date</th>
-            <th>Points</th>
+            <th>Max points</th>
             <th>Auto</th>
             <th></th>
             <th></th>

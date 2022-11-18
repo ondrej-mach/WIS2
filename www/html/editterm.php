@@ -64,7 +64,7 @@
             </label><br/>';
             
         echo '<label>Date
-            <input name="termDate" type="text"
+            <input name="termDate" type="date"
             value="'.$term->termDate.'">
             </label><br/>';
             
