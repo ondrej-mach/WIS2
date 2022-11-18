@@ -9,6 +9,7 @@ if (!isset($_GET['points']) || !isset($_GET['termID']) || !isset($_GET['courseID
 
 require_once 'includes/courses-inc.php';
 require_once 'includes/student-inc.php';
+require_once 'includes/terms-inc.php';
 
 $courseID = $_GET['courseID'];
 
@@ -23,6 +24,11 @@ if (!(is_teacher() && (in_array($uid, $lecturers) || $uid == getGuarantorID($cou
 }
 
 foreach($points as $key => $value) {
+    # check max points in backend
+    $maxPoints = getTermByID($termID)->termMaxPoints;
+    if ($value > $maxPoints) {
+        exit('Wrong parameters');
+    }
     if (!isset($value)) {
         evaluateTerm($termID, $key, $uid, $value);
     }
