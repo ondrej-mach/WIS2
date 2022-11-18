@@ -72,3 +72,4 @@ function userDel($uid) {
     
     return $user;
 }
+?>

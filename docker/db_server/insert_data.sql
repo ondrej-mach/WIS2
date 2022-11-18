@@ -73,9 +73,9 @@ INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints)
 VALUES (3, 2, 'Bonusový úkol', '2022/10/1', '2');
 
 -- student signed up for term
-INSERT INTO SignedUp (studentID, termID) VALUES (3, 1);
-INSERT INTO SignedUp (studentID, termID) VALUES (6, 2);
-INSERT INTO SignedUp (studentID, termID) VALUES (3, 2);
+INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 1, 5, 10);
+INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (6, 2, 5, 5);
+INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 2, 4, 5);
 
 -- student attends course
 INSERT INTO Attends (accountID, courseID, approved) VALUES (3, 1, true);

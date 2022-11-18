@@ -84,5 +84,5 @@ function assert_admin() {
     }
 }
 
-
+?>
 

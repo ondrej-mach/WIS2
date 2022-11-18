@@ -27,3 +27,4 @@ function getCoursesForTeacher($accountID) {
     $stmt->execute([$accountID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
+?>

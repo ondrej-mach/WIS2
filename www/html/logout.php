@@ -11,3 +11,4 @@ if (is_logged_in()) {
 
 header("location: index.php");
 
+?>

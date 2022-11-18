@@ -105,8 +105,9 @@ h3 {
     padding: 20px;
     background-color: #3498DB;
     max-width: 350px;
-    margin: 2rem 0;
+    margin: 1rem 0;
     border-radius: 5px;
+    box-shadow: 5px 5px 5px #CCCCCC;
 }
 
 #section_index a {
@@ -129,6 +130,7 @@ h3 {
     max-width: fit-content;
     margin: 10px auto;
     padding: 20px;
+    box-shadow: 5px 5px 15px #CCCCCC;
 }
 
 #section_login form {
@@ -275,6 +277,7 @@ footer div {
     padding: 5px;
     border-radius: 0 0 5px 5px;
     transition: background-color 0.2s;
+    box-shadow: 5px 5px 15px #CCCCCC;
 }
 
 .section_table button:hover {
@@ -318,6 +321,7 @@ footer div {
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 5px 5px 15px #CCCCCC;
 }
 
 .section_form button:hover {
@@ -346,5 +350,6 @@ footer div {
 
 #edit_course {
     display: grid;
-    margin: 10px auto;
+    margin-bottom: 100px;
+    margin-top: 10px;
 }

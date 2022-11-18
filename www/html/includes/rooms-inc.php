@@ -49,4 +49,4 @@ function getRoomByID($rid) {
     
     return $room;
 }
-
+?>

@@ -29,3 +29,4 @@ try {
 } catch (Exception $e) {
     header("location: ../login.php?error=badcredentials");
 }
+?>

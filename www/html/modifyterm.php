@@ -47,3 +47,4 @@ if (!empty($attributes)) {
 }
 
 header("location: editterm.php?termID=$termID&courseID=$courseID");
+?>
