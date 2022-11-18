@@ -18,48 +18,84 @@
 <section class="section_table">
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Full name</th>
-      <th>State</th>
-      <th>Evaluate</th>
-      <th>Edit</th>
-      <th>
-    </tr>
-  </thead>
-  <tbody>
-<?php
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Full name</th>
+			<th>State</th>
+			
+			<th>Evaluate</th>
+			<th>Accept</th>
+			<th>Edit</th>
+			<th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
 
-  require_once 'includes/courses-inc.php';
-  require_once 'includes/users-inc.php';
-  require_once 'includes/teachers-inc.php';
+		require_once 'includes/courses-inc.php';
+		require_once 'includes/users-inc.php';
+		require_once 'includes/teachers-inc.php';
 
-  $courses = getCoursesForTeacher(getUID());
+		$courses = getCoursesForTeacher(getUID());
+		$courseIDs = [];
+		foreach ($courses as $course) {
+			#TODO can be done better by modifying SQL query
+			if (in_array($course->courseID, $courseIDs)) {
+				continue;
+			}
+			else {
+				array_push($courseIDs, $course->courseID);
+			}
 
-  foreach ($courses as $course) {
-      $editCourseURL = 'editcourse.php?courseID='.$course->courseID;
-      $evaluateCourseURL = 'evaluatecourse.php?courseID='.$course->courseID;
-      $deleteCourseURL = 'deletecourse.php?courseID='.$course->courseID;
-      echo "<tr>";
-        echo "<td>" . $course->courseName . "</td>";
-        echo "<td>" . $course->courseFullName . "</td>";
-        echo "<td>" . courseStateToString($course->courseState) . "</td>";
-        echo "<td><a href=\"$evaluateCourseURL\">Evaluate</a></td>";
-        if ($course->is_guarantor) {
-            echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
-            echo "<td><a href=\"$deleteCourseURL\">Delete</a></td>";
-        } else {
-          echo "<td><td>";
-        }
-      echo "</tr>";
-  }
-?>
-    </tbody>
-  </table>
+			$editCourseURL = 'editcourse.php?courseID='.$course->courseID;
+			$acceptStudentsURL = 'acceptstudents.php?courseID='.$course->courseID;
+			$deleteCourseURL = 'deletecourse.php?courseID='.$course->courseID;
+			$evaluateStudentsURL = 'evaluatecourse.php?courseID='.$course->courseID;
+			#$courseSummaryURL = 'coursesummary.php?courseID='.$course->courseID;
 
-  <a href="editcourse.php?courseID=new" >Create new course</a><br/>
+			echo "<tr>";
+			echo "<td>" . $course->courseName . "</td>";
+			echo "<td>" . $course->courseFullName . "</td>";
+			echo "<td>" . courseStateToString($course->courseState) . "</td>";
 
-  <?php include_once 'templates/footer.php' ?>
+			$is_teacher = in_array(getUID(), getLecturerIDs($course->courseID));
+			$is_guarantor = (getUID() == getGuarantorID($course->courseID));
+
+			if ($course->courseState == 10) {
+				#echo "<td><a href=\"$courseSummaryURL\">Summary</a></td>";
+				echo "<td><a href=\"$evaluateStudentsURL\">Evaluate</a></td>";
+			}
+			else {
+				#echo "<td>";
+				echo "<td>";
+			}
+
+			if ($is_guarantor && $course->courseState == 10) {
+				echo "<td><a href=\"$acceptStudentsURL\">Accept</a></td>";
+			}
+			else {
+				echo "<td>";
+			}
+
+			if ($is_guarantor) {
+
+				echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
+				echo "<td><a href=\"$deleteCourseURL\">Delete</a></td>";
+			} else {
+				echo "<td><td>";
+			}
+			
+			echo "</tr>";
+		}
+  	?>
+  	</tbody>
+</table>
+
+<a href="editcourse.php?courseID=new" >Create new course</a><br/>
+</section>
+</div>
+
+<?php include_once 'templates/footer.php' ?>
 
 </html> 

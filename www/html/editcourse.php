@@ -93,6 +93,7 @@
             </label><br/>';
         
         $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
+        
         if (is_admin()) {
             require_once 'includes/users-inc.php';
             require_once 'includes/teachers-inc.php';
@@ -127,6 +128,7 @@
 
         $courseState = isset($course->courseState) ? courseStateToInt($course->courseState) : 0;
         $disp = array($courseState);
+
         if (is_admin() && ($courseState != 0)) {
             $states = array(5, 10);
             $not_disp = array_diff($states, $disp);
@@ -143,6 +145,7 @@
 
         $uid = getUID();
         # display if user is the course guatantor
+
         if (is_teacher() && ($uid === $gid) && ($courseState != 10)) {
             $states = array(0, 5);
             $not_disp = array_diff($states, $disp);
@@ -155,6 +158,14 @@
             }
             echo '</select></label><br/>';
         }
+        /*
+        if (is_teacher() && ($uid === $gid)) {
+            $disabled = (count(getStudents($courseID)) > $course->courseCapacity) ? "disabled" : "";
+            #TODO check if course is full and disable button
+            echo '<label>Open for enrollment
+                    <input name="courseOpen" type="checkbox" '.$disabled.'>
+                </label><br/>';
+        }*/
         
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';
@@ -191,7 +202,11 @@
                     echo "<td>" . $user->accountUsername . "</td>";
                     echo "<td>" . $user->accountRealName . "</td>";
                     echo "<td>" . $user->accountEmail . "</td>";
-                    echo "<td><a href=\"$removeURL\">Remove</a></td>";
+                    if (($id != getGuarantorID($courseID))) {
+                        echo "<td><a href='$removeURL'>Remove</a></td>";
+                    } else {
+                        echo "<td></td>";
+                    }
                     echo "</tr>";
                 }
             ?>
@@ -243,10 +258,11 @@
             <tr>
             <th>Name</th>
             <th>Date</th>
-            <th>Max points</th>
-            <th>Auto registration</th>
-            <th>Remove</th>
-            <th>Edit</th>
+            <th>Points</th>
+            <th>Auto</th>
+            <th></th>
+            <th></th>
+            <th></th>
             </tr>
         </thead>
         <tbody>
@@ -256,13 +272,16 @@
                 foreach ($terms as $term) {
                     $removeURL = "removeterm.php?termID=$term->termID&courseID=$course->courseID";
                     $editURL = "editterm.php?termID=$term->termID&courseID=$courseID";
+                    $evaluateURL = "evaluateterm.php?termID=$term->termID";
+
                     echo "<tr>";
                     echo "<td>" . $term->termName . "</td>";
                     echo "<td>" . $term->termDate . "</td>";
                     echo "<td>" . $term->termMaxPoints . "</td>";
                     echo "<td>" . $term->termAutoregistered . "</td>";
-                    echo "<td><a href=\"$removeURL\">Remove</a></td>";
+                    echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
                     echo "<td><a href=\"$editURL\">Edit</a></td>";
+                    echo "<td><a href=\"$removeURL\">Remove</a></td>";
                     echo "</tr>";
                 }
             ?>
