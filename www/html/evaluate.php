@@ -29,10 +29,7 @@ foreach($points as $key => $value) {
     if ($value > $maxPoints) {
         exit('Wrong parameters');
     }
-    if (!isset($value) || $value == "") {
-        evaluateTerm($termID, $key, $uid, 0);
-    }
-    else {
+    if (isset($value) && $value != "") {
         updatePoints($value, $uid, $termID, $key);
     }
 }

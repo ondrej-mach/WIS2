@@ -27,6 +27,27 @@ function getTermByID($termID) {
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
+function getUnregisteredTermsByStudent($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termID, termName, termDate, termMaxPoints
+                                       FROM Term WHERE courseID = ? AND termID NOT IN (SELECT termID FROM SignedUp WHERE studentID = ?)");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function getRegisteredTermsByStudent($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerID
+                                       FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
+                                       WHERE courseID = ? AND studentID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function isRegisteredToTerm($termID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT COUNT(termID) AS cnt FROM SignedUp WHERE termID = ? AND studentID = ?");
+    $stmt->execute([$termID, $accountID]);
+    return $stmt->fetch(PDO::FETCH_OBJ)->cnt > 0;
+}
+
 function addTerm($courseID) {
     $conn = $GLOBALS['conn'];
     $conn->beginTransaction();
