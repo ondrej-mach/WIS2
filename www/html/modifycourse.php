@@ -15,6 +15,8 @@ if ($courseID == 'new') {
         
     try {
         $courseID = addCourse($_REQUEST['courseName'], getUID());
+        # add guarantor as a lecturer
+        addLecturer($courseID, getUID());
     } catch (Exception $e) {
         header("location: createcourse.php?courseID=new");
         exit;

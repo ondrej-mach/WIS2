@@ -39,6 +39,16 @@ foreach ($_REQUEST as $key => $value) {
     if (in_array($key, $params)) {
         $attributes[$key] = $value;   
     }
+
+    $terms = getTerms($courseID);
+    $max = 100;
+    foreach ($terms as $t) {
+        $max -= $t->termMaxPoints;
+    }
+    if ($key == "termMaxPoints" && ($value > $max || $value < 0)) {
+        echo "Max points must be between 0 and $max";
+        exit;
+    }
 }
 
 # if we need to change any data, access the database
