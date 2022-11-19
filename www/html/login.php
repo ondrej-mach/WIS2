@@ -3,7 +3,7 @@
     <ul>
         <li>
             <a href=index.php id="logo">
-                <img src="../res/vut_logo.png" alt="VUT logo">
+                <img src="res/vut_logo.png" alt="VUT logo">
                 <h1>WIS 2</h1>
             </a>
         </li>
@@ -16,8 +16,8 @@
     <?php if (isset($_GET["error"])) echo "<p>Bad credentials</p>"; ?>
 
     <form id="login_form" action="includes/login-inc.php" method="POST">
-        <input class="input_login" type="text" name="username" />
-        <input class="input_login" type="password" name="password" />
+        <input class="input_login" type="text" name="username" placeholder="username"/>
+        <input class="input_login" type="password" name="password" placeholder="password"/>
         <button id="submit_button" type="submit" name="submit">Log in</button>
     </form>
 
