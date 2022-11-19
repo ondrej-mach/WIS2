@@ -47,19 +47,19 @@ function printBool($x) {
             $stmt = $conn->prepare("SELECT * FROM Account");
             $stmt->execute();
 
-            while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $usermodURL = 'usermod.php?accountID=' . $user['accountID'];
-                $userdelURL = 'userdel.php?accountID=' . $user['accountID'];
+            while ($account = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $usermodURL = 'usermod.php?accountID=' . $account['accountID'];
+                $userdelURL = 'userdel.php?accountID=' . $account['accountID'];
             
                 echo "<tr>";
-                echo "<td>" . $user['accountUsername'] . "</td>";
-                echo "<td>" . $user['accountRealName'] . "</td>";
-                echo "<td>" . $user['accountAddress'] . "</td>";
-                echo "<td>" . $user['accountDateOfBirth'] . "</td>";
-                echo "<td>" . $user['accountEmail'] . "</td>";
-                echo printBool($user['accountStudent']);
-                echo printBool($user['accountTeacher']);
-                echo printBool($user['accountAdmin']);
+                echo "<td>" . $account['accountUsername'] . "</td>";
+                echo "<td>" . $account['accountRealName'] . "</td>";
+                echo "<td>" . $account['accountAddress'] . "</td>";
+                echo "<td>" . $account['accountDateOfBirth'] . "</td>";
+                echo "<td>" . $account['accountEmail'] . "</td>";
+                echo printBool($account['accountStudent']);
+                echo printBool($account['accountTeacher']);
+                echo printBool($account['accountAdmin']);
                 echo "<td><a href=\"$usermodURL\">Edit</a></td>";
                 echo "<td><a href=\"$userdelURL\">Delete</a></td>";
                 echo "</tr>";

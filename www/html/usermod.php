@@ -1,12 +1,16 @@
 <?php
-require_once 'includes/authorization-inc.php';
 
+require_once 'includes/authorization-inc.php';
 assert_logged_in();
 
-$uid = $GLOBALS['user']->accountID;
+
+
 if (isset($_REQUEST["accountID"])) {
     assert_admin();
     $uid = $_REQUEST["accountID"];
+}
+else {
+    $uid = $GLOBALS['user']->accountID;
 }
 
 $userParams = [ 
@@ -53,6 +57,8 @@ if (!empty($attributes)) {
 
 <section class="section_form">
     <?php
+        require_once 'includes/users-inc.php';
+
         if (is_admin()) {
             echo "<a class=\"button_back\" href=manageusers.php>Back to user management</a><br/>";
         }
@@ -60,39 +66,42 @@ if (!empty($attributes)) {
         echo "<div><form method=\"POST\">";
         $disabled = is_admin() ? '' : 'disabled';
         
-        require_once 'includes/users-inc.php';
-        $user = getUserByID($uid);
+        // !!! for some reason, this cannot be called $user !!!
+        $user_to_process = getUserByID($uid);
         
         echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
-        $disabled value=\"$user->accountUsername\"></label><br/>";
+        $disabled value=\"$user_to_process->accountUsername\"></label><br/>";
         
         echo '<label>Name<input name="accountRealName" type="text" value="'.
-        $user->accountRealName.'"></label><br/>';
+        $user_to_process->accountRealName.'"></label><br/>';
         
         echo '<label>Address<input name="accountAddress" type="text" value="'.
-        $user->accountAddress.'"></label><br/>';
+        $user_to_process->accountAddress.'"></label><br/>';
 
         echo '<label>Date of birth<input name="accountDateOfBirth" type="date" value="'.
-        $user->accountDateOfBirth.'"></label><br/>';
+        $user_to_process->accountDateOfBirth.'"></label><br/>';
     
         echo '<label>Email<input name="accountEmail" type="text" value="'.
-        $user->accountEmail.'"></label><br/>';
+        $user_to_process->accountEmail.'"></label><br/>';
         
         #TODO uncheck user not working properly
-        $checked_a = $user->accountAdmin ? 'checked' : '';
-        $checked_t = $user->accountTeacher ? 'checked' : '';
-        $checked_s = $user->accountStudent ? 'checked' : '';
+        $checked_a = $user_to_process->accountAdmin ? "checked" : "";
+        $checked_t = $user_to_process->accountTeacher ? "checked" : "";
+        $checked_s = $user_to_process->accountStudent ? "checked" : "";
         if (is_admin()) {
             echo '  <label>Admin
-                        <input type="checkbox" name="accountAdmin"'.$checked_a.'>
+                        <input type="hidden" name="accountAdmin" value="off">
+                        <input type="checkbox" name="accountAdmin" '.$checked_a.'>
                     </label><br/>';
 
             echo '  <label>Teacher
-                        <input type="checkbox" name="accountTeacher"'.$checked_t.'>
+                        <input type="hidden" name="accountTeacher" value="off">
+                        <input type="checkbox" name="accountTeacher" '.$checked_t.'>
                     </label><br/>';
 
             echo '  <label>Student
-                        <input type="checkbox" name="accountStudent"'.$checked_s.'>
+                        <input type="hidden" name="accountStudent" value="off">
+                        <input type="checkbox" name="accountStudent" '.$checked_s.'>
                     </label><br/>';
         }
     ?>
