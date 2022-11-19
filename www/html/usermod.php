@@ -61,27 +61,27 @@ if (!empty($attributes)) {
         $disabled = is_admin() ? '' : 'disabled';
         
         require_once 'includes/users-inc.php';
-        $user = getUserByID($uid);
+        $account = getUserByID($uid);
         
         echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
-        $disabled value=\"$user->accountUsername\"></label><br/>";
+        $disabled value=\"$account->accountUsername\"></label><br/>";
         
         echo '<label>Name<input name="accountRealName" type="text" value="'.
-        $user->accountRealName.'"></label><br/>';
+        $account->accountRealName.'"></label><br/>';
         
         echo '<label>Address<input name="accountAddress" type="text" value="'.
-        $user->accountAddress.'"></label><br/>';
+        $account->accountAddress.'"></label><br/>';
 
         echo '<label>Date of birth<input name="accountDateOfBirth" type="date" value="'.
-        $user->accountDateOfBirth.'"></label><br/>';
+        $account->accountDateOfBirth.'"></label><br/>';
     
         echo '<label>Email<input name="accountEmail" type="text" value="'.
-        $user->accountEmail.'"></label><br/>';
+        $account->accountEmail.'"></label><br/>';
         
         #TODO uncheck user not working properly
-        $checked_a = $user->accountAdmin ? 'checked' : '';
-        $checked_t = $user->accountTeacher ? 'checked' : '';
-        $checked_s = $user->accountStudent ? 'checked' : '';
+        $checked_a = $account->accountAdmin ? 'checked' : '';
+        $checked_t = $account->accountTeacher ? 'checked' : '';
+        $checked_s = $account->accountStudent ? 'checked' : '';
         if (is_admin()) {
             echo '  <label>Admin
                         <input type="checkbox" name="accountAdmin"'.$checked_a.'>
