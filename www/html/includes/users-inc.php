@@ -45,8 +45,17 @@ function userMod($uid, $attributes) {
         if ($key == "accountPassword") {
             $value = password_hash($value, NULL);
         }
-        if (($value == "on") && ($key == "accountStudent" || $key == "accountTeacher" || $key == "accountAdmin")) {
-            $value = 1;
+        if (($key == "accountStudent" || $key == "accountTeacher" || $key == "accountAdmin")) {
+            switch($value) {
+                case "on":
+                    $value = 1;
+                    break;
+                case "off":
+                    $value = 0;
+                    break;
+                default:
+                    throw new Exception("Invalid value for $key: $value");
+            }
         }
         
         #TODO check if date value is valid
@@ -68,8 +77,8 @@ function userDel($uid) {
     
     $stmt = $conn->prepare("SELECT * FROM Account WHERE accountID = ?");
     $stmt->execute([$uid]);
-    $user = $stmt->fetch(PDO::FETCH_OBJ);
+    $user_to_return = $stmt->fetch(PDO::FETCH_OBJ);
     
-    return $user;
+    return $user_to_return;
 }
-?>
+

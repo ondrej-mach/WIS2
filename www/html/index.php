@@ -10,6 +10,10 @@
 
 <?php
 
+if (!is_logged_in()) {
+    echo "<a href=login.php><li>Login</li></a>";
+}
+
 if (!is_admin() && is_logged_in()) {
     echo "<a href=usermod.php><li>Manage account</li></a>";
 }
@@ -30,7 +34,7 @@ if (is_admin()) {
 }
 
 if (is_logged_in() && !is_admin() && !is_teacher() && !is_student()) {
-    echo "TODO";
+    dieForbidden();
 }
 ?>
 </ul>

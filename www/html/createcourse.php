@@ -14,10 +14,10 @@ if (isset($_POST['courseName'])) {
         }
         else {
             require_once 'includes/courses-inc.php';
-            $courseName = $_POST["courseName"];
 
+            $courseName = $_POST["courseName"];
             $courseID = addCourse($courseName, getUID());
-            echo "Course created successfully";
+            addLecturer($courseID, getUID());
         }
     }
 

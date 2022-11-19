@@ -44,4 +44,7 @@
         $username = $GLOBALS['user']->accountUsername;
         echo "<div id=\"uname_div\"><p id=\"username\">Logged in as $username</p></div>";
     }
+    else {
+        echo "<div id=\"uname_div\"><p id=\"username\">Not logged in</p></div>";
+    }
 ?>

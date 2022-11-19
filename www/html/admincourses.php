@@ -24,6 +24,7 @@
             <th>Credits</th>
             <th>Capacity</th>
             <th>State</th>
+            <th>Terms</th>
             <th></th>
             <th></th>
         </tr>
@@ -42,6 +43,7 @@
             }
             $editCourseURL = 'editcourse.php?courseID=' . $course->courseID;
             $deleteCourseURL = 'deletecourse.php?courseID=' . $course->courseID;
+            $summaryCourseURL = 'coursesummary.php?courseID=' . $course->courseID;
             $guarantor = getUserByID(getGuarantorID($course->courseID));
           
             echo "<tr>";
@@ -51,6 +53,7 @@
             echo "<td>" . $course->courseCredits . "</td>";
             echo "<td>" . $course->courseCapacity . "</td>";
             echo "<td>" . courseStateToString($course->courseState) . "</td>";
+            echo "<td><a href=\"$summaryCourseURL\">Summary</a></td>";
             echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
             echo "<td><a href=\"$deleteCourseURL\">Delete</a></td>";
             echo "</tr>";

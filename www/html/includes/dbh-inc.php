@@ -1,5 +1,5 @@
 <?php
-
+function dbh_init() {
     if (!isset($GLOBALS['conn'])) {
         if(is_readable(__DIR__.'/secrets.php')) {
             require_once 'secrets.php';
@@ -20,4 +20,6 @@
         
         $GLOBALS['conn'] = $conn;
     }
-?>
+}
+dbh_init();
+

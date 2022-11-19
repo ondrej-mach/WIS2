@@ -67,9 +67,15 @@
             <input name="termDate" type="date"
             value="'.$term->termDate.'">
             </label><br/>';
-            
+        
+            $terms = getTerms($term->courseID);
+            $max = 100;
+            foreach ($terms as $t) {
+                $max -= $t->termMaxPoints;
+            }
         echo '<label>Max points
-            <input name="termMaxPoints" type="text"
+            <input name="termMaxPoints" type="number"
+            min = "0" max = "'.$max.'"
             value="'.$term->termMaxPoints.'">
             </label><br/>';
 

@@ -10,7 +10,7 @@
     $lecturers = getLecturerIDs($courseID);
     $uid = getUID();
 
-    if (!(is_teacher() && (in_array($uid, $lecturers) || $uid == getGuarantorID($courseID)))) {
+    if (!is_admin() && !(is_teacher() && (in_array($uid, $lecturers) || $uid == getGuarantorID($courseID)))) {
         dieForbidden();
     }
 ?>
@@ -30,9 +30,9 @@
     }
 ?>
 
-<section class="section_table">
-
 <h3>Course summary</h3>
+
+<section class="section_table">
 
 <table>
     <thead>
@@ -40,6 +40,7 @@
         <?php
             require_once 'includes/courses-inc.php';
             require_once 'includes/terms-inc.php';
+            
             echo "<th>Student \ Term</th>";
             $terms = getTerms($courseID);
             foreach ($terms as $term) {
@@ -51,12 +52,14 @@
     </thead>
     <tbody>
         <?php
+        
             require_once 'includes/student-inc.php';
             require_once 'includes/users-inc.php';
             require_once 'includes/courses-inc.php';
+            
             $students = getStudents($courseID);
             foreach ($students as $student) {
-                echo "<tr>";
+                echo "<tr>"; 
                 echo "<td>".getUserByID($student->accountID)->accountUsername."</td>";
                 $summary = 0;
                 foreach ($terms as $term) {
