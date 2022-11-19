@@ -30,9 +30,9 @@
     }
 ?>
 
-<section class="section_table">
-
 <h3>Evaluate term</h3>
+
+<section class="section_table">
 
 <table>
     <thead>

@@ -24,12 +24,13 @@ if (!(is_teacher() && (in_array($uid, $lecturers) || $uid == getGuarantorID($cou
 }
 
 foreach($points as $key => $value) {
+    # check max points in backend
     $maxPoints = getTermByID($termID)->termMaxPoints;
     if ($value > $maxPoints) {
         exit('Wrong parameters');
     }
-    if (!isset($value)) {
-        evaluateTerm($termID, $key, $uid, $value);
+    if (!isset($value) || $value == "") {
+        evaluateTerm($termID, $key, $uid, 0);
     }
     else {
         updatePoints($value, $uid, $termID, $key);

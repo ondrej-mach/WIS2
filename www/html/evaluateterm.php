@@ -24,12 +24,7 @@
 
 
 <?php
-    if (is_admin()) {
-        echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
-    }
-    if (is_teacher()) {
-        echo "<a class=\"button_back\" href=teachercourses.php>Back to courses</a><br/>";
-    }
+    echo "<a class=\"button_back\" href=evaluatecourse.php?courseID=".$courseID.">Back to courses</a><br/>";
 ?>
 <h3> Evaluate term </h3>
 
