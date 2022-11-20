@@ -23,17 +23,16 @@
 
 <?php
     if (is_admin()) {
-        echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
+        echo "<div id=\"button_back\" ><a href=admincourses.php>Back to courses</a></div><br/>";
     }
     if (is_teacher()) {
-        echo "<a class=\"button_back\" href=teachercourses.php>Back to courses</a><br/>";
+        echo "<div id=\"button_back\" ><a href=teachercourses.php>Back to courses</a></div><br/>";
     }
 ?>
-
-<h3>Course summary</h3>
+</section>
 
 <section class="section_table">
-
+<h3>Course summary</h3>
 <table>
     <thead>
         <tr>

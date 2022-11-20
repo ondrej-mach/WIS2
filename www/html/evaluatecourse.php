@@ -23,47 +23,46 @@
 
 <?php
     if (is_admin()) {
-        echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
+        echo "<div id=\"button_back\" ><a href=admincourses.php>Back to courses</a></div><br/>";
     }
     if (is_teacher()) {
-        echo "<a class=\"button_back\" href=teachercourses.php>Back to courses</a><br/>";
+        echo "<div id=\"button_back\" ><a href=teachercourses.php>Back to courses</a></div><br/>";
     }
 ?>
-
-<h3>Evaluate term</h3>
+</section>
 
 <section class="section_table">
+    <h3>Evaluate term</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Points</th>
+                <th>Auto</th>
+                <th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                require_once 'includes/courses-inc.php';
+                require_once 'includes/terms-inc.php';
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Points</th>
-            <th>Auto</th>
-            <th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-            require_once 'includes/courses-inc.php';
-            require_once 'includes/terms-inc.php';
-
-            $terms = getTerms($courseID);
-            foreach ($terms as $term) {
-                $evaluateURL = "evaluateterm.php?termID=$term->termID";
-                
-                    echo "<tr>";
-                    echo "<td>" . $term->termName . "</td>";
-                    echo "<td>" . $term->termDate . "</td>";
-                    echo "<td>" . $term->termMaxPoints . "</td>";
-                    echo "<td>" . $term->termAutoregistered . "</td>";
-                    echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
-                    echo "</tr>";
-            }
-        ?>
-    </tbody>
-</table>
+                $terms = getTerms($courseID);
+                foreach ($terms as $term) {
+                    $evaluateURL = "evaluateterm.php?termID=$term->termID";
+                    
+                        echo "<tr>";
+                        echo "<td>" . $term->termName . "</td>";
+                        echo "<td>" . $term->termDate . "</td>";
+                        echo "<td>" . $term->termMaxPoints . "</td>";
+                        echo "<td>" . $term->termAutoregistered . "</td>";
+                        echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
+                        echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
 </section>
 
 <?php include_once 'templates/footer.php'; ?>

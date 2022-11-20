@@ -31,9 +31,11 @@ include_once 'templates/header.php';
 include_once 'templates/navbar.php';
 
 if (is_admin()) {
-    echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
+    echo "<div id=\"button_back\"><a href=admincourses.php>Back to courses</a></div><br/>";
 }
 ?>
+</section>
+
 <section class="section_form">
     <div>
         <h1>Add new course</h1>

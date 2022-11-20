@@ -38,8 +38,9 @@
     }
 
     echo "</ul>
-        </section>";
-
+        </section>
+        <section id=\"back_login\">";
+    
     if (is_logged_in()) {
         $username = $GLOBALS['user']->accountUsername;
         echo "<div id=\"uname_div\"><p id=\"username\">Logged in as $username</p></div>";

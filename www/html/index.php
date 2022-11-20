@@ -5,6 +5,9 @@
 <?php include_once 'templates/header.php'; ?>
 <?php include_once 'templates/navbar.php'; ?>
 
+<div id="button_back"></div><br/>
+</section>
+
 <section id="section_index">
 <ul>
 
@@ -27,7 +30,6 @@ if (is_teacher()) {
 }
 
 if (is_admin()) {
-    # TODO
     echo "<a href=manageusers.php><li>User management</li></a>";
     echo "<a href=managerooms.php><li>Room management</li></a>";
     echo "<a href=admincourses.php><li>Manage courses</li></a>";

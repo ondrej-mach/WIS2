@@ -9,12 +9,13 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
+<div id="button_back" ><a href=index.php>Back to index</a></div><br/>
+</section>
+
 <div id="manage_courses_a">
 
-<h3>Manage Courses</h3>
-
 <section class="section_table">
-
+<h3>Manage Courses</h3>
 <table>
     <thead>
         <tr>
@@ -25,7 +26,6 @@
             <th>Capacity</th>
             <th>State</th>
             <th>Terms</th>
-            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -42,7 +42,6 @@
                 continue;
             }
             $editCourseURL = 'editcourse.php?courseID=' . $course->courseID;
-            $deleteCourseURL = 'deletecourse.php?courseID=' . $course->courseID;
             $summaryCourseURL = 'coursesummary.php?courseID=' . $course->courseID;
             $guarantor = getUserByID(getGuarantorID($course->courseID));
           
@@ -51,23 +50,27 @@
             echo "<td>" . $course->courseFullName . "</td>";
             echo "<td>" . $guarantor->accountRealName . "</td>";
             echo "<td>" . $course->courseCredits . "</td>";
-            echo "<td>" . $course->courseCapacity . "</td>";
+            $students = getStudents($course->courseID);
+            echo "<td>" . count($students) ."/". $course->courseCapacity ."</td>";
             echo "<td>" . courseStateToString($course->courseState) . "</td>";
             echo "<td><a href=\"$summaryCourseURL\">Summary</a></td>";
             echo "<td><a href=\"$editCourseURL\">Edit</a></td>";
-            echo "<td><a href=\"$deleteCourseURL\">Delete</a></td>";
             echo "</tr>";
         }
 
     ?>
     </tbody>
 </table>
-<form action=createcourse.php method="POST">
+<?php
+if (!is_admin()) {
+echo '<form action=createcourse.php method="POST">
   <label>Add course with ID
     <input name="courseName" type="text">
   </label>
   <button type="submit" name="submit">Add</button>
-</form>
+</form>';
+}
+?>
 </section>
 </div>
 

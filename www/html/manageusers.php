@@ -18,12 +18,13 @@ function printBool($x) {
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
+<div id="button_back"><a href="index.php">Back to index</a></div></br>
+</section>
 
 <div id="manage_users">
 
-<h3>Manage Users</h3>
-
 <section class="section_table">
+<h3>Manage Users</h3>
 <table id="table_users">
     <thead>
         <tr>
