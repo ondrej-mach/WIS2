@@ -139,6 +139,18 @@ function modifyCourse($courseID, $attributes) {
         if (!in_array($key, $possibleAttr)) {
             throw new Exception("Attribute $key does not exist.");
         }
+        if ($key == "courseOpen") {
+            switch($value) {
+                case "on":
+                    $value = 1;
+                    break;
+                case "off":
+                    $value = 0;
+                    break;
+                default:
+                    throw new Exception("Invalid value for courseOpen.");
+            }
+        }
         
         if ($key == "courseGuarantor") {
             $conn->beginTransaction();

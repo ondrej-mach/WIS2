@@ -56,7 +56,7 @@ if (is_admin()) {
     echo '<div id="button_back" ><a href=manageusers.php>Back to user management</a></div><br/>';
 }
 else {
-    echo '<div id="button_back" ></div><br/>';
+    echo '<div id="button_back" ><a href=index.php>Back to index</a></div><br/>';
 }
 ?>
 </section>

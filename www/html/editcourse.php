@@ -12,14 +12,12 @@
     $new = ($courseID == 'new');
     $permitted = false;
     $is_admin = is_admin();
-    $is_guarantor = (getUID() == getGuarantorID($courseID));
+    $is_guarantor = ($new) ? true : (getUID() == getGuarantorID($courseID));
     
     if ($is_admin) {
         $permitted = true;
         
     } elseif (is_teacher()) {
-        
-        
         if ($new) {
             $permitted = true;
             
@@ -164,14 +162,15 @@
             }
             echo '</select></label><br/>';
         }
-        /*
-        if (is_teacher() && ($uid === $gid)) {
-            $disabled = (count(getStudents($courseID)) > $course->courseCapacity) ? "disabled" : "";
-            #TODO check if course is full and disable button
+        
+        if ($is_guarantor) {
+            $disabled = (count(getStudents($courseID)) >= $course->courseCapacity) ? "disabled" : "";
+            $checked = ($course->courseOpen) ? "checked" : "";
             echo '<label>Open for enrollment
-                    <input name="courseOpen" type="checkbox" '.$disabled.'>
+                    <input name="courseOpen" type="hidden" value="off" >
+                    <input name="courseOpen" type="checkbox" ' . $checked . $disabled . '>
                 </label><br/>';
-        }*/
+        }
         
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';

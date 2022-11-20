@@ -59,7 +59,7 @@
                 echo '<td>' . $student->accountUsername . '</td>';
                 echo '<td>' . $student->accountRealName . '</td>';
                 echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
-                echo "<input type=\"hidden\" name=\"approved[$student->accountID]\" value=\"off\" />";
+                echo "<input type=\"hidden\" name=\"approved[$student->accountID]\" value=\"off\"/>";
                 echo "<td><input type=\"checkbox\" name=\"approved[$student->accountID]\" $check_approved></input></td>";
                 echo '</tr>';
             }

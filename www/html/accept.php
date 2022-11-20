@@ -20,10 +20,10 @@ if (!(is_teacher() && ($uid == getGuarantorID($courseID)))) {
 
 foreach($approved as $key => $value) {
     if ($value == "on") {
-        setRegistration($courseID, $key, 1);
+        setApproval($courseID, $key, 1);
     } 
     else if ($value == "off"){
-        setRegistration($courseID, $key, 0);
+        setApproval($courseID, $key, 0);
     }
 }
 
