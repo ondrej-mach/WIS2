@@ -31,11 +31,11 @@ function getTermByID($termID) {
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
-function getTermInfo($termID) {
+function getTermInfo($termID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID
                                        FROM Term NATURAL JOIN SignedUp
-                                       WHERE termID = ?");
-    $stmt->execute([$termID]);
+                                       WHERE termID = ? AND studentID = ?");
+    $stmt->execute([$termID, $accountID]);
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 

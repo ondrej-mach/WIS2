@@ -11,7 +11,7 @@
         dieForbidden();
     }
 
-    $term = getTermInfo($termID);
+    $term = getTermInfo($termID, getUID());
 ?>
 
 <!DOCTYPE html>
