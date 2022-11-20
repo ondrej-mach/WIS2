@@ -5,7 +5,7 @@
     echo "<ul>
             <li>
                 <a href=index.php id=\"logo\">
-                    <img src=\"../res/vut_logo.png\" alt=\"VUT logo\">
+                    <img src=\"res/vut_logo.png\" alt=\"VUT logo\">
                     <h1>WIS 2</h1>
                 </a>
             </li>";  

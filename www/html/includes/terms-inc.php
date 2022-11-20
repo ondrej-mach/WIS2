@@ -7,8 +7,12 @@ function getEmptyTerm() {
     $term = (object) [
         'termID' => NULL,
         'courseID' => NULL,
+        'roomID' => NULL,
         'termName' => '',
+        'termDescription' => '',
+        'termType' => 'Other',
         'termDate' => NULL,
+        'termLength' => NULL,
         'termMaxPoints' => 0,
         'termAutoregistered' => true,
     ];
@@ -27,6 +31,43 @@ function getTermByID($termID) {
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
+function getTermInfo($termID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID
+                                       FROM Term NATURAL JOIN SignedUp
+                                       WHERE termID = ? AND studentID = ?");
+    $stmt->execute([$termID, $accountID]);
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+function getUnregisteredTermsByStudent($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termID, termName, termDate, termMaxPoints
+                                       FROM Term WHERE courseID = ? AND termID NOT IN (SELECT termID FROM SignedUp WHERE studentID = ?)");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function getRegisteredTermsByStudent($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerID
+                                       FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
+                                       WHERE courseID = ? AND studentID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function getFutureTerms($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDate, termLength, roomName
+                                       FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID JOIN Room ON Term.roomID = Room.roomID
+                                       WHERE courseID = ? AND termDate > NOW() AND studentID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function isRegisteredToTerm($termID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT COUNT(termID) AS cnt FROM SignedUp WHERE termID = ? AND studentID = ?");
+    $stmt->execute([$termID, $accountID]);
+    return $stmt->fetch(PDO::FETCH_OBJ)->cnt > 0;
+}
+
 function addTerm($courseID) {
     $conn = $GLOBALS['conn'];
     $conn->beginTransaction();
@@ -43,8 +84,12 @@ function modifyTerm($termID, $attributes) {
     $conn = $GLOBALS['conn'];
     
     $possibleAttr = [ 
+        "roomID",
         "termName",
+        "termDescription",
+        "termType",
         "termDate",
+        "termLength",
         "termMaxPoints",
         "termAutoregistered",
     ];

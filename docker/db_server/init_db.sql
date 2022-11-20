@@ -73,10 +73,15 @@ CREATE TABLE Lecturer (
 CREATE TABLE Term (
     termID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     courseID INTEGER NOT NULL,
+    roomID INTEGER,
     termName VARCHAR(128),
-    termDate DATE,
+    termDescription TEXT,
+    termType VARCHAR(16),
+    termDate DATETIME,
+    termLength INTEGER,
     termMaxPoints INTEGER,
     termAutoregistered BOOLEAN DEFAULT false,
+    FOREIGN KEY (roomID) REFERENCES Room(roomID),
     FOREIGN KEY (courseID) REFERENCES Course(courseID)
 );
 

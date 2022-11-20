@@ -2,23 +2,14 @@
 
 require_once 'includes/dbh-inc.php';
 
-function signStudentToTerm($termID, $studentID, $uid) {
+function signStudentToTerm($termID, $studentID) {
     $conn = $GLOBALS['conn'];
-    $sql = "INSERT INTO SignedUp (termID, studentID, lecturerID) 
-            VALUES (?, ?, ?)";
+    $sql = "INSERT INTO SignedUp (termID, studentID) 
+            VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$termID, $studentID, $uid]);
+    $stmt->execute([$termID, $studentID]);
 
     return $conn->lastInsertId();
-}
-
-#TODO not sure this is needed
-function evaluateTerm($termID, $studentID, $uid, $points) {
-    $conn = $GLOBALS['conn'];
-    $sql = "INSERT INTO SignedUp (termID, studentID, lecturerID, points) 
-            VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$termID, $studentID, $uid, $points]);
 }
 
 function updatePoints($points, $uid, $termID, $studentID) {

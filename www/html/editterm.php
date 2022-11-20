@@ -63,16 +63,50 @@
             <input name="termName" type="text"
             value="'.$term->termName.'">
             </label><br/>';
+
+        echo '<label>Description
+            <input name="termDescription" type="text"
+            value="'.$term->termDescription.'">
+            </label><br/>';
+
+        $type = $term->termType ?? "Other";
+        echo '<label>Type
+            <select name="termType">
+                <option '.($type == "Lecture" ? "selected " : "").'value="Lecture">Lecture</option>
+                <option '.($type == "Exercise" ? "selected " : "").'value="Exercise">Exercise</option>
+                <option '.($type == "Project" ? "selected " : "").'value="Project">Project</option>
+                <option '.($type == "Exam" ? "selected " : "").'value="Exam">Exam</option>
+                <option '.($type == "Other" ? "selected " : "").'value="Other">Other</option>
+            </select>
+            </label><br/>';
             
         echo '<label>Date
-            <input name="termDate" type="date"
-            value="'.$term->termDate.'">
+            <input name="termDate" type="datetime-local"
+            value="'.date("Y-m-d\TH:i", strtotime($term->termDate ?? time())).'">
+            </label><br/>';
+
+        echo '<label>Length (in minutes)
+            <input name="termLength" type="number"
+            value="'.$term->termLength.'">
+            </label><br/>';
+
+        require_once 'includes/rooms-inc.php';
+        $rooms = getRooms();
+        echo '<label>Room
+            <select name="roomID">
+                <option '.($new ? "selected" : "").' value="">None</option>';
+        foreach ($rooms as $room) {
+            echo '<option '.($room->roomID == $term->roomID ? "selected " : "").'value="'.$room->roomID.'">'.$room->roomName.'</option>';
+        }
+        echo '</select>
             </label><br/>';
         
             $terms = getTerms($term->courseID);
             $max = 100;
             foreach ($terms as $t) {
-                $max -= $t->termMaxPoints;
+                if ($t->termID != $termID) {
+                    $max -= $t->termMaxPoints;
+                }
             }
         echo '<label>Max points
             <input name="termMaxPoints" type="number"

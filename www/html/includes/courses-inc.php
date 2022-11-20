@@ -213,4 +213,40 @@ function getStudents($courseID) {
     }
     return $students;
 }
+
+function getStudentsByTerm($courseID, $termID) {
+    $students = [];
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Account JOIN SignedUp ON Account.accountID = SignedUp.studentID JOIN Term ON Term.termID = SignedUp.termID WHERE Term.courseID = ? AND Term.termID = ?");
+    $stmt->execute([$courseID, $termID]);
+    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+    foreach($result as $student) {
+        array_push($students, $student);
+    }
+    return $students;
+}
+
+function getCoursesForStudent($accountID) {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT DISTINCT courseID, courseName, courseFullName, courseCredits FROM Course NATURAL JOIN SignedUp WHERE studentID = ?");
+    $stmt->execute([$accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function getCourseTotalPoints($courseID, $accountID) {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT SUM(points) AS points FROM Course NATURAL JOIN SignedUp NATURAL JOIN Term WHERE courseID = ? AND studentID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+    return $result->points;
+}
+
+function doesStudentAttend($courseID, $accountID) {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Attends WHERE approved = true AND courseID = ? AND accountID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+    return $result != null;
+}
 ?>

@@ -27,23 +27,31 @@ if ($termID == 'new') {
 }
 
 $params = [ 
+    "roomID",
     "termName",
+    "termDescription",
+    "termType",
     "termDate",
+    "termLength",
     "termMaxPoints",
     "termAutoregistered",
 ];
 
 $attributes = [];
+$terms = getTerms($courseID);
+$max = 100;
+foreach ($terms as $t) {
+    if ($t->termID != $termID) {
+        $max -= $t->termMaxPoints;
+    }
+}
 
 foreach ($_REQUEST as $key => $value) {
+    if ($key == "termDate") {
+        $value = date("Y-m-d H:i:00", strtotime($value));
+    }
     if (in_array($key, $params)) {
         $attributes[$key] = $value;   
-    }
-
-    $terms = getTerms($courseID);
-    $max = 100;
-    foreach ($terms as $t) {
-        $max -= $t->termMaxPoints;
     }
     if ($key == "termMaxPoints" && ($value > $max || $value < 0)) {
         echo "Max points must be between 0 and $max";

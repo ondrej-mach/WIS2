@@ -48,23 +48,14 @@
             require_once 'includes/users-inc.php';
             require_once 'includes/student-inc.php';
 
-            $students = getStudents($courseID);
+            $students = getStudentsByTerm($courseID, $termID);
 
             foreach ($students as $student) {
-                
-                $check_approved = $student->approved ? "checked" : "";
-                $student = getUserByID($student->accountID);
-                $points = getStudentPoints($termID, $student->accountID);
-
-                if (!isset($points)) {
-                    evaluateTerm($termID, $student->accountID, $uid, 0);
-                }
-                
                 echo '<tr>';
                 echo '<td>' . $student->accountUsername . '</td>';
                 echo '<td>' . $student->accountRealName . '</td>';
                 echo '<td><input type="number" name="points[' . $student->accountID . ']" 
-                    value="' . $points . '" min="0" max="'.$term->termMaxPoints.'"/></td>';
+                    value="' . $student->points . '" min="0" max="'.$student->termMaxPoints.'"/></td>';
                 echo '<td><input type="hidden" name="courseID" value="' . $courseID . '"/></td>';
                 echo '<td><input type="hidden" name="termID" value="' . $termID . '"/></td>';
                 echo "</tr>";

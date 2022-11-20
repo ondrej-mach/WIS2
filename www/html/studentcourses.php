@@ -35,6 +35,7 @@ $stud_courses = getStudentCourses($uid);
             <th>Credits</th>
             <th>Capacity</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +53,7 @@ $stud_courses = getStudentCourses($uid);
 
             $guarantor = getUserByID(getGuarantorID($course->courseID));
             $detailURL = 'detailcourse.php?courseID='.$course->courseID.'&studentID='.$uid;
+            $courseURL = 'studentcourse.php?courseID='.$course->courseID;
           
             echo "<tr>";
             echo "<td>" . $course->courseName . "</td>";
@@ -61,6 +63,7 @@ $stud_courses = getStudentCourses($uid);
             $students = getStudents($course->courseID);
             echo "<td>" . count($students) ."/". $course->courseCapacity ."</td>";
             echo "<td><a href=\"$detailURL\">My results</a></td>";
+            echo "<td><a href=\"$courseURL\">Course details</a></td>";
             echo "</tr>";
         }
 
@@ -193,4 +196,4 @@ $stud_courses = getStudentCourses($uid);
 
 <?php include_once 'templates/footer.php' ?>
 
-</html>
+</html> 
