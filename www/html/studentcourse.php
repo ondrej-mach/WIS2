@@ -16,6 +16,7 @@
     require_once 'includes/terms-inc.php';
     require_once 'includes/student-inc.php';
 	require_once 'includes/users-inc.php';
+    require_once 'includes/rooms-inc.php';
 
     if (!isset($_GET['courseID'])) {
         exit('Wrong parameters');
@@ -101,6 +102,36 @@
 </table>
 
 </section>
+<section class="section_table">
+<h4>Schedule</h4>
+
+<table>
+	<thead>
+		<tr>
+			<th>Date</th>
+            <th>Time</th>
+            <th>Room</th>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+		$terms = getFutureTerms($course->courseID, getUID());
+		foreach ($terms as $term) {
+            $time = strtotime($term->termDate);
+			echo "<tr>";
+			echo "<td>" . date("Y-m-d", $time) . "</td>";
+			echo "<td>" . date("H:i", $time) . " - " . date("H:i", $time + intval($term->termLength) * 60) . "</td>";
+            echo "<td>" . $term->roomName . "</td>";
+            echo "<td>" . $term->termName . "</td>";
+			echo "</tr>";
+		}
+  	?>
+  	</tbody>
+</table>
+
+</section>
+
 </div>
 
 <?php include_once 'templates/footer.php' ?>

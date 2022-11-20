@@ -7,8 +7,12 @@ function getEmptyTerm() {
     $term = (object) [
         'termID' => NULL,
         'courseID' => NULL,
+        'roomID' => NULL,
         'termName' => '',
+        'termDescription' => '',
+        'termType' => 'Other',
         'termDate' => NULL,
+        'termLength' => NULL,
         'termMaxPoints' => 0,
         'termAutoregistered' => true,
     ];
@@ -46,6 +50,14 @@ function getRegisteredTermsByStudent($courseID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerID
                                        FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
                                        WHERE courseID = ? AND studentID = ?");
+    $stmt->execute([$courseID, $accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
+function getFutureTerms($courseID, $accountID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDate, termLength, roomName
+                                       FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID JOIN Room ON Term.roomID = Room.roomID
+                                       WHERE courseID = ? AND termDate > NOW() AND studentID = ?");
     $stmt->execute([$courseID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }

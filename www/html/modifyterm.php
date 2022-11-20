@@ -41,7 +41,9 @@ $attributes = [];
 $terms = getTerms($courseID);
 $max = 100;
 foreach ($terms as $t) {
-    $max -= $t->termMaxPoints;
+    if ($t->termID != $termID) {
+        $max -= $t->termMaxPoints;
+    }
 }
 
 foreach ($_REQUEST as $key => $value) {
