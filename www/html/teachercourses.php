@@ -11,6 +11,9 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
+<div id="button_back" ><a href=index.php>Back to index</a></div><br/>
+</section>
+
 <div id="manage_courses_t">
 
 <h3>My courses</h3>
@@ -23,10 +26,11 @@
 			<th>Name</th>
 			<th>Full name</th>
 			<th>State</th>
-			<th>Summary</th>
-			<th>Evaluate</th>
-			<th>Accept</th>
-			<th>Edit</th>
+			<th>Capacity</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
 			<th>
 		</tr>
 	</thead>
@@ -37,7 +41,8 @@
 		require_once 'includes/users-inc.php';
 		require_once 'includes/teachers-inc.php';
 
-		$courses = getCoursesForTeacher(getUID());
+		$uid = getUID();
+		$courses = getCoursesForTeacher($uid);
 		$courseIDs = [];
 		foreach ($courses as $course) {
 			#TODO can be done better by modifying SQL query
@@ -59,8 +64,11 @@
 			echo "<td>" . $course->courseFullName . "</td>";
 			echo "<td>" . courseStateToString($course->courseState) . "</td>";
 
-			$is_teacher = in_array(getUID(), getLecturerIDs($course->courseID));
-			$is_guarantor = (getUID() == getGuarantorID($course->courseID));
+            $students = getStudents($course->courseID);
+            echo "<td>" . count($students) ."/". $course->courseCapacity ."</td>";
+
+			$is_teacher = in_array($uid, getLecturerIDs($course->courseID));
+			$is_guarantor = ($uid == getGuarantorID($course->courseID));
 
 			if ($course->courseState == 10) {
 				echo "<td><a href=\"$courseSummaryURL\">Summary</a></td>";

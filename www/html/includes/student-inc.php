@@ -55,4 +55,12 @@ function removeStudentFromTerm($termID, $studentID) {
     $stmt = $conn->prepare($sql);
     $stmt->execute([$termID, $studentID]);
 }
-?>
+
+function setRegistration($courseID, $accountID, $approved) {
+    $conn = $GLOBALS['conn'];
+    $sql = "UPDATE Attends 
+            SET approved = ? 
+            WHERE courseID = ? AND accountID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$approved, $courseID, $accountID]);
+}
