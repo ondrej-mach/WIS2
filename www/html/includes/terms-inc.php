@@ -27,6 +27,14 @@ function getTermByID($termID) {
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
+function getTermInfo($termID) {
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID
+                                       FROM Term NATURAL JOIN SignedUp
+                                       WHERE termID = ?");
+    $stmt->execute([$termID]);
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
 function getUnregisteredTermsByStudent($courseID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT termID, termName, termDate, termMaxPoints
                                        FROM Term WHERE courseID = ? AND termID NOT IN (SELECT termID FROM SignedUp WHERE studentID = ?)");
@@ -64,8 +72,12 @@ function modifyTerm($termID, $attributes) {
     $conn = $GLOBALS['conn'];
     
     $possibleAttr = [ 
+        "roomID",
         "termName",
+        "termDescription",
+        "termType",
         "termDate",
+        "termLength",
         "termMaxPoints",
         "termAutoregistered",
     ];

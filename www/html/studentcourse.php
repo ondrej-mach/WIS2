@@ -43,6 +43,7 @@
 			<th>Max points</th>
 			<th>Points</th>
             <th>Graded by</th>
+            <th>
 		</tr>
 	</thead>
 	<tbody>
@@ -55,12 +56,15 @@
 				$lecturerName = "";
 			}
 
+            $termDetailURL = 'studentterm.php?termID='.$term->termID;
+
 			echo "<tr>";
 			echo "<td>" . $term->termName . "</td>";
 			echo "<td>" . $term->termDate . "</td>";
             echo "<td>" . $term->termMaxPoints . "</td>";
             echo "<td>" . $term->points . "</td>";
             echo "<td>" . $lecturerName . "</td>";
+            echo "<td><a href=\"" . $termDetailURL . "\">Details</a></td>";
 			echo "</tr>";
 		}
   	?>
@@ -87,7 +91,7 @@
 
 			echo "<tr>";
 			echo "<td>" . $term->termName . "</td>";
-			echo "<td>" . $term->date . "</td>";
+			echo "<td>" . $term->termDate . "</td>";
             echo "<td>" . $term->termMaxPoints . "</td>";
             echo "<td><a href=\"registerterm.php?termID=" . $term->termID . "\">Register</a></td>";
 			echo "</tr>";

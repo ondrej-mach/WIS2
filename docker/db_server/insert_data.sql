@@ -69,25 +69,26 @@ INSERT INTO Lecture (courseID, roomID) VALUES (1, 2);
 INSERT INTO Lecture (courseID, roomID) VALUES (2, 1);
 
 -- terms for the 2 courses
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (1, 2, 'Půlsemestrální zkouška', '2022/11/02', '15', true);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered)
-VALUES (2, 1, 'Zápočet', '2022/12/17', '30', true);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (3, 2, 'Bonusový úkol', '2022/10/1', '2', false);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (4, 3, 'Bonusový úkol', '2022/10/9', '4', false);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (5, 1, 'Zápočet', '2022/12/17', '15', true);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (6, 2, 'Půlsemestrální zkouška', '2022/9/02', '20', false);
-INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered) 
-VALUES (7, 3, 'Zápočet', '2022/11/19', '10', true);
+INSERT INTO Term (termID, courseID, roomID, termName, termDate, termMaxPoints, termAutoregistered, termType, termLength) 
+VALUES (1, 2, 1, 'Půlsemestrální zkouška', '2022/11/02 12:00', '15', true, 'Exam', '60');
+INSERT INTO Term (termID, courseID, termName, termDescription, termDate, termMaxPoints, termAutoregistered, termType)
+VALUES (2, 1, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/12/17', '30', true, 'Other');
+INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered, termType) 
+VALUES (3, 2, 'Bonusový úkol', '2022/10/1 23:59', '2', false, 'Project');
+INSERT INTO Term (termID, courseID, termName, termDate, termMaxPoints, termAutoregistered, termType) 
+VALUES (4, 3, 'Bonusový úkol', '2022/10/9', '4', false, 'Project');
+INSERT INTO Term (termID, courseID, termName, termDescription, termDate, termMaxPoints, termAutoregistered, termType) 
+VALUES (5, 1, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/12/17', '15', true, 'Other');
+INSERT INTO Term (termID, courseID, roomID, termName, termDate, termMaxPoints, termAutoregistered, termType, termLength) 
+VALUES (6, 2, 2, 'Půlsemestrální zkouška', '2022/9/02 08:00', '20', false, 'Exam', '90');
+INSERT INTO Term (termID, courseID, termName, termDescription, termDate, termMaxPoints, termAutoregistered, termType) 
+VALUES (7, 3, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/11/19', '10', true, 'Other');
 
 -- student signed up for term
 INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 1, 5, 10);
 INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (6, 2, 5, 5);
 INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 3, 4, 5);
+INSERT INTO SignedUp (studentID, termID) VALUES (3, 5);
 
 -- student attends course
 INSERT INTO Attends (accountID, courseID, approved) VALUES (3, 1, true);

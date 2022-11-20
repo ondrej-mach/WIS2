@@ -62,10 +62,30 @@
             <input name="termName" type="text"
             value="'.$term->termName.'">
             </label><br/>';
+
+        echo '<label>Description
+            <input name="termDescription" type="text"
+            value="'.$term->termDescription.'">
+            </label><br/>';
+
+        echo '<label>Type
+            <select name="termType">
+                <option value="Lecture">Lecture</option>
+                <option value="Exercise">Exercise</option>
+                <option value="Project">Project</option>
+                <option value="Exam">Exam</option>
+                <option value="Other">Other</option>
+            </select>
+            </label><br/>';
             
         echo '<label>Date
-            <input name="termDate" type="date"
-            value="'.$term->termDate.'">
+            <input name="termDate" type="datetime-local"
+            value="'.date("Y-m-dTH:i", strtotime($term->termDate)) ?? date("Y-m-dT00:00", time()).'">
+            </label><br/>';
+
+        echo '<label>Length (in minutes, not for projects)
+            <input name="termLength" type="number"
+            value="'.$term->termLength.'">
             </label><br/>';
         
             $terms = getTerms($term->courseID);
