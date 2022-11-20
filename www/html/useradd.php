@@ -32,6 +32,8 @@
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
+<div id="button_back" ><a href="manageusers.php">Back to manage users</a></div><br/>
+</section>
 
 <section class="section_form">
     <div>

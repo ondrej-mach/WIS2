@@ -8,20 +8,20 @@
 
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
+<div id="button_back"><a href="index.php">Back to Index</a></div>
+</section>
 
 <div id="manage_rooms">
-    
-<h3>Manage Rooms</h3>
-
 <section class="section_table">
+    <h3>Manage Rooms</h3>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Desc</th>
+                <th>Description</th>
                 <th></th>
-                <th>
+                <th></th>
             </tr>
         </thead>
         <tbody>

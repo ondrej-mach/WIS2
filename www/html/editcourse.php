@@ -6,21 +6,22 @@
         exit('Wrong parameters');
     }
     
+    require_once 'includes/courses-inc.php';
+
     $courseID = $_GET['courseID'];
     $new = ($courseID == 'new');
-    
     $permitted = false;
+    $is_admin = is_admin();
+    $is_guarantor = ($new) ? true : (getUID() == getGuarantorID($courseID));
     
-    if (is_admin()) {
+    if ($is_admin) {
         $permitted = true;
         
     } elseif (is_teacher()) {
-        require_once 'includes/courses-inc.php';
-        
         if ($new) {
             $permitted = true;
             
-        } elseif (getUID() == getGuarantorID($courseID)) {
+        } elseif ($is_guarantor) {
             $permitted = true;
         }
     }
@@ -38,19 +39,21 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
-<div id="edit_course">
-
-<!-- TABLE OF LECTURERS -->
-<section class="section_form">
-
 <?php
-    if (is_admin()) {
-        echo "<a class=\"button_back\" href=admincourses.php>Back to courses</a><br/>";
+    if ($is_admin) {
+        echo "<div id=\"button_back\" ><a href=admincourses.php>Back to courses</a></div><br/>";
     }
     if (is_teacher()) {
-        echo "<a class=\"button_back\" href=teachercourses.php>Back to courses</a><br/>";
+        echo "<div id=\"button_back\"><a href=teachercourses.php>Back to courses</a></div><br/>";
     }
 ?>
+</section>
+
+<!-- TABLE OF LECTURERS -->
+
+<div id="edit_course">
+
+<section class="section_form">
 
 <h3>Edit course info</h3>
 
@@ -59,42 +62,43 @@
     <?php
         require_once 'includes/courses-inc.php';
         $course = $new ? getEmptyCourse() : getCourseByID($courseID);
-        
+        #TODO maybe remove this entirely? not only disable it
+        $disabled = $is_admin ? 'disabled' : '';
         echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
         
         $courseName = isset($course->courseName) ? $course->courseName : 'short';
-        echo '<label>Name
-            <input name="courseName" type="text"
-            value="'.$courseName.'">
-            </label><br/>';
+        echo "<label>Name
+            <input name=\"courseName\" type=\"text\" $disabled
+            value=\"$courseName\">
+            </label><br/>";
             
         $courseFullName = isset($course->courseFullName) ? $course->courseFullName : 'full name';
-        echo '<label>Full name
-            <input name="courseFullName" type="text"
-            value="'.$courseFullName.'">
-            </label><br/>';
+        echo "<label>Full name
+            <input name=\"courseFullName\" type=\"text\" $disabled
+            value=\"$courseFullName\">
+            </label><br/>";
             
         $courseDescription = isset($course->courseDescription) ? $course->courseDescription : 'desc';
-        echo '<label>Description
-            <input name="courseDescription" type="text"
-            value="'.$courseDescription.'">
-            </label><br/>';
+        echo "<label>Description
+            <input name=\"courseDescription\" type=\"text\" $disabled
+            value=\"$courseDescription\">
+            </label><br/>";
 
         $courseCredits = isset($course->courseCredits) ? $course->courseCredits : 0;
-        echo '<label>Credits
-            <input name="courseCredits" type="number"
-            value="'.$courseCredits.'">
-            </label><br/>';
+        echo "<label>Credits
+            <input name=\"courseCredits\" type=\"number\"  min=\"0\" $disabled
+            value=\"$courseCredits\">
+            </label><br/>";
 
         $courseCapacity = isset($course->courseCapacity) ? $course->courseCapacity : 0;
-        echo '<label>Capacity
-            <input name="courseCapacity" type="number"
-            value="'.$courseCapacity.'">
-            </label><br/>';
+        echo "<label>Capacity
+            <input name=\"courseCapacity\" type=\"number\" min=\"0\" $disabled
+            value=\"$courseCapacity\">
+            </label><br/>";
         
         $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
         
-        if (is_admin()) {
+        if ($is_guarantor) {
             require_once 'includes/users-inc.php';
             require_once 'includes/teachers-inc.php';
             
@@ -129,7 +133,7 @@
         $courseState = isset($course->courseState) ? courseStateToInt($course->courseState) : 0;
         $disp = array($courseState);
 
-        if (is_admin() && ($courseState != 0)) {
+        if ($is_admin && ($courseState != 0)) {
             $states = array(5, 10);
             $not_disp = array_diff($states, $disp);
             echo '
@@ -146,7 +150,7 @@
         $uid = getUID();
         # display if user is the course guatantor
 
-        if (is_teacher() && ($uid === $gid) && ($courseState != 10)) {
+        if ($is_guarantor && ($courseState != 10)) {
             $states = array(0, 5);
             $not_disp = array_diff($states, $disp);
             echo '<label>State
@@ -158,15 +162,15 @@
             }
             echo '</select></label><br/>';
         }
-        #TODO
-        /*
-        if (is_teacher() && ($uid === $gid)) {
-            $disabled = (count(getStudents($courseID)) > $course->courseCapacity) ? "disabled" : "";
-            #TODO check if course is full and disable button
+        
+        if ($is_guarantor) {
+            $disabled = (count(getStudents($courseID)) >= $course->courseCapacity) ? "disabled" : "";
+            $checked = ($course->courseOpen) ? "checked" : "";
             echo '<label>Open for enrollment
-                    <input name="courseOpen" type="checkbox" '.$disabled.'>
+                    <input name="courseOpen" type="hidden" value="off" >
+                    <input name="courseOpen" type="checkbox" ' . $checked . $disabled . '>
                 </label><br/>';
-        }*/
+        }
         
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';
@@ -176,12 +180,12 @@
     ?>
     </form>
 </div>
+</section>
 
-
-<h3>Lecturers</h3>
-
+<div>
 <!-- TABLE OF LECTURERS -->
 <section class="section_table">
+    <h3>Lecturers</h3>
     <table>
         <thead>
             <tr>
@@ -203,9 +207,14 @@
                     echo "<td>" . $user->accountUsername . "</td>";
                     echo "<td>" . $user->accountRealName . "</td>";
                     echo "<td>" . $user->accountEmail . "</td>";
-                    if (($id != getGuarantorID($courseID))) {
-                        echo "<td><a href='$removeURL'>Remove</a></td>";
-                    } else {
+                    if ($is_guarantor && !$is_admin) {
+                        if (($id != getGuarantorID($courseID))) {
+                            echo "<td><a href='$removeURL'>Remove</a></td>";
+                        } else {
+                            echo "<td></td>";
+                        }
+                    }
+                    else {
                         echo "<td></td>";
                     }
                     echo "</tr>";
@@ -232,7 +241,7 @@
             $displayed = array_diff($displayed, [$gid]);
             $displayed_empty = (count($displayed) == 0);
 
-            $display = $displayed_empty ? 'style="display: none;"' : '';
+            $display = ($displayed_empty || is_admin()) ? 'style="display: none;"' : '';
 
             echo '<form method="GET" action="addlecturer.php" ' .$display.'>';
 
@@ -249,11 +258,11 @@
         ?>
     </div>
 </section>
-
-<h3>Terms</h3>
+</div>
 
 <!-- TABLE OF TERMS -->
 <section class="section_table">
+    <h3>Terms</h3>
     <table>
         <thead>
             <tr>
@@ -261,9 +270,11 @@
             <th>Date</th>
             <th>Max points</th>
             <th>Auto</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <?php
+                if (!$is_admin) {
+                    echo '<th></th><th></th><th></th>';
+                }
+            ?>
             </tr>
         </thead>
         <tbody>
@@ -280,16 +291,21 @@
                     echo "<td>" . $term->termDate . "</td>";
                     echo "<td>" . $term->termMaxPoints . "</td>";
                     echo "<td>" . $term->termAutoregistered . "</td>";
-                    echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
-                    echo "<td><a href=\"$editURL\">Edit</a></td>";
-                    echo "<td><a href=\"$removeURL\">Remove</a></td>";
+                    if (!$is_admin) {
+                        echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
+                        echo "<td><a href=\"$editURL\">Edit</a></td>";
+                        echo "<td><a href=\"$removeURL\">Remove</a></td>";
+                    }
                     echo "</tr>";
                 }
             ?>
         </tbody>
     </table>
-    
-    <?php echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>"; ?>
+    <?php
+    if (!$is_admin) {
+        echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>";  
+    }
+    ?>
 
 </section>
 </div>

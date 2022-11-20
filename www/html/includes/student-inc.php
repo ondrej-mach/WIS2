@@ -46,4 +46,36 @@ function removeStudentFromTerm($termID, $studentID) {
     $stmt = $conn->prepare($sql);
     $stmt->execute([$termID, $studentID]);
 }
-?>
+
+function setApproval($courseID, $accountID, $approved) {
+    $conn = $GLOBALS['conn'];
+    $sql = "UPDATE Attends 
+            SET approved = ? 
+            WHERE courseID = ? AND accountID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$approved, $courseID, $accountID]);
+}
+
+function setRegistration($courseID, $accountID, $value) {
+    $conn = $GLOBALS['conn'];
+    $sql = "INSERT INTO Attends (accountID, courseID, approved) 
+            VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$accountID, $courseID, $value]);
+}
+
+function removeRegistration($courseID, $accountID) {
+    $conn = $GLOBALS['conn'];
+    $sql = "DELETE FROM Attends 
+            WHERE accountID = ? AND courseID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$accountID, $courseID]);
+}
+
+function getStudentCourses($accountID) {
+    $conn = $GLOBALS['conn'];
+    $sql = "SELECT * FROM Attends WHERE accountID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$accountID]);
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}

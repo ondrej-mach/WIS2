@@ -38,10 +38,6 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
-<section class="section_form">
-
-<h3>Term info</h3>
-
 <?php
     require_once 'includes/terms-inc.php';
     $term = $new ? getEmptyTerm() : getTermByID($termID);
@@ -49,9 +45,14 @@
         $term->courseID = $_GET['courseID'];
     }
     if (is_admin() || is_teacher()) {
-        echo "<a class=\"button_back\" href=editcourse.php?courseID=$term->courseID>Back to edit course</a><br/>";
+        echo "<div id=\"button_back\" ><a href=editcourse.php?courseID=$term->courseID>Back to edit course</a></div><br/>";
     }
 ?>
+
+</section>
+
+<section class="section_form">
+<h3>Term info</h3>
 <div>
     <form method="POST" action="<?php echo 'modifyterm.php'; ?>" >
     <?php
@@ -84,7 +85,7 @@
             value="'.date("Y-m-d\TH:i", strtotime($term->termDate ?? time())).'">
             </label><br/>';
 
-        echo '<label>Length (in minutes, not for projects)
+        echo '<label>Length (in minutes)
             <input name="termLength" type="number"
             value="'.$term->termLength.'">
             </label><br/>';

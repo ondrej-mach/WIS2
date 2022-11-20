@@ -51,12 +51,19 @@ if (!empty($attributes)) {
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
-<section class="section_form">
-    <?php
-        if (is_admin()) {
-            echo "<a class=\"button_back\" href=manageusers.php>Back to user management</a><br/>";
-        }
+<?php
+if (is_admin()) {
+    echo '<div id="button_back" ><a href=manageusers.php>Back to user management</a></div><br/>';
+}
+else {
+    echo '<div id="button_back" ><a href=index.php>Back to index</a></div><br/>';
+}
+?>
+</section>
 
+<section class="section_form">
+    <h3>Edit info</h3>
+    <?php
         echo "<div><form method=\"POST\">";
         $disabled = is_admin() ? '' : 'disabled';
         
@@ -84,14 +91,17 @@ if (!empty($attributes)) {
         $checked_s = $account->accountStudent ? 'checked' : '';
         if (is_admin()) {
             echo '  <label>Admin
+                        <input type="hidden" name="accountAdmin" value="off">
                         <input type="checkbox" name="accountAdmin"'.$checked_a.'>
                     </label><br/>';
 
             echo '  <label>Teacher
+                        <input type="hidden" name="accountTeacher" value="off">
                         <input type="checkbox" name="accountTeacher"'.$checked_t.'>
                     </label><br/>';
 
             echo '  <label>Student
+                        <input type="hidden" name="accountStudent" value="off">
                         <input type="checkbox" name="accountStudent"'.$checked_s.'>
                     </label><br/>';
         }

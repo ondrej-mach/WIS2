@@ -22,17 +22,16 @@
 <?php include_once 'templates/header.php'; ?>
 <?php include_once 'templates/navbar.php'; ?>
 
-
 <?php
-    echo "<a class=\"button_back\" href=evaluatecourse.php?courseID=".$courseID.">Back to courses</a><br/>";
+    echo "<div id=\"button_back\" ><a href=evaluatecourse.php?courseID=".$courseID.">Back to courses</a></div><br/>";
 ?>
-<h3> Evaluate term </h3>
+
+</section>
 
 <section class="section_table">
-
-<?php #TODO: Add a form to accept students to the course ?>
-
+<h3> Evaluate term </h3>
 <form method="GET" action="evaluate.php">
+    <?php #TODO: Add a form to accept students to the course ?>
 <table>
     <thead>
         <tr>

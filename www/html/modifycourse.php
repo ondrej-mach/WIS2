@@ -36,6 +36,7 @@ $adminParams = [
     "courseCredits",
     "courseCapacity",
     "courseGuarantor",
+    "courseOpen",
 ];
 
 $attributes = [];

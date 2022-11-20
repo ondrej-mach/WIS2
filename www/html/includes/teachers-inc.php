@@ -18,10 +18,10 @@ function getTeacherIDs($courseID) {
 
 function getCoursesForTeacher($accountID) {
     $stmt = $GLOBALS['conn']->prepare("
-        SELECT courseID, courseName, courseFullName, courseState, true AS is_guarantor
+        SELECT courseID, courseName, courseFullName, courseState, courseCapacity, true AS is_guarantor
         FROM Course NATURAL JOIN Guarantees WHERE accountID = ?
         UNION
-        SELECT courseID, courseName, courseFullName, courseState, false AS is_guarantor
+        SELECT courseID, courseName, courseFullName, courseState, courseCapacity, false AS is_guarantor
         FROM Course NATURAL JOIN Lecturer WHERE accountID = ?; 
     ");
     $stmt->execute([$accountID, $accountID]);
