@@ -76,8 +76,13 @@ foreach ($_REQUEST as $key => $value) {
 
 # if we need to change any data, access the database
 if (!empty($attributes)) {
-    modifyTerm($termID, $attributes);
+    try{
+        modifyTerm($termID, $attributes);
+    } catch (Exception $e) {
+        header("location: editterm.php?termID=$termID&courseID=$courseID&error=1");
+        exit;
+    }
 }
 
-header("location: editterm.php?termID=$termID&courseID=$courseID");
+header("location: editcourse.php?courseID=$courseID");
 ?>

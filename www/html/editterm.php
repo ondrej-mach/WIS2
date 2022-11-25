@@ -53,6 +53,10 @@
 
 <section class="section_form">
 <h3>Term info</h3>
+<?php 
+    if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error updating</p>';
+?>
 <div>
     <form method="POST" action="<?php echo 'modifyterm.php'; ?>" >
     <?php

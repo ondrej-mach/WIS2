@@ -27,8 +27,7 @@
     }
     
     if (!$permitted) {
-        http_response_code(403);
-        die('Forbidden');
+        dieForbidden();
     }
 ?>
 
@@ -56,7 +55,12 @@
 <section class="section_form">
 
 <h3>Edit course info</h3>
-
+<?php 
+    if (isset($_GET["success"])) 
+        echo '<p style="color: green;">Successfully updated</p>';
+    if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error updating</p>';
+?>
 <div>
     <form method="POST" action="<?php echo 'modifycourse.php'; ?>">
     <?php
@@ -253,7 +257,7 @@
             } 
             echo '</select>';
             echo '</label>';
-            echo '<button type="submit" name="submit">Add</button>';
+            echo '<button type="submit" name="submit"'.($courseID == "new" ? " disabled" : "").'>Add</button>';
             echo '</form>';
         ?>
     </div>
@@ -302,7 +306,7 @@
         </tbody>
     </table>
     <?php
-    if (!$is_admin) {
+    if (!$is_admin && $courseID != "new") {
         echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>";  
     }
     ?>

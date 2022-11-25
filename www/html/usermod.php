@@ -40,7 +40,13 @@ foreach ($_POST as $key => $value) {
 # if we need to change any data, access the database
 if (!empty($attributes)) {
     require_once 'includes/users-inc.php';
-    userMod($uid, $attributes);
+    try{
+        userMod($uid, $attributes);
+    } catch (Exception $e) {
+        header("location: usermod.php?error=1".(isset($_REQUEST["accountID"]) ? "&accountID=".$_REQUEST["accountID"] : ""));
+        exit;
+    }
+    header("location: usermod.php?success=1".(isset($_REQUEST["accountID"]) ? "&accountID=".$_REQUEST["accountID"] : ""));
 }
 
 ?>
@@ -63,7 +69,14 @@ else {
 
 <section class="section_form">
     <h3>Edit info</h3>
+    
     <?php
+        if (isset($_REQUEST["success"])) {
+            echo '<p style="color: green;">Successfully saved</p>';
+        }
+        else if (isset($_REQUEST["error"])) {
+            echo '<p style="color: red;">Error: could not modify user info</p>';
+        }
         echo "<div><form method=\"POST\">";
         $disabled = is_admin() ? '' : 'disabled';
         
