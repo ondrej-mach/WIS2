@@ -18,15 +18,19 @@
     }
     
     if (!is_admin() && is_logged_in()) {
-        echo "<li><a href=usermod.php>My Account</a></li>";
+        echo "<li><a href=usermod.php>Manage Account</a></li>";
     }
     
     if (is_teacher()) {
-        echo "<li><a href=teachercourses.php>Organize courses</a></li>";
+        echo "<li><a href=teachercourses.php>Manage courses</a></li>";
     }
     
     if (is_student()) {
         echo "<li><a href=studentcourses.php>My courses</a></li>";
+    }
+
+    if (!is_logged_in()) {
+        echo "<li><a href=viewcourses.php>View courses</a></li>";
     }
     
     echo "<li id=\"filler\">";

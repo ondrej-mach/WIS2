@@ -52,7 +52,7 @@ $stud_courses = getStudentCourses($uid);
             }
 
             $guarantor = getUserByID(getGuarantorID($course->courseID));
-            $detailURL = 'detailcourse.php?courseID='.$course->courseID.'&studentID='.$uid;
+            $detailURL = 'resultscourse.php?courseID='.$course->courseID.'&studentID='.$uid;
             $courseURL = 'studentcourse.php?courseID='.$course->courseID;
           
             echo "<tr>";

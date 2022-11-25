@@ -15,6 +15,7 @@
 
 if (!is_logged_in()) {
     echo "<a href=login.php><li>Login</li></a>";
+    echo "<a href=viewcourses.php><li>View courses</li></a>";
 }
 
 if (!is_admin() && is_logged_in()) {
@@ -22,7 +23,7 @@ if (!is_admin() && is_logged_in()) {
 }
 
 if (is_student()) {
-    echo "<a href=studentcourses.php><li>Courses</li></a>";
+    echo "<a href=studentcourses.php><li>My courses</li></a>";
 }
 
 if (is_teacher()) {

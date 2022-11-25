@@ -63,6 +63,13 @@ function getCourses() {
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
+function getApprovedCourses() {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT * FROM Course WHERE courseState = 10");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
+}
+
 function getCoursesGuaranteedBy($accountID) {
     $conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT * FROM Course NATURAL JOIN Guarantees WHERE accountID = ?");
