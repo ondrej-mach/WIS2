@@ -46,8 +46,8 @@ if (!empty($attributes)) {
             require_once 'includes/rooms-inc.php';
             $room = getRoomByID($rid);
                     
-            echo "<label>Room name<input name=\"roomName\" type=\"text\" 
-            $disabled value=\"$room->roomName\"></label><br/>";
+            echo "<label>Room name*<input name=\"roomName\" type=\"text\" 
+            $disabled value=\"$room->roomName\" required></label><br/>";
             
             echo '<label>Room description<input name="roomDescription" type="text" value="' .
             $room->roomDescription . '"></label><br/>';        

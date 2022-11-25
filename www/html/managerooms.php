@@ -47,7 +47,7 @@
     </table>
     <form action=addroom.php>
         <label>Add room
-            <input name="roomName" type="text">
+            <input name="roomName" type="text" required>
         </label>
         <button type="submit" name="submit">Add</button>
     </form>

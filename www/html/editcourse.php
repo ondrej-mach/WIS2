@@ -67,9 +67,9 @@
         echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
         
         $courseName = isset($course->courseName) ? $course->courseName : 'short';
-        echo "<label>Name
+        echo "<label>Name*
             <input name=\"courseName\" type=\"text\" $disabled
-            value=\"$courseName\">
+            value=\"$courseName\" required>
             </label><br/>";
             
         $courseFullName = isset($course->courseFullName) ? $course->courseFullName : 'full name';
@@ -85,15 +85,15 @@
             </label><br/>";
 
         $courseCredits = isset($course->courseCredits) ? $course->courseCredits : 0;
-        echo "<label>Credits
+        echo "<label>Credits*
             <input name=\"courseCredits\" type=\"number\"  min=\"0\" $disabled
-            value=\"$courseCredits\">
+            value=\"$courseCredits\" required>
             </label><br/>";
 
         $courseCapacity = isset($course->courseCapacity) ? $course->courseCapacity : 0;
-        echo "<label>Capacity
+        echo "<label>Capacity*
             <input name=\"courseCapacity\" type=\"number\" min=\"0\" $disabled
-            value=\"$courseCapacity\">
+            value=\"$courseCapacity\" required>
             </label><br/>";
         
         $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
@@ -103,7 +103,7 @@
             require_once 'includes/teachers-inc.php';
             
             # Course guarantor selector
-            echo '<label>Guarantor <select name="courseGuarantor">';
+            echo '<label>Guarantor* <select name="courseGuarantor">';
             echo '<optgroup label="Current guarantor">';
             
             

@@ -70,11 +70,11 @@ else {
         require_once 'includes/users-inc.php';
         $account = getUserByID($uid);
         
-        echo "<label>Username<input name=\"accountUsername\" type=\"text\" 
-        $disabled value=\"$account->accountUsername\"></label><br/>";
+        echo "<label>Username*<input name=\"accountUsername\" type=\"text\" 
+        $disabled value=\"$account->accountUsername\" required></label><br/>";
         
-        echo '<label>Name<input name="accountRealName" type="text" value="'.
-        $account->accountRealName.'"></label><br/>';
+        echo '<label>Name*<input name="accountRealName" type="text" value="'.
+        $account->accountRealName.'" required></label><br/>';
         
         echo '<label>Address<input name="accountAddress" type="text" value="'.
         $account->accountAddress.'"></label><br/>';
