@@ -29,6 +29,9 @@
     $course = getCourseByID($_GET['courseID']);
 ?>
 
+<div id="button_back" ><a href=studentcourses.php>Back to courses</a></div><br/>
+</section>
+
 <div id="manage_course_s">
 
 <h3><?php echo $course->courseFullName; ?></h3>

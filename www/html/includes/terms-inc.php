@@ -32,7 +32,7 @@ function getTermByID($termID) {
 }
 
 function getTermInfo($termID, $accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID, courseID
                                        FROM Term NATURAL JOIN SignedUp
                                        WHERE termID = ? AND studentID = ?");
     $stmt->execute([$termID, $accountID]);

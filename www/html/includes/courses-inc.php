@@ -256,4 +256,12 @@ function doesStudentAttend($courseID, $accountID) {
     $result = $stmt->fetch(PDO::FETCH_OBJ);
     return $result != null;
 }
+
+function getCourseSignedUpNumber($courseID) {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Attends WHERE courseID = ? AND approved = true");
+    $stmt->execute([$courseID]);
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+    return $result->count;
+}
 ?>

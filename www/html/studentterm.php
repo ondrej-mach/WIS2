@@ -20,6 +20,9 @@
 <?php include_once 'templates/header.php' ?>
 <?php include_once 'templates/navbar.php' ?>
 
+<div id="button_back" ><a href="studentcourse.php?courseID=<?php echo $term->courseID ?>">Back to course</a></div><br/>
+</section>
+
 <div id="view_term">
 
 <h3><?php echo $term->termName ?></h3>
