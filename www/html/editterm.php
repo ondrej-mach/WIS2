@@ -115,8 +115,8 @@
             </label><br/>';
 
         echo '<label>Auto register
-            <input name="termAutoregistered" type="text"
-            value="'.$term->termAutoregistered.'">
+            <input name="termAutoregistered" type="hidden" value="off" >
+            <input name="termAutoregistered" type="checkbox" '.($term->termAutoregistered ? "checked" : "").'>
             </label><br/>';
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';

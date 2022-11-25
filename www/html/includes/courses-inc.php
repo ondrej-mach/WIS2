@@ -209,29 +209,17 @@ function removeGuarantor($courseID) {
 }
 
 function getStudents($courseID) {
-    $students = [];
     $conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT accountID, approved FROM Attends WHERE courseID = ?");
     $stmt->execute([$courseID]);
-    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
-    
-    foreach($result as $student) {
-        array_push($students, $student);
-    }
-    return $students;
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getStudentsByTerm($courseID, $termID) {
-    $students = [];
     $conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT * FROM Account JOIN SignedUp ON Account.accountID = SignedUp.studentID JOIN Term ON Term.termID = SignedUp.termID WHERE Term.courseID = ? AND Term.termID = ?");
     $stmt->execute([$courseID, $termID]);
-    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
-
-    foreach($result as $student) {
-        array_push($students, $student);
-    }
-    return $students;
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getCoursesForStudent($accountID) {

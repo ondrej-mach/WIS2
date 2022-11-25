@@ -54,15 +54,6 @@ CREATE TABLE Attends (
     FOREIGN KEY (courseID) REFERENCES Course(courseID)
 );
 
-CREATE TABLE Lecture (
-    courseID INTEGER NOT NULL,
-    roomID INTEGER,
-    lectureFrom DATE,
-    lectureTo DATE,
-    FOREIGN KEY (courseID) REFERENCES Course(courseID),
-    FOREIGN KEY (roomID) REFERENCES Room(roomID)
-);
-
 CREATE TABLE Lecturer (
     accountID INTEGER NOT NULL,
     courseID INTEGER NOT NULL,
@@ -90,6 +81,7 @@ CREATE TABLE SignedUp (
     studentID INTEGER,
     lecturerID INTEGER, -- last changed by
     points INTEGER,
+    autoregistered BOOLEAN DEFAULT false,
     FOREIGN KEY (termID) REFERENCES Term(termID),
     FOREIGN KEY (studentID) REFERENCES Account(accountID),
     FOREIGN KEY (lecturerID) REFERENCES Account(accountID)

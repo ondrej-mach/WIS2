@@ -9,20 +9,6 @@ function userAdd($username, $password) {
     return $GLOBALS['conn']->lastInsertId();
 }
 
-function username2uid($username) {
-    $stmt = $GLOBALS['conn']->prepare('SELECT accountID FROM Account WHERE accountUsername = ?');
-    $stmt->execute([$username]);
-    $user = $stmt->fetch(PDO::FETCH_OBJ);
-    return $user->accountID;
-}
-
-function uid2username($uid) {
-    $stmt = $GLOBALS['conn']->prepare('SELECT accountUsername FROM Account WHERE accountUsername = ?');
-    $stmt->execute([$username]);
-    $user = $stmt->fetch(PDO::FETCH_OBJ);
-    return $user->accountUsername;
-}
-    
 function userMod($uid, $attributes) {
     $conn = $GLOBALS['conn'];
     

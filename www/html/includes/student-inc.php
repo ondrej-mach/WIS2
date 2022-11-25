@@ -2,32 +2,23 @@
 
 require_once 'includes/dbh-inc.php';
 
-function signStudentToTerm($termID, $studentID) {
+function signStudentToTerm($termID, $studentID, $autoregistered) {
     $conn = $GLOBALS['conn'];
-    $sql = "INSERT INTO SignedUp (termID, studentID) 
-            VALUES (?, ?)";
+    $sql = "INSERT INTO SignedUp (termID, studentID, autoregistered) 
+            VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$termID, $studentID]);
+    $stmt->execute([$termID, $studentID, $autoregistered]);
 
     return $conn->lastInsertId();
 }
 
-function updatePoints($points, $uid, $termID, $studentID) {
+function updatePoints($points, $lecturerID, $termID, $studentID) {
     $conn = $GLOBALS['conn'];
-    #is this really necessary?
-    $conn->beginTransaction();
     $sql = "UPDATE SignedUp 
-            SET points = ? 
+            SET points = ?, lecturerID = ?
             WHERE termID = ? AND studentID = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$points, $termID, $studentID]);
-
-    $sql = "UPDATE SignedUp 
-            SET lecturerID = ? 
-            WHERE termID = ? AND studentID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$uid, $termID, $studentID]);
-    $conn->commit();
+    $stmt->execute([$points, $lecturerID, $termID, $studentID]);
 }
 
 function getStudentPoints($termID, $studentID) {
@@ -62,6 +53,16 @@ function setRegistration($courseID, $accountID, $value) {
             VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$accountID, $courseID, $value]);
+
+    require_once 'includes/course-inc.php';
+    require_once 'includes/terms-inc.php';
+
+    $terms = getTerms($courseID);
+    foreach ($terms as $term) {
+        if ($term->termAutoregistered && !isRegisteredToTerm($termID, $accountID)) {
+            signStudentToTerm($term->termID, $accountID, 1);
+        }
+    }
 }
 
 function removeRegistration($courseID, $accountID) {

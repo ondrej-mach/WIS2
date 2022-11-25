@@ -103,6 +103,26 @@ function modifyTerm($termID, $attributes) {
         $stmt = $conn->prepare($sql);
         $stmt->execute([$value, $termID]);
     }
+
+    if ($attributes['termAutoregistered'] == 1) {
+        require_once 'includes/courses-inc.php';
+        require_once 'includes/student-inc.php';
+
+        $students = getStudents(getTermByID($termID)->courseID);
+        foreach ($students as $student) {
+            if (!isRegisteredToTerm($termID, $student->accountID)) {
+                signStudentToTerm($termID, $student->accountID, 1);
+            }
+        }
+    } else if ($attributes['termAutoregistered'] == 0) {
+        unregisterAutoregisteredTerm($termID);
+    }
+}
+
+function unregisterAutoregisteredTerm($termID) {
+    $conn = $GLOBALS['conn']; 
+    $stmt = $conn->prepare("DELETE FROM SignedUp WHERE termID = ? AND autoregistered = 1 AND points IS NULL");
+    $stmt->execute([$termID]);
 }
 
 function removeAllStudentsfromTerm($termID) {

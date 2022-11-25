@@ -290,7 +290,7 @@
                     echo "<td>" . $term->termName . "</td>";
                     echo "<td>" . $term->termDate . "</td>";
                     echo "<td>" . $term->termMaxPoints . "</td>";
-                    echo "<td>" . $term->termAutoregistered . "</td>";
+                    echo "<td>" . ($term->termAutoregistered ? "yes" : "no") . "</td>";
                     if (!$is_admin) {
                         echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
                         echo "<td><a href=\"$editURL\">Edit</a></td>";
