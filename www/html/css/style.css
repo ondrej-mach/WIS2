@@ -266,13 +266,14 @@ footer div {
     background-color: #DDDDDD;
 }
 
-.section_table table tr td:last-child a:hover {
+.section_table table tr td a {
+    color: #1f70a6;
+}
+
+.section_table table tr td a.delete {
     color: red;
 }
 
-.section_table table tr td:nth-last-child(2) a:hover {
-    color: #3498DB;
-}
 
 .section_table>a {
     border: #3498DB 2px solid;
