@@ -27,12 +27,18 @@ foreach($points as $key => $value) {
     # check max points in backend
     $maxPoints = getTermByID($termID)->termMaxPoints;
     if ($value > $maxPoints) {
-        exit('Wrong parameters');
+        header("location: evaluateterm.php?termID=$termID&error=1");
+        exit;
     }
     if (isset($value) && $value != "") {
-        updatePoints($value, $uid, $termID, $key);
+        try{
+            updatePoints($value, $uid, $termID, $key);
+        } catch (Exception $e) {
+            header("location: evaluateterm.php?termID=$termID&error=1");
+            exit;
+        }
     }
 }
 
-header("location: evaluateterm.php?termID=$termID");
+header("location: evaluateterm.php?termID=$termID&success=1");
 ?>

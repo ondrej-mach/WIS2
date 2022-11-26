@@ -30,8 +30,13 @@
 
 <section class="section_table">
 <h3> Evaluate term </h3>
+<?php 
+    if (isset($_GET["success"])) 
+        echo '<p style="color: green;">Successfully saved</p>';
+    else if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error saving</p>';
+?>
 <form method="GET" action="evaluate.php">
-    <?php #TODO: Add a form to accept students to the course ?>
 <table>
     <thead>
         <tr>

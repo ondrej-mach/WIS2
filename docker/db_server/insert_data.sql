@@ -65,9 +65,6 @@ VALUES (2, 'E112', 'Small lecture room');
 INSERT INTO Room (roomID, roomName, roomDescription)
 VALUES (3, 'A113', 'Small lab');
 
-INSERT INTO Lecture (courseID, roomID) VALUES (1, 2);
-INSERT INTO Lecture (courseID, roomID) VALUES (2, 1);
-
 -- terms for the 2 courses
 INSERT INTO Term (termID, courseID, roomID, termName, termDate, termMaxPoints, termAutoregistered, termType, termLength) 
 VALUES (1, 2, 1, 'Půlsemestrální zkouška', '2022/11/02 12:00', '15', true, 'Exam', '60');
@@ -82,13 +79,19 @@ VALUES (5, 1, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočt
 INSERT INTO Term (termID, courseID, roomID, termName, termDate, termMaxPoints, termAutoregistered, termType, termLength) 
 VALUES (6, 2, 2, 'Půlsemestrální zkouška', '2022/9/02 08:00', '20', false, 'Exam', '90');
 INSERT INTO Term (termID, courseID, termName, termDescription, termDate, termMaxPoints, termAutoregistered, termType) 
-VALUES (7, 3, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/11/19', '10', true, 'Other');
+VALUES (7, 3, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/11/19', '10', false, 'Other');
 
 -- student signed up for term
-INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 1, 5, 10);
-INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (6, 2, 5, 5);
-INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 3, 4, 5);
-INSERT INTO SignedUp (studentID, termID) VALUES (3, 5);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points, autoregistered) VALUES (3, 1, 'Miroslav Havel', 10, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (3, 2, true);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points) VALUES (3, 3, 'Jana Černá', 5);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (3, 5, true);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points, autoregistered) VALUES (6, 2, 'Miroslav Havel', 5, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (6, 5, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (6, 7, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (7, 2, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (7, 5, true);
+INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (7, 7, true);
 
 -- student attends course
 INSERT INTO Attends (accountID, courseID, approved) VALUES (3, 1, true);

@@ -40,7 +40,8 @@ authorization_init();
 
 function dieForbidden() {
     http_response_code(403);
-    die('Forbidden');
+    header('location: ../index.php?error=forbidden');
+    exit;
 }
 
 function getUID() {

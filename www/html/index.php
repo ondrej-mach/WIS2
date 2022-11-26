@@ -9,6 +9,14 @@
 </section>
 
 <section id="section_index">
+
+<?php
+    if (isset($_GET["error"])) {
+        echo '<center><h1>Forbidden</h1>
+              <p>You are not allowed to access this page.</p></center>';
+    }
+?>
+
 <ul>
 
 <?php

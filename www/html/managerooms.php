@@ -14,6 +14,11 @@
 <div id="manage_rooms">
 <section class="section_table">
     <h3>Manage Rooms</h3>
+    <?php
+        if (isset($_REQUEST["error"])) {
+            echo '<p style="color: red;">Error deleting room (can\'t delete a room in use)</p>';
+        }
+    ?>
     <table>
         <thead>
             <tr>
@@ -47,7 +52,7 @@
     </table>
     <form action=addroom.php>
         <label>Add room
-            <input name="roomName" type="text">
+            <input name="roomName" type="text" required>
         </label>
         <button type="submit" name="submit">Add</button>
     </form>

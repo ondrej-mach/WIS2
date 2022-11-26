@@ -27,8 +27,7 @@
     }
     
     if (!$permitted) {
-        http_response_code(403);
-        die('Forbidden');
+        dieForbidden();
     }
 ?>
 
@@ -56,7 +55,12 @@
 <section class="section_form">
 
 <h3>Edit course info</h3>
-
+<?php 
+    if (isset($_GET["success"])) 
+        echo '<p style="color: green;">Successfully updated</p>';
+    if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error updating</p>';
+?>
 <div>
     <form method="POST" action="<?php echo 'modifycourse.php'; ?>">
     <?php
@@ -67,9 +71,9 @@
         echo '<input type="hidden" name="courseID" value="'.$courseID.'" />';
         
         $courseName = isset($course->courseName) ? $course->courseName : 'short';
-        echo "<label>Name
+        echo "<label>Name*
             <input name=\"courseName\" type=\"text\" $disabled
-            value=\"$courseName\">
+            value=\"$courseName\" required>
             </label><br/>";
             
         $courseFullName = isset($course->courseFullName) ? $course->courseFullName : 'full name';
@@ -85,15 +89,15 @@
             </label><br/>";
 
         $courseCredits = isset($course->courseCredits) ? $course->courseCredits : 0;
-        echo "<label>Credits
+        echo "<label>Credits*
             <input name=\"courseCredits\" type=\"number\"  min=\"0\" $disabled
-            value=\"$courseCredits\">
+            value=\"$courseCredits\" required>
             </label><br/>";
 
         $courseCapacity = isset($course->courseCapacity) ? $course->courseCapacity : 0;
-        echo "<label>Capacity
+        echo "<label>Capacity*
             <input name=\"courseCapacity\" type=\"number\" min=\"0\" $disabled
-            value=\"$courseCapacity\">
+            value=\"$courseCapacity\" required>
             </label><br/>";
         
         $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
@@ -103,7 +107,7 @@
             require_once 'includes/teachers-inc.php';
             
             # Course guarantor selector
-            echo '<label>Guarantor <select name="courseGuarantor">';
+            echo '<label>Guarantor* <select name="courseGuarantor">';
             echo '<optgroup label="Current guarantor">';
             
             
@@ -253,7 +257,7 @@
             } 
             echo '</select>';
             echo '</label>';
-            echo '<button type="submit" name="submit">Add</button>';
+            echo '<button type="submit" name="submit"'.($courseID == "new" ? " disabled" : "").'>Add</button>';
             echo '</form>';
         ?>
     </div>
@@ -263,6 +267,11 @@
 <!-- TABLE OF TERMS -->
 <section class="section_table">
     <h3>Terms</h3>
+    <?php 
+        if (isset($_GET['error'])) {
+            echo '<p style="color: red;">Error deleting term</p>';
+        }
+    ?>
     <table>
         <thead>
             <tr>
@@ -290,7 +299,7 @@
                     echo "<td>" . $term->termName . "</td>";
                     echo "<td>" . $term->termDate . "</td>";
                     echo "<td>" . $term->termMaxPoints . "</td>";
-                    echo "<td>" . $term->termAutoregistered . "</td>";
+                    echo "<td>" . ($term->termAutoregistered ? "yes" : "no") . "</td>";
                     if (!$is_admin) {
                         echo "<td><a href=\"$evaluateURL\">Evaluate</a></td>";
                         echo "<td><a href=\"$editURL\">Edit</a></td>";
@@ -302,7 +311,7 @@
         </tbody>
     </table>
     <?php
-    if (!$is_admin) {
+    if (!$is_admin && $courseID != "new") {
         echo "<a href=\"editterm.php?termID=new&courseID=$courseID\">Add term</a>";  
     }
     ?>

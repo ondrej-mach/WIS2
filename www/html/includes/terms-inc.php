@@ -32,7 +32,7 @@ function getTermByID($termID) {
 }
 
 function getTermInfo($termID, $accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerRealName, roomID, courseID
                                        FROM Term NATURAL JOIN SignedUp
                                        WHERE termID = ? AND studentID = ?");
     $stmt->execute([$termID, $accountID]);
@@ -47,7 +47,7 @@ function getUnregisteredTermsByStudent($courseID, $accountID) {
 }
 
 function getRegisteredTermsByStudent($courseID, $accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerID
+    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerRealName
                                        FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
                                        WHERE courseID = ? AND studentID = ?");
     $stmt->execute([$courseID, $accountID]);
@@ -103,6 +103,26 @@ function modifyTerm($termID, $attributes) {
         $stmt = $conn->prepare($sql);
         $stmt->execute([$value, $termID]);
     }
+
+    if ($attributes['termAutoregistered'] == 1) {
+        require_once 'includes/courses-inc.php';
+        require_once 'includes/student-inc.php';
+
+        $students = getStudents(getTermByID($termID)->courseID);
+        foreach ($students as $student) {
+            if (!isRegisteredToTerm($termID, $student->accountID)) {
+                signStudentToTerm($termID, $student->accountID, 1);
+            }
+        }
+    } else if ($attributes['termAutoregistered'] == 0) {
+        unregisterAutoregisteredTerm($termID);
+    }
+}
+
+function unregisterAutoregisteredTerm($termID) {
+    $conn = $GLOBALS['conn']; 
+    $stmt = $conn->prepare("DELETE FROM SignedUp WHERE termID = ? AND autoregistered = 1 AND points IS NULL");
+    $stmt->execute([$termID]);
 }
 
 function removeAllStudentsfromTerm($termID) {
@@ -114,8 +134,14 @@ function removeAllStudentsfromTerm($termID) {
 }
 
 function delTerm($termID) {
-    //TODO cascade constraints
-    $stmt = $GLOBALS['conn']->prepare("DELETE FROM Term WHERE termID = ?");
-    $stmt->execute([$termID]);
+    $conn = $GLOBALS['conn'];
+    try {
+        removeAllStudentsfromTerm($termID);
+        $stmt = $conn->prepare("DELETE FROM Term WHERE termID = ?");
+        $stmt->execute([$termID]);
+    } catch (Exception $e) {
+        $conn->rollBack();
+        throw $e;
+    }
 }
 ?>

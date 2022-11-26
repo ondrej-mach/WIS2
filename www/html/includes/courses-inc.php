@@ -99,11 +99,29 @@ function addCourse($name, $guarantorID) {
 }
 
 function deleteCourse($courseID) {
-    #TODO: delete all the other stuff
     $conn = $GLOBALS['conn'];
-    $sql = "DELETE FROM Course WHERE courseID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$courseID]);
+    $conn->beginTransaction();
+    try {
+        require_once 'includes/terms-inc.php';
+        removeGuarantor($courseID);
+        $terms = getTerms($courseID);
+        foreach ($terms as $term) {
+            delTerm($term->termID);
+        }
+        $sql = "DELETE FROM Attends WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+        $sql = "DELETE FROM Lecturer WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+        $sql = "DELETE FROM Course WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+    } catch (PDOException $e) {
+        $conn->rollBack();
+        throw $e;
+    }
+    $conn->commit();
 }
 
 function getGuarantorID($courseID) {
@@ -194,13 +212,6 @@ function removeLecturer($courseID, $accountID) {
     $stmt->execute([$courseID, $accountID]);
 }
 
-function removeAllTermsfromCourse($courseID) {
-    $conn = $GLOBALS['conn'];
-    $sql = "DELETE FROM Term WHERE courseID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$courseID]);
-}
-
 function removeGuarantor($courseID) {
     $conn = $GLOBALS['conn'];
     $sql = "DELETE FROM Guarantees WHERE courseID = ?";
@@ -209,29 +220,17 @@ function removeGuarantor($courseID) {
 }
 
 function getStudents($courseID) {
-    $students = [];
     $conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT accountID, approved FROM Attends WHERE courseID = ?");
     $stmt->execute([$courseID]);
-    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
-    
-    foreach($result as $student) {
-        array_push($students, $student);
-    }
-    return $students;
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getStudentsByTerm($courseID, $termID) {
-    $students = [];
     $conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT * FROM Account JOIN SignedUp ON Account.accountID = SignedUp.studentID JOIN Term ON Term.termID = SignedUp.termID WHERE Term.courseID = ? AND Term.termID = ?");
     $stmt->execute([$courseID, $termID]);
-    $result = $stmt->fetchAll(PDO::FETCH_CLASS);
-
-    foreach($result as $student) {
-        array_push($students, $student);
-    }
-    return $students;
+    return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
 
 function getCoursesForStudent($accountID) {
@@ -255,5 +254,13 @@ function doesStudentAttend($courseID, $accountID) {
     $stmt->execute([$courseID, $accountID]);
     $result = $stmt->fetch(PDO::FETCH_OBJ);
     return $result != null;
+}
+
+function getCourseSignedUpNumber($courseID) {
+    $conn = $GLOBALS['conn'];
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Attends WHERE courseID = ? AND approved = true");
+    $stmt->execute([$courseID]);
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+    return $result->count;
 }
 ?>

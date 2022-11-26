@@ -41,13 +41,13 @@
 
         <form method="POST">
             <label <?php if ($badUsername) echo 'style="color:red"'; ?>>
-                <p>Username</p>
-                <input name="accountUsername" value="<?php echo $username; ?>" type="text">
+                <p>Username*</p>
+                <input name="accountUsername" value="<?php echo $username; ?>" type="text" required>
             </label><br />
 
             <label>
-                <p>Password</p>
-                <input name="accountPassword" value="<?php echo $password; ?>" type="text">
+                <p>Password*</p>
+                <input name="accountPassword" value="<?php echo $password; ?>" type="text" required>
             </label><br />
 
             <button type="submit" name="submit">Add user</button>

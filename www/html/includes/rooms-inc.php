@@ -34,7 +34,6 @@ function roomMod($rid, $attributes) {
 }
 
 function delRoom($rid) {
-    # TODO cascade all foreign keys
     $sql = "DELETE FROM Room WHERE roomID = ?";
     $stmt = $GLOBALS['conn']->prepare($sql);
     $stmt->execute([$rid]);

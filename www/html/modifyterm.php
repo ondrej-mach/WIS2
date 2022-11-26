@@ -50,6 +50,21 @@ foreach ($_REQUEST as $key => $value) {
     if ($key == "termDate") {
         $value = date("Y-m-d H:i:00", strtotime($value));
     }
+    if ($key == "termLength" && $value == "") {
+        continue;
+    }
+    if ($key == "roomID" && $value == "") {
+        continue;
+    }
+    if ($key == "termAutoregistered") {
+        if ($value == "on") {
+            $value = 1;
+        } else if ($value == "off") {
+            $value = 0;
+        } else {
+            throw new Exception("Invalid value for termAutoregistered");
+        }
+    }
     if (in_array($key, $params)) {
         $attributes[$key] = $value;   
     }
@@ -61,8 +76,13 @@ foreach ($_REQUEST as $key => $value) {
 
 # if we need to change any data, access the database
 if (!empty($attributes)) {
-    modifyTerm($termID, $attributes);
+    try{
+        modifyTerm($termID, $attributes);
+    } catch (Exception $e) {
+        header("location: editterm.php?termID=$termID&courseID=$courseID&error=1");
+        exit;
+    }
 }
 
-header("location: editterm.php?termID=$termID&courseID=$courseID");
+header("location: editcourse.php?courseID=$courseID");
 ?>

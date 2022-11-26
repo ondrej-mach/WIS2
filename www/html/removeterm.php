@@ -9,8 +9,12 @@
         }
         require_once 'includes/student-inc.php';
 
-        removeAllStudentsfromTerm($_GET['termID']);
-        delTerm($_GET['termID']);
+        try {
+            delTerm($_GET['termID']);
+        } catch (Exception $e) {
+            header("location: editcourse.php?courseID=".$_GET['courseID']."&error=".$e->getMessage());
+            exit;
+        }
     }
 
     header("location: editcourse.php?courseID=".$_GET['courseID']);

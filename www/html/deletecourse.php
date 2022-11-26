@@ -7,9 +7,17 @@
         if (!is_admin() && (getUID() != getGuarantorID($courseID))) {
             dieForbidden();
         }
-        removeAllTermsfromCourse($courseID);
-        removeGuarantor($courseID);
-        deleteCourse($courseID);
+
+        try {
+            deleteCourse($courseID);
+        } catch (Exception $e) {
+            if (is_admin()) {
+                header("location: admincourses.php?error=" . $e->getMessage());
+            } else {
+                header("location: teachercourses.php?error=" . $e->getMessage());
+            }
+            exit;
+        }
     }
     if (is_admin()) {
         header("location: admincourses.php");

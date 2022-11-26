@@ -58,9 +58,14 @@ foreach ($_REQUEST as $key => $value) {
 # if we need to change any data, access the database
 if (!empty($attributes)) {
     require_once 'includes/courses-inc.php';
-    modifyCourse($courseID, $attributes);
+    try{
+        modifyCourse($courseID, $attributes);
+    } catch (Exception $e) {
+        header("location: editcourse.php?courseID=$courseID&error=1");
+        exit;
+    }
 }
 
-header("location: editcourse.php?courseID=$courseID");
+header("location: editcourse.php?courseID=$courseID&success=1");
 
 ?>

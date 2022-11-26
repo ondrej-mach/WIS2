@@ -30,6 +30,12 @@
 </section>
 
 <h3>Accepts students to course</h3>
+<?php 
+    if (isset($_GET["success"])) 
+        echo '<p style="color: green;">Successfully saved</p>';
+    if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error saving</p>';
+?>
 
 <section class="section_table">
 

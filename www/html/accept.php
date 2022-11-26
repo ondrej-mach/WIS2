@@ -19,13 +19,18 @@ if (!(is_teacher() && ($uid == getGuarantorID($courseID)))) {
 }
 
 foreach($approved as $key => $value) {
-    if ($value == "on") {
-        setApproval($courseID, $key, 1);
-    } 
-    else if ($value == "off"){
-        setApproval($courseID, $key, 0);
+    try{
+        if ($value == "on") {
+            setApproval($courseID, $key, 1);
+        } 
+        else if ($value == "off"){
+            setApproval($courseID, $key, 0);
+        }
+    } catch (Exception $e) {
+        header("location: acceptstudents.php?courseID=$courseID&error=1");
+        exit;
     }
 }
 
-header("location: acceptstudents.php?courseID=$courseID");
+header("location: acceptstudents.php?courseID=$courseID&success=1");
 ?>

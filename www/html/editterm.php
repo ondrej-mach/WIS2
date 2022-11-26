@@ -53,15 +53,19 @@
 
 <section class="section_form">
 <h3>Term info</h3>
+<?php 
+    if (isset($_GET["error"])) 
+        echo '<p style="color: red;">Error updating</p>';
+?>
 <div>
     <form method="POST" action="<?php echo 'modifyterm.php'; ?>" >
     <?php
         echo '<input type="hidden" name="termID" value="'.$termID.'" />';
         echo '<input type="hidden" name="courseID" value="'.$term->courseID.'" />';
         
-        echo '<label>Name
+        echo '<label>Name*
             <input name="termName" type="text"
-            value="'.$term->termName.'">
+            value="'.$term->termName.'" required>
             </label><br/>';
 
         echo '<label>Description
@@ -70,7 +74,7 @@
             </label><br/>';
 
         $type = $term->termType ?? "Other";
-        echo '<label>Type
+        echo '<label>Type*
             <select name="termType">
                 <option '.($type == "Lecture" ? "selected " : "").'value="Lecture">Lecture</option>
                 <option '.($type == "Exercise" ? "selected " : "").'value="Exercise">Exercise</option>
@@ -80,12 +84,12 @@
             </select>
             </label><br/>';
             
-        echo '<label>Date
+        echo '<label>Date*
             <input name="termDate" type="datetime-local"
-            value="'.date("Y-m-d\TH:i", strtotime($term->termDate ?? time())).'">
+            value="'.date("Y-m-d\TH:i", strtotime($term->termDate ?? time())).'" required>
             </label><br/>';
 
-        echo '<label>Length (in minutes)
+        echo '<label>Length (minutes)
             <input name="termLength" type="number"
             value="'.$term->termLength.'">
             </label><br/>';
@@ -108,15 +112,15 @@
                     $max -= $t->termMaxPoints;
                 }
             }
-        echo '<label>Max points
+        echo '<label>Max points*
             <input name="termMaxPoints" type="number"
             min = "0" max = "'.$max.'"
-            value="'.$term->termMaxPoints.'">
+            value="'.$term->termMaxPoints.'" required>
             </label><br/>';
 
         echo '<label>Auto register
-            <input name="termAutoregistered" type="text"
-            value="'.$term->termAutoregistered.'">
+            <input name="termAutoregistered" type="hidden" value="off" >
+            <input name="termAutoregistered" type="checkbox" '.($term->termAutoregistered ? "checked" : "").'>
             </label><br/>';
         if ($new) {
             echo '<button type="submit" name="submit">Create</button>';
