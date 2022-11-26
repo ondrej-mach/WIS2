@@ -31,6 +31,9 @@ function userMod($uid, $attributes) {
         if ($key == "accountPassword") {
             $value = password_hash($value, NULL);
         }
+        if ($key == "accountDateOfBirth" && $value == "") {
+            continue;
+        }
         if (($key == "accountStudent" || $key == "accountTeacher" || $key == "accountAdmin")) {
             switch($value) {
                 case "on":
