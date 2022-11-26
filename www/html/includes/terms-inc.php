@@ -20,7 +20,7 @@ function getEmptyTerm() {
 }
 
 function getTerms($courseID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Term WHERE courseID = ?");
+    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Term WHERE courseID = ? ORDER BY termDate");
     $stmt->execute([$courseID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
@@ -41,7 +41,7 @@ function getTermInfo($termID, $accountID) {
 
 function getUnregisteredTermsByStudent($courseID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT termID, termName, termDate, termMaxPoints
-                                       FROM Term WHERE courseID = ? AND termID NOT IN (SELECT termID FROM SignedUp WHERE studentID = ?)");
+                                       FROM Term WHERE courseID = ? AND termID NOT IN (SELECT termID FROM SignedUp WHERE studentID = ?) ORDER BY termDate");
     $stmt->execute([$courseID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
@@ -49,7 +49,7 @@ function getUnregisteredTermsByStudent($courseID, $accountID) {
 function getRegisteredTermsByStudent($courseID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerRealName
                                        FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
-                                       WHERE courseID = ? AND studentID = ?");
+                                       WHERE courseID = ? AND studentID = ? ORDER BY termDate");
     $stmt->execute([$courseID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }
@@ -57,7 +57,7 @@ function getRegisteredTermsByStudent($courseID, $accountID) {
 function getFutureTerms($courseID, $accountID) {
     $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDate, termLength, roomName
                                        FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID JOIN Room ON Term.roomID = Room.roomID
-                                       WHERE courseID = ? AND termDate > NOW() AND studentID = ?");
+                                       WHERE courseID = ? AND termDate > NOW() AND studentID = ? ORDER BY termDate");
     $stmt->execute([$courseID, $accountID]);
     return $stmt->fetchAll(PDO::FETCH_CLASS);
 }

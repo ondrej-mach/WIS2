@@ -33,6 +33,7 @@ function printBool($x) {
 <table id="table_users">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Username</th>
             <th>Name</th>
             <th>Address</th>
@@ -58,6 +59,7 @@ function printBool($x) {
                 $userdelURL = 'userdel.php?accountID=' . $account['accountID'];
             
                 echo "<tr>";
+                echo "<td>" . $account['accountID'] . "</td>";
                 echo "<td>" . $account['accountUsername'] . "</td>";
                 echo "<td>" . $account['accountRealName'] . "</td>";
                 echo "<td>" . $account['accountAddress'] . "</td>";
