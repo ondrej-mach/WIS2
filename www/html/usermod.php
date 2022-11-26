@@ -95,7 +95,7 @@ else {
         echo '<label>Date of birth<input name="accountDateOfBirth" type="date" value="'.
         $account->accountDateOfBirth.'"></label><br/>';
     
-        echo '<label>Email<input name="accountEmail" type="text" value="'.
+        echo '<label>Email<input name="accountEmail" type="email" value="'.
         $account->accountEmail.'"></label><br/>';
         
         #TODO uncheck user not working properly
