@@ -124,7 +124,7 @@
         
             echo '<optgroup label="Others">';
             
-            $teacherIDs = getTeacherIDs($courseID);
+            $teacherIDs = getTeacherIDs();
             $displayed = array_diff($teacherIDs, $lecturerIDs);
             $displayed = array_diff($displayed, [$gid]);
             foreach ($displayed as $id) {
@@ -239,7 +239,7 @@
             $course = $new ? getEmptyCourse() : getCourseByID($courseID);
             
             # Course lecturer selector
-            $teacherIDs = getTeacherIDs($courseID);
+            $teacherIDs = getTeacherIDs();
             $displayed = array_diff($teacherIDs, getLecturerIDs($courseID));
             $gid = ($courseID == "new") ? getUID() : getGuarantorID($courseID);
             $displayed = array_diff($displayed, [$gid]);

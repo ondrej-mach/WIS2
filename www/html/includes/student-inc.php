@@ -33,13 +33,6 @@ function getStudentPoints($termID, $studentID) {
     return $result;
 }
 
-function removeStudentFromTerm($termID, $studentID) {
-    $conn = $GLOBALS['conn'];
-    $sql = "DELETE FROM SignedUp WHERE termID = ? AND studentID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$termID, $studentID]);
-}
-
 function setApproval($courseID, $accountID, $approved) {
     $conn = $GLOBALS['conn'];
     $sql = "UPDATE Attends 
