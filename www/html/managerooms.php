@@ -44,7 +44,7 @@
                 echo "<td>" . $room->roomName . "</td>";
                 echo "<td>" . $room->roomDescription . "</td>";
                 echo "<td><a href=\"$modifyRoomURL\">Edit</a></td>";
-                echo "<td><a href=\"$deleteRoomURL\">Delete</a></td>";
+                echo "<td><a class=\"delete\" href=\"$deleteRoomURL\">Delete</a></td>";
                 echo "</tr>";
                 }
             ?>
