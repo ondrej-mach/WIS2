@@ -1,159 +1,213 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Projekt IIS</title>
-    <style type="text/css">
-    	table { border-collapse: collapse; }
-    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
-    	dt { font-weight: bold; margin-top: 0.5em; }
-    	.tt { font-family: 'Courier'; }
-    </style>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>Projekt IIS</title>
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1px solid black;
+			padding: 0.3em 0.5em;
+			text-align: left;
+		}
+
+		dt {
+			font-weight: bold;
+			margin-top: 0.5em;
+		}
+
+		.tt {
+			font-family: 'Courier';
+		}
+	</style>
 </head>
+
 <body>
 
-<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+	<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
      podle použitého editoru -->
 
-<h1>WIS2</h1> <!-- Nahradte názvem svého zadání -->
+	<h1>WIS2</h1> <!-- Nahradte názvem svého zadání -->
 
-<dl>
-	<dt>Autoři</dt>
-	<dd>Rostislav Lán
-	    <a href="mailto:xlanro00@stud.fit.vutbr.cz">xlanro00@stud.fit.vutbr.cz</a> - 
-		popis činnosti v týmu
-	</dd>
-	<dd>Ondřej Mach
-	    <a href="mailto:xmacho12@stud.fit.vutbr.cz">xmacho12@stud.fit.vutbr.cz</a> -
-		návrh schématu DB, přihlašování a správa uživatelů, správa místností
-	</dd>
-	<dd>Martin Zmitko
-	    <a href="mailto:xzmitk01@stud.fit.vutbr.cz">xzmitk01@stud.fit.vutbr.cz</a> - 
-		popis činnosti v týmu
-	</dd>
+	<dl>
+		<dt>Autoři</dt>
+		<dd>Rostislav Lán
+			<a href="mailto:xlanro00@stud.fit.vutbr.cz">xlanro00@stud.fit.vutbr.cz</a> -
+			popis činnosti v týmu
+		</dd>
+		<dd>Ondřej Mach
+			<a href="mailto:xmacho12@stud.fit.vutbr.cz">xmacho12@stud.fit.vutbr.cz</a> -
+			návrh schématu DB, přihlašování a správa uživatelů, správa místností
+		</dd>
+		<dd>Martin Zmitko
+			<a href="mailto:xzmitk01@stud.fit.vutbr.cz">xzmitk01@stud.fit.vutbr.cz</a> -
+			popis činnosti v týmu
+		</dd>
 
-	<dt>URL aplikace</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xmacho12/IIS">http://www.stud.fit.vutbr.cz/~xmacho12/IIS</a></dd>
-	
-	<dt>Záložní instance</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xzmitk01/IIS">http://www.stud.fit.vutbr.cz/~xzmitk01/IIS</a></dd>
-	
+		<dt>URL aplikace</dt>
+		<dd><a href="http://www.stud.fit.vutbr.cz/~xmacho12/IIS">http://www.stud.fit.vutbr.cz/~xmacho12/IIS</a></dd>
 
-</dl>
-
-<h2>Uživatelé systému pro testování</h2>
-<table>
-<tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>havel</td><td>teacher</td><td>Učitel</td></tr>
-<tr><td>xnovak00</td><td>student</td><td>Student</td></tr>
-</tbody></table>
-
-<h3>Video</h3>
-
-<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Video</a>
-
-<p>
-Ve videu jsou ukázány všechny případy použití, které byly v zadání.
-Pro přehlednost jsou také vykonány ve stejném pořadí.
-</p>
+		<dt>Záložní instance</dt>
+		<dd><a href="http://www.stud.fit.vutbr.cz/~xzmitk01/IIS">http://www.stud.fit.vutbr.cz/~xzmitk01/IIS</a></dd>
 
 
-<h2>Implementace</h2>
+	</dl>
 
-<p>
-Aplikace je postavena na vrstvené architektuře.
-Je rozdělena na vrstvu prezentační, business a datovou.
-Prezentační vrstvu představují skripty v kořenovém adresáři webu.
-Business vrstvu implementují skripty v podsložce includes.
-Datovou vrstvou je knihovna PDO, která zajišťuje komunikaci s databází MySQL.
-</p>
+	<h2>Uživatelé systému pro testování</h2>
+	<table>
+		<tbody>
+			<tr>
+				<th>Login</th>
+				<th>Heslo</th>
+				<th>Role</th>
+			</tr>
+			<tr>
+				<td>admin</td>
+				<td>admin</td>
+				<td>Administrátor</td>
+			</tr>
+			<tr>
+				<td>havel</td>
+				<td>teacher</td>
+				<td>Učitel</td>
+			</tr>
+			<tr>
+				<td>xnovak00</td>
+				<td>student</td>
+				<td>Student</td>
+			</tr>
+		</tbody>
+	</table>
 
-<h3>Busuiness vrstva</h3>
-<p>
-Skripty ve složce includes obsahují pomocné funkce,
-které jsou používány v zobrazovacích skriptech.
-Obsah této složky lze víceméně posat jako business vrstva.
-</p>
+	<h3>Video</h3>
 
-<ul style="list-style-type: none">
-	<li><span class="tt">dbh-inc.php</span> - Naváže spojení s DB, připojení uloží do globální proměnné</li>
-	<li><span class="tt">authorization-inc.php</span> - Funkce pro zjištění privilegií uživatele, který se snaží načíst stránku</li>
-	<li><span class="tt">users-inc.php</span> - Funkce pro úpavu, přidání, mazání uživatel</li>
-</ul>
+	<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Video</a>
 
-<p>Ostatní skripty nevyžadují popis, jejich účel je pochopitelný z jejich jména.</p>
-
-
-<h3>Prezentační vrstva</h3>
-<p>
-Skripty <span class="tt">login.php</span> a <span class="tt">logout.php</span> umožňují přihlášení a odhlášení uživatele.
-Při přihlášení uživatele je do databáze uložen sessionID a čas expirace.
-Uživatel může být přihlášen najednou z více zařízení.
-Při načtení jakékoli stránky je čas expirace prodloužen.
-V případě, že přihlášení již expirovalo, je smazáno z databáze a uživatel se musí přihlásit znova.
-</p>
-
-<p>
-Skripty <span class="tt">usermod.php</span> a <span class="tt">userdel.php</span> zprostředkovávají úpravu údajů resp. odstranění uživatele. 
-<span class="tt">usermod.php</span> je dostupný každému přihlášenému uživateli,
-pouze administrátor ale může měnit údaje jiného uživatele.
-Skript <span class="tt">useradd.php</span> přidá nového uživatele, je dostupný pouze pro administrátora.
-Skript <span class="tt">manageusers.php</span> administrátorovi zobrazí přehlednou tabulku všech uživatelů, ze které může přejít na editaci jednoho z nich.
-</p>
-
-<p>
-Skripty <span class="tt">addroom.php</span>, 
-<span class="tt">managerooms.php</span>,
-<span class="tt">roommod.php</span>
-slouží k zobrazení a editaci místností. Jsou dostupné pouze administrátorovi.
-</p>
+	<p>
+		Ve videu jsou ukázány všechny případy použití, které byly v zadání.
+		Pro přehlednost jsou také vykonány ve stejném pořadí.
+	</p>
 
 
-Zatim nepouzite:
-<span class="tt">studentcourses.php
-</span><span class="tt">addlecturer.php
-</span><span class="tt">admincourses.php
-</span><span class="tt">createcourse.php
-</span><span class="tt">deletecourse.php
-</span><span class="tt">editcourse.php
-</span><span class="tt">editterm.php
-</span><span class="tt">evaluate.php
-</span><span class="tt">evaluatecourse.php
-</span><span class="tt">evaluateterm.php
-</span><span class="tt">modifycourse.php
-</span><span class="tt">modifyterm.php
-</span><span class="tt">removelecturer.php
-</span><span class="tt">removeterm.php
-</span><span class="tt">teachercourses.php
-</span>
+	<h2>Implementace</h2>
+
+	<p>
+		Aplikace je postavena na vrstvené architektuře.
+		Je rozdělena na vrstvu prezentační, business a datovou.
+		Prezentační vrstvu představují skripty v kořenovém adresáři webu.
+		Business vrstvu implementují skripty v podsložce includes.
+		Datovou vrstvou je knihovna PDO, která zajišťuje komunikaci s databází MySQL.
+	</p>
+
+	<h3>Busuiness vrstva</h3>
+	<p>
+		Skripty ve složce includes obsahují pomocné funkce,
+		které jsou používány v zobrazovacích skriptech.
+		Obsah této složky lze víceméně posat jako business vrstva.
+	</p>
+
+	<ul style="list-style-type: none">
+		<li><span class="tt">dbh-inc.php</span> - Naváže spojení s DB, připojení uloží do globální proměnné</li>
+		<li><span class="tt">authorization-inc.php</span> - Funkce pro zjištění privilegií uživatele, který se snaží načíst stránku</li>
+		<li><span class="tt">users-inc.php</span> - Funkce pro úpavu, přidání, mazání uživatel</li>
+	</ul>
+
+	<p>Ostatní skripty nevyžadují popis, jejich účel je pochopitelný z jejich jména.</p>
 
 
-<h3>Databáze</h3>
+	<h3>Prezentační vrstva</h3>
+	<p>
+		Skripty <span class="tt">login.php</span> a <span class="tt">logout.php</span> umožňují přihlášení a odhlášení uživatele.
+		Při přihlášení uživatele je do databáze uložen sessionID a čas expirace.
+		Uživatel může být přihlášen najednou z více zařízení.
+		Při načtení jakékoli stránky je čas expirace prodloužen.
+		V případě, že přihlášení již expirovalo, je smazáno z databáze a uživatel se musí přihlásit znova.
+	</p>
 
-<img src='schema.png' />
+	<p>
+		Skripty <span class="tt">usermod.php</span> a <span class="tt">userdel.php</span> zprostředkovávají úpravu údajů resp. odstranění uživatele.
+		<span class="tt">usermod.php</span> je dostupný každému přihlášenému uživateli,
+		pouze administrátor ale může měnit údaje jiného uživatele.
+		Skript <span class="tt">useradd.php</span> přidá nového uživatele, je dostupný pouze pro administrátora.
+		Skript <span class="tt">manageusers.php</span> administrátorovi zobrazí přehlednou tabulku všech uživatelů, ze které může přejít na editaci jednoho z nich.
+	</p>
 
+	<p>
+		Skripty <span class="tt">addroom.php</span>,
+		<span class="tt">managerooms.php</span>,
+		<span class="tt">roommod.php</span>
+		slouží k zobrazení a editaci místností. Jsou dostupné pouze administrátorovi.
+	</p>
 
-<h2>Instalace</h2>
+	<p>
+		Skript <span class="tt">evaluatecourse.php</span> je užívám k přepínání mezi hodnoceními jednotlivých termínů daného kurzu,
+		skript <span class="tt">evaluateterm.php</span> umožňuje vyučujícímu zadat hodnocení studentů do daného termínu,
+		<span class="tt">evaluate.php</span> zprostředkovává úpravu údajů o hodnocení studenta v daném termínu.
+		Jsou dostupné pouze učitelům kurzu a garantovi.
+	</p>
 
-<p>
-Pro vývoj byl použit docker, díky tomu není potřeba nic nastavovat.
-Po naklonování lze instance spustit příkazem <span class="tt">docker-compose up -d</span>.
-Databáze se sama inicializuje pomocí skriptů ve složce docker/db_server.
-Web informačního systému bude dostupný na lokálním portu 8080 a phpMyAdmin na 8081.
-</p>
+	<p>
+		Skript <span class="tt">createcourse.php</span> Zařizuje vytvoření nového kurzu,
+		skript <span class="tt">deletecourse.php</span> slouží k odstranění kurzu. Jsou dostupné pouze garantovi a administrátorovi.
+		Skript <span class="tt">editcourse.php</span> je v různých podobách dostupný administrátorovi a garantovi. Umožnuje upravit informace o kurzu, výběr vyučujících kurzu a také přidávání termínů.
+		Skript <span class="tt">modifycourse.php</span> zprostředkovává úpravu informací o kurzu.
+		Skript <span class="tt">detailcourse.php</span> zprostředkovává souhrn informací o kurzu je dostupný i studentům i nepřihlášeným uživatelům.
+		Skript <span class="tt">resultcourse.php</span> zobrazuje výsledky studentů v daném kurzu.
+	</p>
 
-Stručně popište: 
-<ul>
-<li>postup instalace na server,</li>
-<li>softwarové požadavky (verze PHP apod.),</li>
-<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
-</ul>
+	<p>
+		Skript <span class="tt">accept.php</span> slouží garantovi k přijímání studentů do kurzu s manuálním schvalováním registrace.
+	</p>
 
-@Martet udelal bys tohle? Realne nevim, co je tam vsechno za setup XD
+	<p>
+		Skripty <span class="tt">addlecturer.php</span> a <span class="tt">removelecturer.php</span>
+		umožňuje adminovi a garantovi přidat/odebrat vyučujícího do/z kurzu.
+	</p>
 
-<h2>Známé problémy</h2>
-<p>Všechny případy použití ze zadání jsou implementované a otestované.</p>
+	<p>
+		Skripty <span class="tt">admincourses.php</span> a <span class="tt">teachercourses.php</span> jsou pohledy, 
+		které administrátorovi a vyučujícímu zobrazí přehled kurzů (u učitele všech, ve kterých vyučuje, nebo je garant, u administrátora všech připravených ke schválení a běžících), 
+		skript <span class="tt">studentcourses.php</span> zobrazí přehled kurzů, ve kterých do student přihlášen, schválen, a těch, které už běží.
+		Skript <span class="tt">viewcourses.php</span> zobrazí nepřihlášeným uživatelům přehled všech kurzů, které aktuálně běží.
+	</p>
+
+	<p>
+		Skript <span class="tt">registerterm.php</span> umožňuje studentovi se přihlásit na termín v daném kurzu, 
+		Skript <span class="tt">modifyterm.php</span> zprostředkovává úpravu údajů o termínu daného kurzu,
+		skript <span class="tt">editterm.php</span> umožňuje administrátorovi a garantovi upravit informace o termínu.
+		skript <span class="tt">removeterm.php</span> umožňuje administrátorovi a garantovi smazat termín.
+	</p>
+
+	<h3>Databáze</h3>
+
+	<img src='schema.png' />
+
+	<h2>Instalace</h2>
+
+	<p>
+		Pro vývoj byl použit docker, díky tomu není potřeba nic nastavovat.
+		Po naklonování lze instance spustit příkazem <span class="tt">docker-compose up -d</span>.
+		Databáze se sama inicializuje pomocí skriptů ve složce docker/db_server.
+		Web informačního systému bude dostupný na lokálním portu 8080 a phpMyAdmin na 8081.
+	</p>
+
+	Stručně popište:
+	<ul>
+		<li>postup instalace na server,</li>
+		<li>softwarové požadavky (verze PHP apod.),</li>
+		<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
+	</ul>
+
+	@Martet udelal bys tohle? Realne nevim, co je tam vsechno za setup XD
+
+	<h2>Známé problémy</h2>
+	<p>Všechny případy použití ze zadání jsou implementované a otestované.</p>
 
 </body>
+
 </html>
