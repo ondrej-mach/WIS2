@@ -4,10 +4,10 @@ assert_admin();
 
 function printBool($x) {
     $svg = $x ? 
-    '<td><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+    '<td style="fill:green;text-align:center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
     <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>'
     :
-    '<td><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+    '<td style="fill:red;text-align:center"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
     <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>';
     return $svg;
 }
@@ -67,7 +67,7 @@ function printBool($x) {
                 echo printBool($account['accountTeacher']);
                 echo printBool($account['accountAdmin']);
                 echo "<td><a href=\"$usermodURL\">Edit</a></td>";
-                echo "<td><a href=\"$userdelURL\">Delete</a></td>";
+                echo "<td><a class=\"delete\" href=\"$userdelURL\">Delete</a></td>";
                 echo "</tr>";
             }
         ?>
