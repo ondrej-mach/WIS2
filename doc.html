@@ -38,7 +38,7 @@
 		<dt>Autoři</dt>
 		<dd>Rostislav Lán
 			<a href="mailto:xlanro00@stud.fit.vutbr.cz">xlanro00@stud.fit.vutbr.cz</a> -
-			popis činnosti v týmu
+			návrh + implementace vzhledu, správa kurzů, hodnocení termínů
 		</dd>
 		<dd>Ondřej Mach
 			<a href="mailto:xmacho12@stud.fit.vutbr.cz">xmacho12@stud.fit.vutbr.cz</a> -
@@ -46,7 +46,7 @@
 		</dd>
 		<dd>Martin Zmitko
 			<a href="mailto:xzmitk01@stud.fit.vutbr.cz">xzmitk01@stud.fit.vutbr.cz</a> -
-			popis činnosti v týmu
+			správa termínů, operace s databází, nastavení a instalace
 		</dd>
 
 		<dt>URL aplikace</dt>
@@ -104,7 +104,7 @@
 		Datovou vrstvou je knihovna PDO, která zajišťuje komunikaci s databází MySQL.
 	</p>
 
-	<h3>Busuiness vrstva</h3>
+	<h3>Business vrstva</h3>
 	<p>
 		Skripty ve složce includes obsahují pomocné funkce,
 		které jsou používány v zobrazovacích skriptech.
@@ -196,14 +196,27 @@
 		Web informačního systému bude dostupný na lokálním portu 8080 a phpMyAdmin na 8081.
 	</p>
 
-	Stručně popište:
-	<ul>
-		<li>postup instalace na server,</li>
-		<li>softwarové požadavky (verze PHP apod.),</li>
-		<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
-	</ul>
+	<p>
+		Instalace na server eva byla v průběhu vývoje zajištěna pomocí automatizovaného GitHub workflow,
+		který zkopíroval potřebné soubory na server a spustil skript <span class="tt">reset_database.sh</span> pro reset a inicializaci databáze.
+		Pro chod tohoto workflow je potřeba mít nastavený SSH klíč, xlogin a heslo k databázi jako secrets v repozitáři.
+	</p>
 
-	@Martet udelal bys tohle? Realne nevim, co je tam vsechno za setup XD
+	Prerekvizity:
+	<ul>
+		<li>PHP 8.1</li>
+		<li>MySQL server s vytvořenou databází se stejným jménem jako jméno databázového uživatele</li>
+		<li>Apache server</li>
+	</ul>
+	
+	Postup manuální instalace:
+	<ol>
+		<li>Zkopírovat všechny soubory ve složce <span class="tt">www/html/</span> do cílové složky na serveru</li>
+		<li>Přejmenovat soubor <span class="tt">includes/_secrets.php</span> na <span class="tt">includes/secrets.php</span></li>
+		<li>Nastavit obsah proměnných na požadované hodnoty dle vašich údajů</li>
+		<li>Zkopírovat do stejné libovolné složky na server soubory <span class="tt">reset_database.sh</span> a <span class="tt">init_db.sql</span> (příp. <span class="tt">insert_data.sql</span>, pokud chcete databázi naplnit ukázkovými daty)</li>
+		<li>Spustit skript <span class="tt">reset_database.sh</span> se jménem pro přístup k databázi jako prvním parametrem, s heslem jako druhým</li>
+	</ol>
 
 	<h2>Známé problémy</h2>
 	<p>Všechny případy použití ze zadání jsou implementované a otestované.</p>
