@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/authorization-inc.php';
+require_once 'includes/courses-inc.php';
     
 if (!(is_teacher() || is_admin())) {
     dieForbidden();
@@ -10,9 +11,7 @@ if (!isset($_REQUEST["courseID"])) {
 }
 $courseID = $_REQUEST["courseID"];
 
-if ($courseID == 'new') {
-    require_once 'includes/courses-inc.php';
-        
+if ($courseID == 'new') {    
     try {
         $courseID = addCourse($_REQUEST['courseName'], getUID());
         # add guarantor as a lecturer
@@ -40,15 +39,20 @@ $adminParams = [
 ];
 
 $attributes = [];
+$guarantorChanged = false;
 
 foreach ($_REQUEST as $key => $value) {
     if (in_array($key, $userParams)) {
         $attributes[$key] = $value;
         
     } elseif (in_array($key, $adminParams)) {
-        if (!is_admin()) {
-            if (($key == "courseGuarantor") && ($value != getUID())) {
+        if ($key == "courseGuarantor") {
+            $guarantorID = getGuarantorID($courseID);
+            if (!is_admin() && $guarantorID != getUID()) {
                 dieForbidden();
+            }
+            if ($guarantorID != $value) {
+                $guarantorChanged = true;
             }
         }
         $attributes[$key] = $value;
@@ -57,7 +61,6 @@ foreach ($_REQUEST as $key => $value) {
 
 # if we need to change any data, access the database
 if (!empty($attributes)) {
-    require_once 'includes/courses-inc.php';
     try{
         modifyCourse($courseID, $attributes);
     } catch (Exception $e) {
@@ -66,6 +69,9 @@ if (!empty($attributes)) {
     }
 }
 
-header("location: editcourse.php?courseID=$courseID&success=1");
-
+if ($guarantorChanged) {
+    header("location: teachercourses.php");
+} else {
+    header("location: editcourse.php?courseID=$courseID&success=1");
+}
 ?>

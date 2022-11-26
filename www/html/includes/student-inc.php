@@ -56,7 +56,7 @@ function setRegistration($courseID, $accountID, $value) {
     $stmt = $conn->prepare($sql);
     $stmt->execute([$accountID, $courseID, $value]);
 
-    require_once 'includes/course-inc.php';
+    require_once 'includes/courses-inc.php';
     require_once 'includes/terms-inc.php';
 
     $terms = getTerms($courseID);
