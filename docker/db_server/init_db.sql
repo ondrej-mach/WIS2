@@ -79,10 +79,9 @@ CREATE TABLE Term (
 CREATE TABLE SignedUp (
     termID INTEGER,
     studentID INTEGER,
-    lecturerID INTEGER, -- last changed by
+    lecturerRealName VARCHAR(128), -- last changed by
     points INTEGER,
     autoregistered BOOLEAN DEFAULT false,
     FOREIGN KEY (termID) REFERENCES Term(termID),
-    FOREIGN KEY (studentID) REFERENCES Account(accountID),
-    FOREIGN KEY (lecturerID) REFERENCES Account(accountID)
+    FOREIGN KEY (studentID) REFERENCES Account(accountID)
 );

@@ -13,12 +13,14 @@ function signStudentToTerm($termID, $studentID, $autoregistered) {
 }
 
 function updatePoints($points, $lecturerID, $termID, $studentID) {
+    require_once 'includes/users-inc.php';
+    $userName = getUserByID($lecturerID)->accountRealName;
     $conn = $GLOBALS['conn'];
     $sql = "UPDATE SignedUp 
-            SET points = ?, lecturerID = ?
+            SET points = ?, lecturerRealName = ?
             WHERE termID = ? AND studentID = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$points, $lecturerID, $termID, $studentID]);
+    $stmt->execute([$points, $userName, $termID, $studentID]);
 }
 
 function getStudentPoints($termID, $studentID) {

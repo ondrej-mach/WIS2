@@ -82,11 +82,11 @@ INSERT INTO Term (termID, courseID, termName, termDescription, termDate, termMax
 VALUES (7, 3, 'Zápočet', 'Předmět lze absolvovat pouze po splnění zápočtu', '2022/11/19', '10', false, 'Other');
 
 -- student signed up for term
-INSERT INTO SignedUp (studentID, termID, LecturerID, points, autoregistered) VALUES (3, 1, 5, 10, true);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points, autoregistered) VALUES (3, 1, 'Miroslav Havel', 10, true);
 INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (3, 2, true);
-INSERT INTO SignedUp (studentID, termID, LecturerID, points) VALUES (3, 3, 4, 5);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points) VALUES (3, 3, 'Jana Černá', 5);
 INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (3, 5, true);
-INSERT INTO SignedUp (studentID, termID, LecturerID, points, autoregistered) VALUES (6, 2, 5, 5, true);
+INSERT INTO SignedUp (studentID, termID, lecturerRealName, points, autoregistered) VALUES (6, 2, 'Miroslav Havel', 5, true);
 INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (6, 5, true);
 INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (6, 7, true);
 INSERT INTO SignedUp (studentID, termID, autoregistered) VALUES (7, 2, true);

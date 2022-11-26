@@ -54,12 +54,6 @@
 	<?php
 		$terms = getRegisteredTermsByStudent($course->courseID, getUID());
 		foreach ($terms as $term) {
-			if(isset($term->lecturerID)){
-				$lecturerName = getUserByID($term->lecturerID)->accountUsername;
-			} else {
-				$lecturerName = "";
-			}
-
             $termDetailURL = 'studentterm.php?termID='.$term->termID;
 
 			echo "<tr>";
@@ -67,7 +61,7 @@
 			echo "<td>" . $term->termDate . "</td>";
             echo "<td>" . $term->termMaxPoints . "</td>";
             echo "<td>" . $term->points . "</td>";
-            echo "<td>" . $lecturerName . "</td>";
+            echo "<td>" . $term->lecturerRealName . "</td>";
             echo "<td><a href=\"" . $termDetailURL . "\">Details</a></td>";
 			echo "</tr>";
 		}

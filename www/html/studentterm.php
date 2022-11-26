@@ -57,12 +57,9 @@
 <?php echo $term->termMaxPoints ?>
 
 <?php
-    if (isset($term->lecturerID)) {
-        require_once 'includes/users-inc.php';
-        $lecturer = getUserByID($term->lecturerID);
-
+    if (isset($term->points)) {
         echo "<h5>Points</h5>";
-        echo $term->points . " (graded by " . $lecturer->accountRealName . ")";
+        echo $term->points . " (graded by " . $term->lecturerRealName . ")";
     }
 ?>
 

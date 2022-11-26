@@ -32,7 +32,7 @@ function getTermByID($termID) {
 }
 
 function getTermInfo($termID, $accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerID, roomID, courseID
+    $stmt = $GLOBALS['conn']->prepare("SELECT termName, termDescription, termType, termLength, termDate, termMaxPoints, termAutoregistered, points, lecturerRealName, roomID, courseID
                                        FROM Term NATURAL JOIN SignedUp
                                        WHERE termID = ? AND studentID = ?");
     $stmt->execute([$termID, $accountID]);
@@ -47,7 +47,7 @@ function getUnregisteredTermsByStudent($courseID, $accountID) {
 }
 
 function getRegisteredTermsByStudent($courseID, $accountID) {
-    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerID
+    $stmt = $GLOBALS['conn']->prepare("SELECT Term.termID AS termID, termName, termDate, termMaxPoints, points, lecturerRealName
                                        FROM Term JOIN SignedUp ON Term.termID = SignedUp.termID
                                        WHERE courseID = ? AND studentID = ?");
     $stmt->execute([$courseID, $accountID]);
