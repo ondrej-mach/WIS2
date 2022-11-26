@@ -267,6 +267,11 @@
 <!-- TABLE OF TERMS -->
 <section class="section_table">
     <h3>Terms</h3>
+    <?php 
+        if (isset($_GET['error'])) {
+            echo '<p style="color: red;">Error deleting term</p>';
+        }
+    ?>
     <table>
         <thead>
             <tr>

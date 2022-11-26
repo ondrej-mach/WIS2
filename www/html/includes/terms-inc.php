@@ -134,8 +134,14 @@ function removeAllStudentsfromTerm($termID) {
 }
 
 function delTerm($termID) {
-    //TODO cascade constraints
-    $stmt = $GLOBALS['conn']->prepare("DELETE FROM Term WHERE termID = ?");
-    $stmt->execute([$termID]);
+    $conn = $GLOBALS['conn'];
+    try {
+        removeAllStudentsfromTerm($termID);
+        $stmt = $conn->prepare("DELETE FROM Term WHERE termID = ?");
+        $stmt->execute([$termID]);
+    } catch (Exception $e) {
+        $conn->rollBack();
+        throw $e;
+    }
 }
 ?>

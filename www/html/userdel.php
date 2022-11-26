@@ -4,7 +4,12 @@
     
     if (isset($_GET['accountID'])) {
         require_once 'includes/users-inc.php';
-        userDel($_GET['accountID']);
+        try{
+            userDel($_GET['accountID']);
+        } catch (Exception $e) {
+            header("location: manageusers.php?error=" . $e->getMessage());
+            exit;
+        }
     }
 
     header("location: manageusers.php");

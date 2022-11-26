@@ -99,11 +99,29 @@ function addCourse($name, $guarantorID) {
 }
 
 function deleteCourse($courseID) {
-    #TODO: delete all the other stuff
     $conn = $GLOBALS['conn'];
-    $sql = "DELETE FROM Course WHERE courseID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$courseID]);
+    $conn->beginTransaction();
+    try {
+        require_once 'includes/terms-inc.php';
+        removeGuarantor($courseID);
+        $terms = getTerms($courseID);
+        foreach ($terms as $term) {
+            delTerm($term->termID);
+        }
+        $sql = "DELETE FROM Attends WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+        $sql = "DELETE FROM Lecturer WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+        $sql = "DELETE FROM Course WHERE courseID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$courseID]);
+    } catch (PDOException $e) {
+        $conn->rollBack();
+        throw $e;
+    }
+    $conn->commit();
 }
 
 function getGuarantorID($courseID) {
@@ -192,13 +210,6 @@ function removeLecturer($courseID, $accountID) {
     $sql = "DELETE FROM Lecturer WHERE courseID = ? AND accountID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$courseID, $accountID]);
-}
-
-function removeAllTermsfromCourse($courseID) {
-    $conn = $GLOBALS['conn'];
-    $sql = "DELETE FROM Term WHERE courseID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$courseID]);
 }
 
 function removeGuarantor($courseID) {

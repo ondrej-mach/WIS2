@@ -17,7 +17,11 @@
 <div id="manage_courses_t">
 
 <h3>My courses</h3>
-
+<?php
+	if (isset($_GET["error"])) {
+		echo '<p style="color: red;">' . $_GET["error"] . '</p>';
+	}
+?>
 <section class="section_table">
 
 <table>

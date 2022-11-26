@@ -25,6 +25,11 @@ function printBool($x) {
 
 <section class="section_table">
 <h3>Manage Users</h3>
+<?php
+    if (isset($_GET['error'])) {
+        echo '<p style="color: red;">'.$_GET['error'].'</p>';
+    }
+?>
 <table id="table_users">
     <thead>
         <tr>
