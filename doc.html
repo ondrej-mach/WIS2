@@ -63,11 +63,12 @@ Aplikace je postavena na vrstvené architektuře.
 Je rozdělena na vrstvu prezentační, business a datovou.
 Prezentační vrstvu představují skripty v kořenovém adresáři webu.
 Business vrstvu implementují skripty v podsložce includes.
-Datovou vrstvu představuje knihovna PDO, která zajišťuje komunikaci s databází MySQL.
+Datovou vrstvou je knihovna PDO, která zajišťuje komunikaci s databází MySQL.
 </p>
 
+<h3>Busuiness vrstva</h3>
 <p>
-Skripty ve složce includes většinou obsahují pomocné funkce,
+Skripty ve složce includes obsahují pomocné funkce,
 které jsou používány v zobrazovacích skriptech.
 Obsah této složky lze víceméně posat jako business vrstva.
 </p>
@@ -80,20 +81,35 @@ Obsah této složky lze víceméně posat jako business vrstva.
 
 <p>Ostatní skripty nevyžadují popis, jejich účel je pochopitelný z jejich jména.</p>
 
+
+<h3>Prezentační vrstva</h3>
 <p>
-Skripty <span class="tt">usermod.php</span> a <span class="tt">userdel.php</span> zprostředkovávají úpravu údajů resp. odstranění uživatele.
+Skripty <span class="tt">login.php</span> a <span class="tt">logout.php</span> umožňují přihlášení a odhlášení uživatele.
+Při přihlášení uživatele je do databáze uložen sessionID a čas expirace.
+Uživatel může být přihlášen najednou z více zařízení.
+Při načtení jakékoli stránky je čas expirace prodloužen.
+V případě, že přihlášení již expirovalo, je smazáno z databáze a uživatel se musí přihlásit znova.
+</p>
+
+<p>
+Skripty <span class="tt">usermod.php</span> a <span class="tt">userdel.php</span> zprostředkovávají úpravu údajů resp. odstranění uživatele. 
+<span class="tt">usermod.php</span> je dostupný každému přihlášenému uživateli,
+pouze administrátor ale může měnit údaje jiného uživatele.
+Skript <span class="tt">useradd.php</span> přidá nového uživatele, je dostupný pouze pro administrátora.
+Skript <span class="tt">manageusers.php</span> administrátorovi zobrazí přehlednou tabulku všech uživatelů, ze které může přejít na editaci jednoho z nich.
+</p>
+
+<p>
+Skripty <span class="tt">addroom.php</span>, 
+<span class="tt">managerooms.php</span>,
+<span class="tt">roommod.php</span>
+slouží k zobrazení a editaci místností. Jsou dostupné pouze administrátorovi.
 </p>
 
 
 Zatim nepouzite:
 <span class="tt">studentcourses.php
-</span><span class="tt">css/style.css
-</span><span class="tt">login.php
-</span><span class="tt">res/vut_logo.png
-</span><span class="tt">roomdel.php
-</span><span class="tt">useradd.php
 </span><span class="tt">addlecturer.php
-</span><span class="tt">addroom.php
 </span><span class="tt">admincourses.php
 </span><span class="tt">createcourse.php
 </span><span class="tt">deletecourse.php
@@ -102,23 +118,27 @@ Zatim nepouzite:
 </span><span class="tt">evaluate.php
 </span><span class="tt">evaluatecourse.php
 </span><span class="tt">evaluateterm.php
-</span><span class="tt">index.php
-</span><span class="tt">logout.php
-</span><span class="tt">managerooms.php
-</span><span class="tt">manageusers.php
 </span><span class="tt">modifycourse.php
 </span><span class="tt">modifyterm.php
 </span><span class="tt">removelecturer.php
 </span><span class="tt">removeterm.php
-</span><span class="tt">roommod.php
 </span><span class="tt">teachercourses.php
 </span>
 
+
 <h3>Databáze</h3>
 
-<p>Zde vložte grafické schéma relační databáze (tabulek v databázi)</p>
+<img src='schema.png' />
+
 
 <h2>Instalace</h2>
+
+<p>
+Pro vývoj byl použit docker, díky tomu není potřeba nic nastavovat.
+Po naklonování lze instance spustit příkazem <span class="tt">docker-compose up -d</span>.
+Databáze se sama inicializuje pomocí skriptů ve složce docker/db_server.
+Web informačního systému bude dostupný na lokálním portu 8080 a phpMyAdmin na 8081.
+</p>
 
 Stručně popište: 
 <ul>
@@ -130,8 +150,7 @@ Stručně popište:
 @Martet udelal bys tohle? Realne nevim, co je tam vsechno za setup XD
 
 <h2>Známé problémy</h2>
-<p>Všechny případy použití ze zadání jsou implementované a plně funkční.</p>
-
+<p>Všechny případy použití ze zadání jsou implementované a otestované.</p>
 
 </body>
 </html>
