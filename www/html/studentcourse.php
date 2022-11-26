@@ -37,7 +37,8 @@
 <h3><?php echo $course->courseFullName; ?></h3>
 
 <section class="section_table">
-<h4>My terms</h4>
+
+<h3>My terms</h3>
 
 <table>
 	<thead>
@@ -71,7 +72,7 @@
 
 </section>
 <section class="section_table">
-<h4>Unregistered terms</h4>
+<h3>Unregistered terms</h3>
 
 <table>
 	<thead>
@@ -100,7 +101,7 @@
 
 </section>
 <section class="section_table">
-<h4>Schedule</h4>
+<h3>Schedule</h3>
 
 <table>
 	<thead>

@@ -23,17 +23,24 @@
 <div id="button_back" ><a href="studentcourse.php?courseID=<?php echo $term->courseID ?>">Back to course</a></div><br/>
 </section>
 
-<div id="view_term">
+<section class="view_term">
+<span>
+<h1><?php echo $term->termName ?></h1>
+</span>
 
-<h3><?php echo $term->termName ?></h3>
-
+<span>
 <h5>Description</h5>
-<?php echo $term->termDescription ?>
+<p><?php echo $term->termDescription ?></p>
+</span>
 
+<span>
 <h5>Type</h5>
-<?php echo $term->termType ?>
+<p><?php echo $term->termType ?></p>
+</span>
 
+<span>
 <h5>Date</h5>
+<p>
 <?php
     $time = strtotime($term->termDate);
     if (isset($term->termLength)) {
@@ -42,31 +49,37 @@
         echo date('Y-m-d H:i', $time);
     }
 ?>
+</p>
+</span>
 
 <?php
     if (isset($term->roomID)){
         require_once 'includes/rooms-inc.php';
         $room = getRoomByID($term->roomID);
 
-        echo "<h5>Room</h5>";
-        echo $room->roomName;
+        echo "<span><h5>Room</h5>";
+        echo '<p>'.$room->roomName.'</p></span>';
     }
 ?>
 
+<span>
 <h5>Max Points</h5>
-<?php echo $term->termMaxPoints ?>
+<p><?php echo $term->termMaxPoints ?></p>
+</span>
 
 <?php
     if (isset($term->points)) {
-        echo "<h5>Points</h5>";
-        echo $term->points . " (graded by " . $term->lecturerRealName . ")";
+        echo "<span><h5>Points</h5>";
+        echo '<p>'.$term->points . " (graded by " . $term->lecturerRealName . ")</p></span>";
     }
 ?>
 
+<span>
 <h5>Automatically registered</h5>
-<?php echo $term->termAutoregistered ? "yes" : "no" ?>
+<?php echo $term->termAutoregistered ? "<p>yes</p>" : "<p>no</p>" ?>
+</span>
 
-</div>
+</section>
 
 <?php include_once 'templates/footer.php' ?>
 

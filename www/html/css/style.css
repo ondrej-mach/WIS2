@@ -319,6 +319,10 @@ footer div {
     max-width: fit-content;
 }
 
+.section_form p {
+    padding-left: 20px;
+}
+
 .section_form div h1 {
     margin: 0;
     padding: 20px;
@@ -386,4 +390,30 @@ footer div {
 
 #courses_student {
     padding-bottom: 80px;
+}
+
+/* View term page */
+
+.view_term {
+    display: grid;
+    margin: 20px;
+    border: #3498DB 1px solid;
+}
+
+.view_term span {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    padding: 10px;
+    min-width: 200px;
+    border-bottom: #3498DB 1px solid;
+}
+
+.view_term span:first-child {
+    margin: 0;
+    background-color: #3498DB;
+    color: #fff;
+}
+
+.view_term h1,.view_term p, .view_term h5 {
+    margin: 5px;
 }

@@ -20,26 +20,34 @@
 <div id="button_back" ><a href=viewcourses.php>Back to courses</a></div><br/>
 </section>
 
-<div id="view_course">
+<section class="view_term">
 
-<h3><?php echo $course->courseName . " - " . $course->courseFullName ?></h3>
+<span>
+<h1><?php echo $course->courseName . " - " . $course->courseFullName ?></h1>
+</span>
 
+<span>
 <h5>Description</h5>
 <?php echo $course->courseDescription ?>
-
+</span>
+<span>
 <h5>Credits</h5>
 <?php echo $course->courseCredits ?>
+</span>
 
+<span>
 <h5>Capacity</h5>
 <?php echo getCourseSignedUpNumber($courseID) . "/" . $course->courseCapacity?>
+</span>
 
+<span>
 <h5>Guarantor</h5>
 <?php
     $guarantor = getUserByID(getGuarantorID($course->courseID));
     echo $guarantor->accountRealName . " (" . $guarantor->accountUsername . ")";
 ?>
-
-</div>
+</span>
+</section>
 
 <?php include_once 'templates/footer.php' ?>
 
