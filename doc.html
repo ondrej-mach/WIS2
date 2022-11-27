@@ -142,18 +142,27 @@
 
 	<p>
 		Skript <span class="tt">evaluatecourse.php</span> je užívám k přepínání mezi hodnoceními jednotlivých termínů daného kurzu,
-		skript <span class="tt">evaluateterm.php</span> umožňuje vyučujícímu zadat hodnocení studentů do daného termínu,
+		skript <span class="tt">evaluateterm.php</span> umožňuje vyučujícímu zadat hodnocení studentům do daného termínu a
 		<span class="tt">evaluate.php</span> zprostředkovává úpravu údajů o hodnocení studenta v daném termínu.
 		Jsou dostupné pouze učitelům kurzu a garantovi.
 	</p>
 
 	<p>
-		Skript <span class="tt">createcourse.php</span> Zařizuje vytvoření nového kurzu,
-		skript <span class="tt">deletecourse.php</span> slouží k odstranění kurzu. Jsou dostupné pouze garantovi a administrátorovi.
-		Skript <span class="tt">editcourse.php</span> je v různých podobách dostupný administrátorovi a garantovi. Umožnuje upravit informace o kurzu, výběr vyučujících kurzu a také přidávání termínů.
+		Skript <span class="tt">createcourse.php</span> zařizuje vytvoření nového kurzu,
+		skript <span class="tt">deletecourse.php</span> slouží k jeho odstranění. Jsou dostupné pouze učitelům, založením kurzu se učitel stane vyučujícím v daném kurzu a také jeho garantem.
+		Skript <span class="tt">editcourse.php</span> je v různých podobách dostupný administrátorovi a garantovi. Administrátorovi umožňuje schválit kurzy čekající na potvrzení,
+		garantovi umožnuje upravit informace o kurzu, výbrat vyučující kurzu, přidat termíny a požádat administrátora o schválení kurzu.
 		Skript <span class="tt">modifycourse.php</span> zprostředkovává úpravu informací o kurzu.
+		Skript <span class="tt">coursesummary.php</span> zobrazuje učitelům a administrátorovi přehled všech studentů společně s jejich hodnoceními v daných termínech.
 		Skript <span class="tt">detailcourse.php</span> zprostředkovává souhrn informací o kurzu je dostupný i studentům i nepřihlášeným uživatelům.
-		Skript <span class="tt">resultcourse.php</span> zobrazuje výsledky studentů v daném kurzu.
+		Skript <span class="tt">resultcourse.php</span> zobrazuje výsledky studenta v daném kurzu, je dostupný pouze studentům.
+	</p>
+
+	<p>
+		Skripty <span class="tt">admincourses.php</span> a <span class="tt">teachercourses.php</span> jsou pohledy, 
+		které administrátorovi a vyučujícímu zobrazí přehled kurzů. Učiteli všechny, ve kterých vyučuje, nebo je garant, u administrátora všechny připravené ke schválení a běžící,
+		skript <span class="tt">studentcourses.php</span> zobrazí přehled kurzů studenta, rozdělených na přihlášené, schválené, a běžící. Dostupný je pouze studentům.
+		Skript <span class="tt">viewcourses.php</span> zobrazí nepřihlášeným uživatelům přehled všech kurzů, které aktuálně běží.
 	</p>
 
 	<p>
@@ -162,21 +171,14 @@
 
 	<p>
 		Skripty <span class="tt">addlecturer.php</span> a <span class="tt">removelecturer.php</span>
-		umožňuje adminovi a garantovi přidat/odebrat vyučujícího do/z kurzu.
+		umožňuje adminovi a garantovi přidat/odebrat vyučující do/z kurzu.
 	</p>
 
 	<p>
-		Skripty <span class="tt">admincourses.php</span> a <span class="tt">teachercourses.php</span> jsou pohledy, 
-		které administrátorovi a vyučujícímu zobrazí přehled kurzů (u učitele všech, ve kterých vyučuje, nebo je garant, u administrátora všech připravených ke schválení a běžících), 
-		skript <span class="tt">studentcourses.php</span> zobrazí přehled kurzů, ve kterých do student přihlášen, schválen, a těch, které už běží.
-		Skript <span class="tt">viewcourses.php</span> zobrazí nepřihlášeným uživatelům přehled všech kurzů, které aktuálně běží.
-	</p>
-
-	<p>
-		Skript <span class="tt">registerterm.php</span> umožňuje studentovi se přihlásit na termín v daném kurzu, 
-		Skript <span class="tt">modifyterm.php</span> zprostředkovává úpravu údajů o termínu daného kurzu,
-		skript <span class="tt">editterm.php</span> umožňuje administrátorovi a garantovi upravit informace o termínu.
-		skript <span class="tt">removeterm.php</span> umožňuje administrátorovi a garantovi smazat termín.
+		Skript <span class="tt">registerterm.php</span> umožňuje studentovi se přihlásit na termín v daném kurzu, dostupný je pouze studentovi.
+		Skript <span class="tt">modifyterm.php</span> zprostředkovává úpravu údajů o termínu v kurzu,
+		skript <span class="tt">editterm.php</span> umožňuje garantovi upravit informace o termínu v kurzu
+		a <span class="tt">removeterm.php</span> umožňuje garantovi smazat termín.
 	</p>
 
 	<h3>Databáze</h3>
